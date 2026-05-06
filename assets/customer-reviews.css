@@ -1,0 +1,219 @@
+/* =============================================
+   Customer Reviews — Dawn Theme Compatible
+   Fichier : assets/customer-reviews.css
+   ============================================= */
+
+.cr-wrapper {
+  background: #fff;
+}
+
+.cr-section {
+  padding: 3rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.cr__header {
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  background: #f5f5f5;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.cr__title {
+  font-weight: 700;
+  margin: 0;
+}
+
+/* =============================================
+   SLIDER WRAPPER
+   ============================================= */
+.cr__slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* =============================================
+   BOUTONS NAVIGATION
+   ============================================= */
+.cr__nav {
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  z-index: 2;
+}
+
+.cr__nav:hover {
+  background: #FF6600;
+  color: #fff;
+  border-color: #FF6600;
+  transform: scale(1.08);
+}
+
+/* =============================================
+   SLIDER TRACK
+   ============================================= */
+.cr__slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 0.5rem 0.25rem 1rem;
+  flex: 1;
+}
+
+.cr__slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* =============================================
+   CARTE AVIS
+   ============================================= */
+.cr__card {
+  flex: 0 0 260px;
+  min-width: 260px;
+  background: #fff;
+  border: 2px solid #FF6600;
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 2px 12px rgba(255,102,0,0.08);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.cr__card:hover {
+  box-shadow: 0 6px 24px rgba(255,102,0,0.18);
+  transform: translateY(-3px);
+}
+
+/* =============================================
+   ETOILES
+   ============================================= */
+.cr__stars-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cr__stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.cr__rating-text {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* =============================================
+   TEXTE DE L'AVIS
+   ============================================= */
+.cr__review-text {
+  font-size: 0.88rem;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =============================================
+   AUTEUR
+   ============================================= */
+.cr__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.cr__author-photo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #f0f0f0;
+}
+
+.cr__author-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #aaa;
+}
+
+.cr__author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cr__author-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cr__author-role {
+  font-size: 0.78rem;
+  color: #888;
+  margin: 0;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 768px) {
+  .cr-section {
+    padding: 2rem 0.75rem;
+  }
+
+  .cr__card {
+    flex: 0 0 220px;
+    min-width: 220px;
+  }
+
+  .cr__nav {
+    width: 30px;
+    height: 30px;
+  }
+}

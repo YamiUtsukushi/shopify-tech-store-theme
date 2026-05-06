@@ -1,0 +1,806 @@
+{% comment %}
+  Custom Header — Compatible Dawn (Shopify)
+  Fichier : sections/custom-header.liquid
+{% endcomment %}
+
+{{ 'custom-header.css' | asset_url | stylesheet_tag }}
+
+{%- assign featured_product = section.settings.featured_product -%}
+{%- assign featured_end_date = section.settings.featured_end_date -%}
+
+<div class="custom-header" id="custom-header-{{ section.id }}">
+
+  {%- comment %} ========== LIGNE 1 ========== {% endcomment -%}
+  <div class="custom-header__top" style="background:{{ section.settings.top_bg }};color:{{ section.settings.top_text_color }};">
+    <div class="custom-header__top-inner">
+
+      {%- comment %} Logo {% endcomment -%}
+      <div class="custom-header__logo">
+        <a href="/" aria-label="Accueil">
+          {%- if section.settings.logo != blank -%}
+            <img
+              src="{{ section.settings.logo | image_url: width: 200 }}"
+              alt="{{ shop.name }}"
+              class="custom-header__logo-img"
+              width="{{ section.settings.logo_width }}"
+              loading="eager"
+            >
+          {%- else -%}
+            <span class="custom-header__logo-text" style="color:{{ section.settings.top_text_color }};">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+
+      {%- comment %} Recherche {% endcomment -%}
+      <div class="custom-header__search">
+        <form action="/search" method="get" class="custom-header__search-form" role="search">
+          <input
+            type="search"
+            name="q"
+            placeholder="Rechercher des produits..."
+            class="custom-header__search-input"
+            aria-label="Rechercher"
+            autocomplete="off"
+          >
+          <input type="hidden" name="type" value="product">
+          <button type="submit" class="custom-header__search-btn" aria-label="Lancer la recherche">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      {%- comment %} Droite : compte + panier {% endcomment -%}
+      <div class="custom-header__actions">
+
+        {%- comment %} Compte client {% endcomment -%}
+        <a href="{{ routes.account_url }}" class="custom-header__action-link" style="color:{{ section.settings.top_text_color }};" aria-label="Mon compte">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <div class="custom-header__action-text">
+            {%- if customer -%}
+              <span class="custom-header__action-label">Bonjour, {{ customer.first_name }}</span>
+              <span class="custom-header__action-sub">Mon compte</span>
+            {%- else -%}
+              <span class="custom-header__action-label">Bonjour, connectez-vous</span>
+              <span class="custom-header__action-sub">Compte & Listes</span>
+            {%- endif -%}
+          </div>
+        </a>
+
+        {%- comment %} Mini panier {% endcomment -%}
+        <button
+          class="custom-header__action-link custom-header__cart-btn"
+          style="color:{{ section.settings.top_text_color }};"
+          id="cartDrawerOpen-{{ section.id }}"
+          aria-label="Ouvrir le panier"
+          type="button"
+        >
+          <div class="custom-header__cart-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            <span class="custom-header__cart-count" id="cartCount-{{ section.id }}">{{ cart.item_count }}</span>
+          </div>
+          <div class="custom-header__action-text">
+            <span class="custom-header__action-label">Panier</span>
+            <span class="custom-header__action-sub" id="cartTotal-{{ section.id }}">{{ cart.total_price | money }}</span>
+          </div>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  {%- comment %} ========== LIGNE 2 — Navigation ========== {% endcomment -%}
+  <div class="custom-header__nav" style="background:{{ section.settings.nav_bg }};color:{{ section.settings.nav_text_color }};">
+    <div class="custom-header__nav-inner">
+
+      {%- comment %} Toutes les catégories {% endcomment -%}
+      <div class="custom-header__categories" id="categoriesWrap-{{ section.id }}">
+        <button class="custom-header__categories-btn" id="categoriesBtn-{{ section.id }}" style="color:{{ section.settings.nav_text_color }};" type="button" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          Toutes les catégories
+        </button>
+        <div class="custom-header__categories-dropdown" id="categoriesDropdown-{{ section.id }}" hidden>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'collection_link' -%}
+              {%- assign col = block.settings.collection -%}
+              {%- if col != blank -%}
+                <a href="{{ col.url }}" class="custom-header__categories-item" {{ block.shopify_attributes }}>
+                  {%- if col.image -%}
+                    <img src="{{ col.image | image_url: width: 40 }}" alt="{{ col.title }}" width="40" height="40" class="custom-header__categories-img">
+                  {%- endif -%}
+                  {{ col.title }}
+                </a>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment %} Menu de navigation principal {% endcomment -%}
+      <nav class="custom-header__menu" aria-label="Navigation principale">
+        {%- if section.settings.menu != blank -%}
+          {%- assign nav_menu = section.settings.menu -%}
+          {%- for link in linklists[nav_menu].links -%}
+            {%- if link.links.size > 0 -%}
+              <div class="custom-header__menu-item custom-header__menu-item--parent">
+                <button class="custom-header__menu-link custom-header__menu-link--parent" style="color:{{ section.settings.nav_text_color }};" type="button">
+                  {{ link.title }}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
+                <div class="custom-header__submenu">
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}" class="custom-header__submenu-link">{{ child.title }}</a>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- else -%}
+              <div class="custom-header__menu-item">
+                <a href="{{ link.url }}" class="custom-header__menu-link" style="color:{{ section.settings.nav_text_color }};">{{ link.title }}</a>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </nav>
+
+      {%- comment %} Liens secondaires droite {% endcomment -%}
+      <div class="custom-header__secondary-links">
+        {%- if section.settings.secondary_link_1_label != blank -%}
+          <a href="{{ section.settings.secondary_link_1_url }}" class="custom-header__secondary-link" style="color:{{ section.settings.nav_text_color }};">
+            ⚡ {{ section.settings.secondary_link_1_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.secondary_link_2_label != blank -%}
+          <span class="custom-header__secondary-sep" style="color:{{ section.settings.nav_text_color }};">|</span>
+          <a href="{{ section.settings.secondary_link_2_url }}" class="custom-header__secondary-link" style="color:{{ section.settings.nav_text_color }};">{{ section.settings.secondary_link_2_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.secondary_link_3_label != blank -%}
+          <span class="custom-header__secondary-sep" style="color:{{ section.settings.nav_text_color }};">|</span>
+          <a href="{{ section.settings.secondary_link_3_url }}" class="custom-header__secondary-link" style="color:{{ section.settings.nav_text_color }};">{{ section.settings.secondary_link_3_label }}</a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{%- comment %} ========== TIROIR PANIER ========== {% endcomment -%}
+<div class="cart-drawer" id="cartDrawer-{{ section.id }}" aria-hidden="true" role="dialog" aria-label="Votre panier">
+  <div class="cart-drawer__overlay" id="cartOverlay-{{ section.id }}"></div>
+
+  <div class="cart-drawer__panel">
+
+    {%- comment %} Header du drawer {% endcomment -%}
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">Mon Panier <span class="cart-drawer__count" id="drawerCount-{{ section.id }}">({{ cart.item_count }})</span></h2>
+      <button class="cart-drawer__close" id="cartDrawerClose-{{ section.id }}" aria-label="Fermer le panier" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    {%- comment %} Corps du drawer {% endcomment -%}
+    <div class="cart-drawer__body" id="cartDrawerBody-{{ section.id }}">
+      {%- if cart.item_count == 0 -%}
+
+        {%- comment %} ---- PANIER VIDE ---- {% endcomment -%}
+        <div class="cart-empty">
+          <svg class="cart-empty__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="60" height="60">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <p class="cart-empty__title">Votre panier est vide</p>
+          <a href="/collections/all" class="cart-empty__continue">Continuer les achats</a>
+
+          {%- if featured_product != blank -%}
+            <div class="cart-empty__featured">
+              <p class="cart-empty__featured-label">Offre du moment</p>
+              {%- if featured_product.featured_image != blank -%}
+                <img
+                  src="{{ featured_product.featured_image | image_url: width: 240 }}"
+                  alt="{{ featured_product.title | escape }}"
+                  class="cart-empty__featured-img"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              {%- if featured_end_date != blank -%}
+                <div class="cart-empty__countdown flash-sale__countdown" data-end="{{ featured_end_date }}">
+                  <div class="flash-sale__countdown-item">
+                    <span class="flash-sale__countdown-value" data-days>00</span>
+                    <span class="flash-sale__countdown-label">Jours</span>
+                  </div>
+                  <div class="flash-sale__countdown-item">
+                    <span class="flash-sale__countdown-value" data-hours>00</span>
+                    <span class="flash-sale__countdown-label">Hrs</span>
+                  </div>
+                  <div class="flash-sale__countdown-item">
+                    <span class="flash-sale__countdown-value" data-mins>00</span>
+                    <span class="flash-sale__countdown-label">Min</span>
+                  </div>
+                  <div class="flash-sale__countdown-item">
+                    <span class="flash-sale__countdown-value" data-secs>00</span>
+                    <span class="flash-sale__countdown-label">Sec</span>
+                  </div>
+                </div>
+              {%- endif -%}
+              <p class="cart-empty__featured-title">{{ featured_product.title }}</p>
+              <p class="cart-empty__featured-price">{{ featured_product.price | money }}</p>
+              <button
+                class="cart-empty__add-btn"
+                data-variant-id="{{ featured_product.selected_or_first_available_variant.id }}"
+                onclick="window.customHeaderAddToCart(this)"
+                type="button"
+              >
+                Ajouter au panier
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
+
+      {%- else -%}
+
+        {%- comment %} ---- ARTICLES ---- {% endcomment -%}
+        <div class="cart-items">
+          {%- for item in cart.items -%}
+            <div class="cart-item" data-key="{{ item.key }}">
+              {%- if item.image -%}
+                <img
+                  src="{{ item.image | image_url: width: 140 }}"
+                  alt="{{ item.title | escape }}"
+                  class="cart-item__img"
+                  width="70"
+                  height="70"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              <div class="cart-item__info">
+                <p class="cart-item__title">{{ item.product.title }}</p>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="cart-item__variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="cart-item__price">{{ item.final_line_price | money }}</p>
+                <div class="cart-item__qty">
+                  <button class="cart-item__qty-btn" data-action="decrease" data-key="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" type="button">−</button>
+                  <span class="cart-item__qty-val">{{ item.quantity }}</span>
+                  <button class="cart-item__qty-btn" data-action="increase" data-key="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" type="button">+</button>
+                </div>
+              </div>
+              <button class="cart-item__remove" data-key="{{ item.key }}" aria-label="Supprimer" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6M14 11v6"/>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                </svg>
+              </button>
+            </div>
+          {%- endfor -%}
+        </div>
+
+      {%- endif -%}
+    </div>
+
+    {%- comment %} Footer du drawer (caché si vide) {% endcomment -%}
+    <div class="cart-drawer__footer" id="cartDrawerFooter-{{ section.id }}" {% if cart.item_count == 0 %}hidden{% endif %}>
+      {%- unless customer -%}
+        <div class="cart-drawer__login-nudge">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Vous possédez un compte ? <a href="{{ routes.account_login_url }}" class="cart-drawer__login-link">Connectez-vous</a> pour payer plus vite.</span>
+        </div>
+      {%- endunless -%}
+      <div class="cart-drawer__subtotal">
+        <span>Sous-total</span>
+        <span id="drawerTotal-{{ section.id }}">{{ cart.total_price | money }}</span>
+      </div>
+      <p class="cart-drawer__taxes-note">Taxes et frais de livraison calculés à la validation</p>
+      <a href="/checkout" class="cart-drawer__checkout-btn">Passer la commande</a>
+      <a href="/cart" class="cart-drawer__view-cart">Voir le panier complet</a>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .custom-header__search-btn { background: {{ section.settings.search_btn_color }}; }
+  .custom-header__categories-btn:hover,
+  .custom-header__menu-link:hover { color: {{ section.settings.nav_hover_color }} !important; }
+</style>
+
+<script>
+(function() {
+  var sectionId = '{{ section.id }}';
+
+  // ---- Helpers ----
+  function qs(id) { return document.getElementById(id); }
+
+  // ---- Drawer open/close ----
+  var drawer     = qs('cartDrawer-' + sectionId);
+  var overlay    = qs('cartOverlay-' + sectionId);
+  var openBtn    = qs('cartDrawerOpen-' + sectionId);
+  var closeBtn   = qs('cartDrawerClose-' + sectionId);
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cart-drawer-open');
+    fetchCart(false);
+  }
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cart-drawer-open');
+  }
+
+  // Expose globalement pour les autres sections
+  window.cartDrawerOpen = openDrawer;
+  window.cartDrawerFetch = function() { fetchCart(true); };
+
+  if (openBtn)  openBtn.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay)  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
+
+  // ---- Fetch & render cart ----
+  function fetchCart(openAfter) {
+    fetch('/cart.js')
+      .then(function(r) { return r.json(); })
+      .then(function(cart) {
+        updateCartUI(cart);
+        if (openAfter) openDrawer();
+      });
+  }
+
+  function updateCartUI(cart) {
+    // Compteur header
+    var countEl = qs('cartCount-' + sectionId);
+    if (countEl) countEl.textContent = cart.item_count;
+
+    // Total header
+    var totalEl = qs('cartTotal-' + sectionId);
+    if (totalEl) totalEl.textContent = formatMoney(cart.total_price);
+
+    // Drawer count
+    var dCount = qs('drawerCount-' + sectionId);
+    if (dCount) dCount.textContent = '(' + cart.item_count + ')';
+
+    // Drawer total
+    var dTotal = qs('drawerTotal-' + sectionId);
+    if (dTotal) dTotal.textContent = formatMoney(cart.total_price);
+
+    // Drawer footer
+    var footer = qs('cartDrawerFooter-' + sectionId);
+    if (footer) footer.hidden = cart.item_count === 0;
+
+    // Drawer body
+    var body = qs('cartDrawerBody-' + sectionId);
+    if (!body) return;
+
+    if (cart.item_count === 0) {
+      body.innerHTML = renderEmpty();
+      initCountdown();
+    } else {
+      body.innerHTML = renderItems(cart);
+      bindCartActions();
+    }
+  }
+
+  function formatMoney(cents) {
+    return (cents / 100).toFixed(2).replace('.', ',') + '\u00a0€';
+  }
+
+  // ---- Render panier vide ----
+  function renderEmpty() {
+    var fp = {{ featured_product | json }};
+    var endDate = '{{ featured_end_date }}';
+    var html = '<div class="cart-empty">';
+    html += '<svg class="cart-empty__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="60" height="60"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+    html += '<p class="cart-empty__title">Votre panier est vide</p>';
+    html += '<a href="/collections/all" class="cart-empty__continue">Continuer les achats</a>';
+
+    if (fp && fp.id) {
+      html += '<div class="cart-empty__featured">';
+      html += '<p class="cart-empty__featured-label">Offre du moment</p>';
+      if (fp.featured_image) {
+        html += '<img src="' + fp.featured_image + '" alt="' + fp.title + '" class="cart-empty__featured-img">';
+      }
+      if (endDate) {
+        html += '<div class="cart-empty__countdown flash-sale__countdown" data-end="' + endDate + '">';
+        html += '<div class="flash-sale__countdown-item"><span class="flash-sale__countdown-value" data-days>00</span><span class="flash-sale__countdown-label">Jours</span></div>';
+        html += '<div class="flash-sale__countdown-item"><span class="flash-sale__countdown-value" data-hours>00</span><span class="flash-sale__countdown-label">Hrs</span></div>';
+        html += '<div class="flash-sale__countdown-item"><span class="flash-sale__countdown-value" data-mins>00</span><span class="flash-sale__countdown-label">Min</span></div>';
+        html += '<div class="flash-sale__countdown-item"><span class="flash-sale__countdown-value" data-secs>00</span><span class="flash-sale__countdown-label">Sec</span></div>';
+        html += '</div>';
+      }
+      html += '<p class="cart-empty__featured-title">' + fp.title + '</p>';
+      html += '<p class="cart-empty__featured-price">' + formatMoney(fp.price) + '</p>';
+      if (fp.variants && fp.variants[0]) {
+        html += '<button class="cart-empty__add-btn" data-variant-id="' + fp.variants[0].id + '" onclick="window.customHeaderAddToCart(this)">Ajouter au panier</button>';
+      }
+      html += '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  // ---- Render articles ----
+  function renderItems(cart) {
+    var html = '<div class="cart-items">';
+    cart.items.forEach(function(item) {
+      html += '<div class="cart-item" data-key="' + item.key + '">';
+      if (item.image) {
+        html += '<img src="' + item.image + '" alt="' + item.title + '" class="cart-item__img" width="70" height="70">';
+      }
+      html += '<div class="cart-item__info">';
+      html += '<p class="cart-item__title">' + item.product_title + '</p>';
+      if (item.variant_title && item.variant_title !== 'Default Title') {
+        html += '<p class="cart-item__variant">' + item.variant_title + '</p>';
+      }
+      html += '<p class="cart-item__price">' + formatMoney(item.final_line_price) + '</p>';
+      html += '<div class="cart-item__qty">';
+      html += '<button class="cart-item__qty-btn" data-action="decrease" data-key="' + item.key + '" data-qty="' + (item.quantity - 1) + '" type="button">−</button>';
+      html += '<span class="cart-item__qty-val">' + item.quantity + '</span>';
+      html += '<button class="cart-item__qty-btn" data-action="increase" data-key="' + item.key + '" data-qty="' + (item.quantity + 1) + '" type="button">+</button>';
+      html += '</div>';
+      html += '</div>';
+      html += '<button class="cart-item__remove" data-key="' + item.key + '" aria-label="Supprimer" type="button">';
+      html += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">';
+      html += '<polyline points="3 6 5 6 21 6"/>';
+      html += '<path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>';
+      html += '<path d="M10 11v6M14 11v6"/>';
+      html += '<path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>';
+      html += '</svg></button>';
+      html += '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  // ---- Actions panier (quantité / suppression) ----
+  function bindCartActions() {
+    var body = qs('cartDrawerBody-' + sectionId);
+    if (!body) return;
+    body.querySelectorAll('[data-action]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        updateLineItem(btn.dataset.key, parseInt(btn.dataset.qty));
+      });
+    });
+    body.querySelectorAll('.cart-item__remove').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        updateLineItem(btn.dataset.key, 0);
+      });
+    });
+  }
+
+  function updateLineItem(key, qty) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(cart) { updateCartUI(cart); });
+  }
+
+  // ---- Add to cart global (utilisé par flash-sale + panier vide) ----
+  window.customHeaderAddToCart = function(btn) {
+    var variantId = btn.dataset.variantId;
+    if (!variantId) return;
+    btn.disabled = true;
+    var original = btn.textContent;
+    btn.textContent = 'Ajout...';
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      btn.textContent = '✓ Ajouté !';
+      fetchCart(true);
+      setTimeout(function() {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 2000);
+    })
+    .catch(function() {
+      btn.textContent = 'Erreur';
+      btn.disabled = false;
+    });
+  };
+
+  // Rétrocompatibilité flash-sale section
+  window.flashSaleAddToCart = window.customHeaderAddToCart;
+
+  // ---- Countdown (panier vide) ----
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function parseDate(str) {
+    if (!str) return NaN;
+    var parts = str.split('T');
+    var datePart = parts[0];
+    var timePart = parts[1] || '00:00:00';
+    var ds = datePart.split('-');
+    var d, m, y;
+    if (ds[0].length === 4) { y = ds[0]; m = ds[1]; d = ds[2]; }
+    else { d = ds[0]; m = ds[1]; y = ds[2]; }
+    return new Date(y + '-' + m + '-' + d + 'T' + timePart).getTime();
+  }
+
+  function initCountdown() {
+    document.querySelectorAll('#cartDrawer-' + sectionId + ' .flash-sale__countdown').forEach(function(el) {
+      var endDate = parseDate(el.dataset.end);
+      if (isNaN(endDate)) return;
+      (function tick() {
+        var diff = endDate - Date.now();
+        if (diff <= 0) return;
+        var d = el.querySelector('[data-days]');
+        var h = el.querySelector('[data-hours]');
+        var mi = el.querySelector('[data-mins]');
+        var s = el.querySelector('[data-secs]');
+        if (d) d.textContent = pad(Math.floor(diff / 86400000));
+        if (h) h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        if (mi) mi.textContent = pad(Math.floor((diff % 3600000) / 60000));
+        if (s) s.textContent = pad(Math.floor((diff % 60000) / 1000));
+        setTimeout(tick, 1000);
+      })();
+    });
+  }
+  initCountdown();
+
+  // ---- Menu catégories ----
+  var catBtn      = qs('categoriesBtn-' + sectionId);
+  var catDropdown = qs('categoriesDropdown-' + sectionId);
+  if (catBtn && catDropdown) {
+
+    function positionDropdown() {
+      var btnRect = catBtn.getBoundingClientRect();
+      var isMobile = window.innerWidth <= 768;
+      catDropdown.style.top = (btnRect.bottom + 4) + 'px';
+      if (isMobile) {
+        catDropdown.style.left = '0';
+        catDropdown.style.right = '0';
+        catDropdown.style.width = '100%';
+      } else {
+        catDropdown.style.left = btnRect.left + 'px';
+        catDropdown.style.right = 'auto';
+        catDropdown.style.width = 'auto';
+        catDropdown.style.minWidth = '220px';
+      }
+    }
+
+    catBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = !catDropdown.hidden;
+      catDropdown.hidden = isOpen;
+      catBtn.setAttribute('aria-expanded', String(!isOpen));
+      if (!isOpen) positionDropdown();
+    });
+
+    document.addEventListener('click', function() {
+      if (catDropdown) catDropdown.hidden = true;
+      if (catBtn) catBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    // Recalcule la position au scroll
+    window.addEventListener('scroll', function() {
+      if (!catDropdown.hidden) positionDropdown();
+    }, { passive: true });
+  }
+
+  // ---- Sous-menus navigation ----
+  document.querySelectorAll('#custom-header-' + sectionId + ' .custom-header__menu-link--parent').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var item = btn.closest('.custom-header__menu-item--parent');
+      var isOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.custom-header__menu-item--parent').forEach(function(i) { i.classList.remove('is-open'); });
+      if (!isOpen) item.classList.add('is-open');
+    });
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.custom-header__menu-item--parent').forEach(function(i) { i.classList.remove('is-open'); });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "En-tête personnalisé",
+  "tag": "header",
+  "class": "custom-header-wrapper",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ligne 1 — Barre principale"
+    },
+    {
+      "type": "color",
+      "id": "top_bg",
+      "label": "Couleur de fond (ligne 1)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "top_text_color",
+      "label": "Couleur du texte (ligne 1)",
+      "default": "#111111"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Largeur du logo",
+      "default": 150
+    },
+    {
+      "type": "color",
+      "id": "search_btn_color",
+      "label": "Couleur du bouton de recherche",
+      "default": "#FF6600"
+    },
+    {
+      "type": "header",
+      "content": "Produit mis en avant (panier vide)"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Produit à mettre en avant"
+    },
+    {
+      "type": "text",
+      "id": "featured_end_date",
+      "label": "Date de fin du compte à rebours",
+      "info": "Format : DD-MM-YYYYTHH:MM:SS ex: 30-06-2025T23:59:59"
+    },
+    {
+      "type": "header",
+      "content": "Ligne 2 — Navigation"
+    },
+    {
+      "type": "color",
+      "id": "nav_bg",
+      "label": "Couleur de fond (ligne 2)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_text_color",
+      "label": "Couleur du texte (ligne 2)",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "nav_hover_color",
+      "label": "Couleur au survol (liens nav)",
+      "default": "#FF6600"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu de navigation principal",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Liens secondaires (droite)"
+    },
+    {
+      "type": "text",
+      "id": "secondary_link_1_label",
+      "label": "Lien 1 — Texte",
+      "default": "Features"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link_1_url",
+      "label": "Lien 1 — URL"
+    },
+    {
+      "type": "text",
+      "id": "secondary_link_2_label",
+      "label": "Lien 2 — Texte",
+      "default": "About Us"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link_2_url",
+      "label": "Lien 2 — URL"
+    },
+    {
+      "type": "text",
+      "id": "secondary_link_3_label",
+      "label": "Lien 3 — Texte",
+      "default": "FAQs"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link_3_url",
+      "label": "Lien 3 — URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_link",
+      "name": "Catégorie",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "En-tête personnalisé"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+// =============================================
+// Fonction globale Add to Cart → ouvre le drawer
+// Utilisée par : featured-products, flash-sale,
+//               collection-page, cart-recommendations,
+//               related-products
+// =============================================
+window.globalAddToCart = function(btn, variantId) {
+  if (!variantId) return;
+  btn.disabled = true;
+  var original = btn.textContent;
+  btn.textContent = 'Ajout...';
+
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: variantId, quantity: 1 })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function() {
+    btn.textContent = '✓ Ajouté !';
+    // Ouvre le drawer et rafraîchit son contenu
+    if (window.cartDrawerFetch) {
+      window.cartDrawerFetch();
+    }
+    setTimeout(function() {
+      btn.textContent = original;
+      btn.disabled = false;
+    }, 2000);
+  })
+  .catch(function() {
+    btn.textContent = 'Erreur';
+    btn.disabled = false;
+  });
+};
+</script>

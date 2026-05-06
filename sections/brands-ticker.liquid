@@ -1,0 +1,257 @@
+{% comment %}
+  Brands Ticker Hybride — iDhightech2
+  Fichier : sections/brands-ticker.liquid
+  - Récupère automatiquement tous les vendors Shopify
+  - Affiche le logo si uploadé dans le customizer, sinon le nom stylisé
+{% endcomment %}
+
+{{ 'brands-ticker.css' | asset_url | stylesheet_tag }}
+
+{%- comment %} Construit un dictionnaire logo par vendor depuis les blocs {% endcomment -%}
+{%- assign vendor_logos = '' -%}
+
+<div class="brands-wrapper" id="brands-{{ section.id }}" style="
+  background: {{ section.settings.section_bg }};
+  --brands-logo-width: {{ section.settings.logo_width }}px;
+  --brands-logo-height: {{ section.settings.logo_height }}px;
+  --brands-logo-bg: {{ section.settings.logo_bg }};
+  --brands-gap: {{ section.settings.gap }}px;
+  --brands-speed: {{ section.settings.speed }}s;
+">
+  <div class="brands-section">
+
+    {%- if section.settings.title != blank -%}
+      <div class="brands__header" style="text-align: {{ section.settings.title_align }};">
+        <h2 class="brands__title" style="font-size: {{ section.settings.title_size }}px; color: {{ section.settings.title_color }};">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="brands__ticker-outer">
+      <div class="brands__ticker {% if section.settings.grayscale %}brands--grayscale{% endif %}">
+
+        {%- comment %} Génère les items — 2 copies pour la boucle infinie {% endcomment -%}
+        {%- for pass in (1..2) -%}
+          <div class="brands__track" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+
+            {%- for vendor in shop.vendors -%}
+              {%- if vendor != blank -%}
+
+                {%- comment %} Cherche si un bloc correspond à ce vendor {% endcomment -%}
+                {%- assign vendor_logo = nil -%}
+                {%- assign vendor_url = nil -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'brand' -%}
+                    {%- assign block_name = block.settings.name | downcase | strip -%}
+                    {%- assign vendor_lower = vendor | downcase | strip -%}
+                    {%- if block_name == vendor_lower -%}
+                      {%- assign vendor_logo = block.settings.logo -%}
+                      {%- assign vendor_url = block.settings.url -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                <div class="brands__item">
+                  {%- if vendor_url != blank -%}
+                    <a href="{{ vendor_url }}" class="brands__link" target="_blank" rel="noopener" aria-label="{{ vendor }}">
+                  {%- else -%}
+                    <div class="brands__link">
+                  {%- endif -%}
+
+                    {%- if vendor_logo != blank -%}
+                      {%- comment %} Logo uploadé {% endcomment -%}
+                      <img
+                        src="{{ vendor_logo | image_url: width: 200 }}"
+                        alt="{{ vendor }}"
+                        class="brands__logo"
+                        loading="lazy"
+                        width="{{ section.settings.logo_width }}"
+                        height="{{ section.settings.logo_height }}"
+                      >
+                    {%- else -%}
+                      {%- comment %} Nom stylisé en fallback {% endcomment -%}
+                      <span class="brands__name">{{ vendor }}</span>
+                    {%- endif -%}
+
+                  {%- if vendor_url != blank -%}
+                    </a>
+                  {%- else -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+              {%- endif -%}
+            {%- endfor -%}
+
+          </div>
+        {%- endfor -%}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  var ticker = document.querySelector('#brands-{{ section.id }} .brands__ticker');
+  if (!ticker) return;
+  {%- if section.settings.pause_on_hover -%}
+  ticker.addEventListener('mouseenter', function() { ticker.style.animationPlayState = 'paused'; });
+  ticker.addEventListener('mouseleave', function() { ticker.style.animationPlayState = 'running'; });
+  {%- endif -%}
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Bandeau Marques",
+  "tag": "section",
+  "class": "brands-wrapper-outer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Couleur de fond de la section",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "header",
+      "content": "Titre"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre (optionnel)",
+      "default": "Nos marques"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#aaaaaa"
+    },
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "Alignement du titre",
+      "options": [
+        { "value": "left", "label": "Gauche" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Droite" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Logos"
+    },
+    {
+      "type": "color",
+      "id": "logo_bg",
+      "label": "Couleur de fond des logos",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 60,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Largeur max des logos",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Hauteur max des logos",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Défilement"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Espace entre les marques",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Vitesse du défilement",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "Logos en noir et blanc (couleur au survol)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause au survol",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "🖼️ Logo d'une marque",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "👇 Tapez le nom exact de la marque telle qu'elle apparaît dans vos produits (ex: Samsung, Apple, Sony). Le nom sera remplacé par le logo automatiquement."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nom exact de la marque",
+          "placeholder": "Ex: Samsung",
+          "info": "⚠️ Doit correspondre exactement au fournisseur dans Produits → Fournisseur. Respectez les majuscules."
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo de la marque",
+          "info": "PNG avec fond transparent recommandé"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Lien vers le site de la marque (optionnel)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bandeau Marques"
+    }
+  ]
+}
+{% endschema %}

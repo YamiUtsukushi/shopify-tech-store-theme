@@ -1,0 +1,432 @@
+{% comment %}
+  FAQ — Compatible Dawn (Shopify)
+  Fichier : sections/faq.liquid
+{% endcomment %}
+
+{{ 'faq.css' | asset_url | stylesheet_tag }}
+
+<section class="faq-section" id="faq-{{ section.id }}">
+
+  {%- comment %} Header {% endcomment -%}
+  <div class="faq__header">
+    {%- if section.settings.title != blank -%}
+      <h1 class="faq__title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="faq__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- comment %} Onglets catégories {% endcomment -%}
+  {%- assign categories = "commandes,retours,produits,paiement,compte,support" | split: "," -%}
+  {%- assign cat_labels = "📦 Commandes & Livraison,↩️ Retours & Remboursements,🔧 Produits & Garantie,💳 Paiement & Sécurité,👤 Mon Compte,📞 Contact & Support" | split: "," -%}
+
+  <div class="faq__tabs" role="tablist">
+    {%- for cat in categories -%}
+      <button
+        class="faq__tab{% if forloop.first %} is-active{% endif %}"
+        data-category="{{ cat }}"
+        role="tab"
+        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        type="button"
+      >
+        {{ cat_labels[forloop.index0] }}
+      </button>
+    {%- endfor -%}
+  </div>
+
+  {%- comment %} Accordéons par catégorie {% endcomment -%}
+  <div class="faq__panels">
+    {%- for cat in categories -%}
+      <div
+        class="faq__panel{% if forloop.first %} is-active{% endif %}"
+        data-panel="{{ cat }}"
+        role="tabpanel"
+      >
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' and block.settings.category == cat -%}
+            <div class="faq__item" {{ block.shopify_attributes }}>
+              <button class="faq__question" type="button" aria-expanded="false">
+                <span>{{ block.settings.question }}</span>
+                <svg class="faq__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              <div class="faq__answer">
+                <div class="faq__answer-inner">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- comment %} CTA bas de page {% endcomment -%}
+  <div class="faq__cta">
+    <p class="faq__cta-text">{{ section.settings.cta_text }}</p>
+    <a href="{{ section.settings.cta_url }}" class="faq__cta-btn">{{ section.settings.cta_label }}</a>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var section = document.getElementById('faq-{{ section.id }}');
+  if (!section) return;
+
+  // ---- Onglets ----
+  var tabs   = section.querySelectorAll('.faq__tab');
+  var panels = section.querySelectorAll('.faq__panel');
+
+  function activateTab(cat) {
+    tabs.forEach(function(t) {
+      t.classList.remove('is-active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    panels.forEach(function(p) { p.classList.remove('is-active'); });
+
+    var tab   = section.querySelector('[data-category="' + cat + '"]');
+    var panel = section.querySelector('[data-panel="' + cat + '"]');
+    if (tab)   { tab.classList.add('is-active'); tab.setAttribute('aria-selected', 'true'); }
+    if (panel) { panel.classList.add('is-active'); }
+    return panel;
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var panel = activateTab(tab.dataset.category);
+      if (panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // Met à jour l'URL sans recharger
+      history.replaceState(null, '', '#' + tab.dataset.category);
+    });
+  });
+
+  // ---- Accordéons ----
+  function openAccordion(item) {
+    var answer = item.querySelector('.faq__answer');
+    var btn    = item.querySelector('.faq__question');
+    item.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+
+  function closeAccordion(item) {
+    var answer = item.querySelector('.faq__answer');
+    var btn    = item.querySelector('.faq__question');
+    item.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    answer.style.maxHeight = null;
+  }
+
+  section.querySelectorAll('.faq__question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item   = btn.closest('.faq__item');
+      var isOpen = item.classList.contains('is-open');
+      var panel  = btn.closest('.faq__panel');
+
+      panel.querySelectorAll('.faq__item.is-open').forEach(function(openItem) {
+        closeAccordion(openItem);
+      });
+
+      if (!isOpen) openAccordion(item);
+    });
+  });
+
+  // ---- Lecture du hash au chargement ----
+  function handleHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+
+    // Sépare la catégorie et l'index de question optionnel ex: "retours-q1"
+    var parts = hash.split('-q');
+    var cat   = parts[0];
+    var qIdx  = parts[1] ? parseInt(parts[1]) - 1 : null;
+
+    var panel = activateTab(cat);
+    if (!panel) return;
+
+    // Scroll vers le panel
+    setTimeout(function() {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Ouvre la question spécifique si indiquée
+      if (qIdx !== null) {
+        var items = panel.querySelectorAll('.faq__item');
+        if (items[qIdx]) {
+          setTimeout(function() {
+            openAccordion(items[qIdx]);
+          }, 400);
+        }
+      }
+    }, 100);
+  }
+
+  handleHash();
+  window.addEventListener('hashchange', handleHash);
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "faq-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Questions fréquentes"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Retrouvez les réponses à vos questions les plus fréquentes."
+    },
+    {
+      "type": "header",
+      "content": "Bouton de contact"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texte avant le bouton",
+      "default": "Vous n'avez pas trouvé votre réponse ?"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texte du bouton",
+      "default": "Contactez notre service client"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Lien du bouton"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Catégorie",
+          "options": [
+            { "value": "commandes", "label": "📦 Commandes & Livraison" },
+            { "value": "retours", "label": "↩️ Retours & Remboursements" },
+            { "value": "produits", "label": "🔧 Produits & Garantie" },
+            { "value": "paiement", "label": "💳 Paiement & Sécurité" },
+            { "value": "compte", "label": "👤 Mon Compte" },
+            { "value": "support", "label": "📞 Contact & Support" }
+          ],
+          "default": "commandes"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Réponse"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Quels sont les délais de livraison ?",
+            "answer": "<p>Nos délais de livraison standard sont de <strong>2 à 5 jours ouvrés</strong> en France métropolitaine. Pour la livraison express, comptez <strong>24 à 48h</strong>. Les commandes passées avant 14h sont expédiées le jour même.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Comment suivre ma commande ?",
+            "answer": "<p>Dès l'expédition de votre commande, vous recevrez un <strong>email de confirmation</strong> contenant un numéro de suivi. Vous pouvez suivre votre colis directement sur le site du transporteur ou depuis votre espace compte sous la rubrique <strong>\"Mes commandes\"</strong>.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Livrez-vous à l'international ?",
+            "answer": "<p>Oui, nous livrons dans toute l'<strong>Union Européenne</strong> ainsi qu'en Suisse, au Royaume-Uni et au Canada. Les délais pour les livraisons internationales sont de <strong>5 à 10 jours ouvrés</strong>. Des frais de douane peuvent s'appliquer selon votre pays.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Puis-je modifier ou annuler ma commande ?",
+            "answer": "<p>Vous pouvez modifier ou annuler votre commande <strong>dans les 2 heures suivant la passation</strong> en nous contactant par email ou téléphone. Passé ce délai, la commande est transmise à notre entrepôt et ne peut plus être modifiée.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "La livraison est-elle gratuite ?",
+            "answer": "<p>La livraison est <strong>offerte pour toute commande supérieure à 50€</strong>. En dessous de ce montant, des frais de port de 4,99€ s'appliquent. La livraison express est disponible à partir de 9,99€ quelle que soit la valeur de la commande.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Quelle est votre politique de retour ?",
+            "answer": "<p>Vous disposez de <strong>30 jours</strong> après réception pour retourner un article. Le produit doit être dans son <strong>emballage d'origine</strong>, non utilisé et accompagné de tous ses accessoires. Les frais de retour sont à votre charge sauf en cas de produit défectueux.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Dans quel délai serai-je remboursé ?",
+            "answer": "<p>Une fois votre retour reçu et validé par notre équipe, le remboursement est effectué sous <strong>5 à 7 jours ouvrés</strong> sur votre moyen de paiement initial. Vous recevrez un email de confirmation dès que le remboursement est traité.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Comment initier un retour ?",
+            "answer": "<p>Pour initier un retour, connectez-vous à votre compte, allez dans <strong>\"Mes commandes\"</strong> et sélectionnez l'article à retourner. Vous recevrez une étiquette de retour par email. Imprimez-la, collez-la sur le colis et déposez-le dans un point relais.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Que faire si je reçois un produit endommagé ?",
+            "answer": "<p>Si vous recevez un produit endommagé, contactez-nous <strong>dans les 48h</strong> suivant la réception avec des photos du produit et de l'emballage. Nous organiserons un échange ou un remboursement complet à nos frais, sans que vous ayez à renvoyer le produit défectueux.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Quelle est la durée de garantie des produits ?",
+            "answer": "<p>Tous nos produits bénéficient de la <strong>garantie légale de conformité de 2 ans</strong> conformément à la législation française. Certains produits disposent également d'une garantie constructeur supplémentaire pouvant aller jusqu'à 3 ans.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Les produits sont-ils compatibles avec tous les appareils ?",
+            "answer": "<p>La compatibilité est indiquée sur chaque fiche produit. Nous vous recommandons de vérifier les <strong>spécifications techniques</strong> avant l'achat. Notre service client est disponible pour vous conseiller sur la compatibilité d'un produit avec vos appareils existants.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Comment faire valoir la garantie ?",
+            "answer": "<p>Pour faire valoir votre garantie, contactez notre service client avec votre <strong>numéro de commande</strong> et une description du problème. Nous vous guiderons dans la procédure : réparation, échange ou remboursement selon la nature du défaut.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Les produits vendus sont-ils neufs ?",
+            "answer": "<p>Oui, <strong>tous nos produits sont neufs</strong>, achetés directement auprès des fabricants ou de distributeurs officiels. Nous ne vendons pas de produits reconditionnés sauf mention explicite dans la fiche produit.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "paiement",
+            "question": "Quels moyens de paiement acceptez-vous ?",
+            "answer": "<p>Nous acceptons les paiements par <strong>Visa, Mastercard, PayPal, Apple Pay et Google Pay</strong>. Toutes les transactions sont sécurisées par un cryptage SSL. Nous proposons également le paiement en <strong>3 ou 4 fois sans frais</strong> pour les commandes supérieures à 100€.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "paiement",
+            "question": "Mes informations bancaires sont-elles sécurisées ?",
+            "answer": "<p>Absolument. Nous utilisons un <strong>protocole SSL 256 bits</strong> pour sécuriser toutes vos données. Vos informations bancaires ne sont jamais stockées sur nos serveurs. Les paiements sont traités par des prestataires certifiés PCI-DSS.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "paiement",
+            "question": "Puis-je obtenir une facture ?",
+            "answer": "<p>Oui, une <strong>facture est automatiquement générée</strong> pour chaque commande et disponible dans votre espace compte sous \"Mes commandes\". Vous pouvez la télécharger au format PDF à tout moment.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "compte",
+            "question": "Comment créer un compte ?",
+            "answer": "<p>Cliquez sur <strong>\"Créer un compte\"</strong> en haut de la page, renseignez votre email et choisissez un mot de passe. Vous recevrez un email de confirmation pour activer votre compte. La création est gratuite et vous donne accès à votre historique de commandes et à nos offres exclusives.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "compte",
+            "question": "J'ai oublié mon mot de passe, que faire ?",
+            "answer": "<p>Cliquez sur <strong>\"Mot de passe oublié\"</strong> sur la page de connexion et saisissez votre adresse email. Vous recevrez un lien de réinitialisation valable 24h. Si vous ne recevez pas l'email, vérifiez vos spams ou contactez notre support.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "compte",
+            "question": "Comment modifier mes informations personnelles ?",
+            "answer": "<p>Connectez-vous à votre compte et accédez à <strong>\"Mes informations\"</strong>. Vous pouvez modifier votre nom, adresse email, numéro de téléphone et adresses de livraison. Les modifications sont enregistrées immédiatement.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "support",
+            "question": "Quels sont les horaires du service client ?",
+            "answer": "<p>Notre service client est disponible <strong>du lundi au vendredi de 9h à 18h</strong>. En dehors de ces horaires, vous pouvez nous laisser un message via le formulaire de contact et nous vous répondrons le prochain jour ouvré.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "support",
+            "question": "Dans quel délai répondez-vous aux messages ?",
+            "answer": "<p>Nous nous engageons à répondre à tous les messages dans un délai de <strong>24h ouvrées</strong>. En période de forte activité (soldes, fêtes), ce délai peut être porté à 48h. Vous recevrez un email de confirmation dès la réception de votre demande.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "support",
+            "question": "Comment nous contacter ?",
+            "answer": "<p>Vous pouvez nous joindre via <strong>notre formulaire de contact</strong>, par email ou par téléphone. Pour les demandes liées à une commande, munissez-vous de votre numéro de commande pour accélérer le traitement de votre demande.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

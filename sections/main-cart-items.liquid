@@ -1,0 +1,273 @@
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
+{{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{{ 'cart-page-custom.css' | asset_url | stylesheet_tag }}
+
+{%- unless settings.cart_type == 'drawer' -%}
+  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
+<script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+
+<div class="cpc__wrapper">
+<div class="cpc__page">
+
+  {%- if cart == empty -%}
+
+    <div class="cpc__empty">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64" style="color:#ddd;">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <h1 class="cpc__empty-title">Votre panier est vide</h1>
+      <p class="cpc__empty-text">Découvrez nos produits et ajoutez-les à votre panier.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="cpc__empty-btn">Continuer mes achats</a>
+      {%- if shop.customer_accounts_enabled and customer == null -%}
+        <p class="cpc__login-nudge">
+          Vous avez un compte ? <a href="{{ routes.account_login_url }}" class="cpc__link">Connectez-vous</a> pour retrouver vos articles.
+        </p>
+      {%- endif -%}
+    </div>
+
+  {%- else -%}
+
+    <div class="cpc__layout">
+
+      {%- comment %} ========== COLONNE GAUCHE ========== {% endcomment -%}
+      <div class="cpc__left">
+
+        <div class="cpc__header">
+          <h1 class="cpc__title">
+            Votre panier
+            <span class="cpc__count">({{ cart.item_count }} produit{% if cart.item_count > 1 %}s{% endif %})</span>
+          </h1>
+          <a href="{{ routes.all_products_collection_url }}" class="cpc__continue-link">← Continuer mes achats</a>
+        </div>
+
+        <cart-items id="main-cart-items" data-id="{{ section.id }}">
+          <div class="js-contents">
+            <form action="{{ routes.cart_url }}" method="post" id="cart">
+
+              {%- for item in cart.items -%}
+                <div class="cpc__card" id="CartItem-{{ item.index | plus: 1 }}">
+
+                  <a href="{{ item.url }}" class="cpc__card-img-link">
+                    {%- if item.image -%}
+                      <img
+                        src="{{ item.image | image_url: width: 200 }}"
+                        alt="{{ item.image.alt | escape }}"
+                        class="cpc__card-img"
+                        width="100"
+                        height="{{ 100 | divided_by: item.image.aspect_ratio | ceil }}"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                  </a>
+
+                  <div class="cpc__card-info">
+                    {%- if item.product.vendor != blank -%}
+                      <p class="cpc__card-vendor">{{ item.product.vendor }}</p>
+                    {%- endif -%}
+
+                    <a href="{{ item.url }}" class="cpc__card-name">{{ item.product.title | escape }}</a>
+
+                    {%- unless item.product.has_only_default_variant -%}
+                      {%- for option in item.options_with_values -%}
+                        <p class="cpc__card-variant">{{ option.name }} : {{ option.value }}</p>
+                      {%- endfor -%}
+                    {%- endunless -%}
+
+                    <div class="cpc__card-price">
+                      {%- if item.original_price != item.final_price -%}
+                        <s class="cpc__price-compare">{{ item.original_price | money }}</s>
+                        <span class="cpc__price-current">{{ item.final_price | money }}</span>
+                      {%- else -%}
+                        <span class="cpc__price-current">{{ item.original_price | money }}</span>
+                      {%- endif -%}
+                    </div>
+
+                    {%- if section.settings.show_stock -%}
+                      {%- if item.variant.available -%}
+                        {%- if item.variant.inventory_management == 'shopify' and item.variant.inventory_quantity > 0 -%}
+                          <p class="cpc__stock">✓ En stock ({{ item.variant.inventory_quantity }} unités)</p>
+                        {%- else -%}
+                          <p class="cpc__stock">✓ En stock</p>
+                        {%- endif -%}
+                      {%- else -%}
+                        <p class="cpc__stock cpc__stock--out">✗ Rupture de stock</p>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </div>
+
+                  <div class="cpc__card-actions">
+                    <p class="cpc__line-price">{{ item.final_line_price | money }}</p>
+
+                    <div class="cpc__qty-wrap">
+                      <label class="cpc__qty-label">Qté</label>
+                      <div class="cpc__qty-controls">
+                        <button type="button" class="cpc__qty-btn" onclick="cpcChangeQty(this, -1)" data-line="{{ item.index | plus: 1 }}">−</button>
+                        <span class="cpc__qty-input" data-line="{{ item.index | plus: 1 }}">{{ item.quantity }}</span>
+                        <button type="button" class="cpc__qty-btn" onclick="cpcChangeQty(this, 1)" data-line="{{ item.index | plus: 1 }}">+</button>
+                      </div>
+                    </div>
+
+                    <a href="{{ routes.cart_change_url }}?line={{ item.index | plus: 1 }}&quantity=0" class="cpc__remove" aria-label="Supprimer">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                      Supprimer
+                    </a>
+                  </div>
+
+                </div>
+              {%- endfor -%}
+
+              <button type="submit" name="update" class="cpc__update-btn">Mettre à jour le panier</button>
+
+            </form>
+          </div>
+        </cart-items>
+
+      </div>
+
+      {%- comment %} ========== COLONNE DROITE ========== {% endcomment -%}
+      <div class="cpc__right">
+        <div class="cpc__recap">
+
+          <h2 class="cpc__recap-title">Récapitulatif</h2>
+
+          <div class="cpc__recap-lines">
+            <div class="cpc__recap-line">
+              <span>Sous-total ({{ cart.item_count }} article{% if cart.item_count > 1 %}s{% endif %})</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <div class="cpc__recap-line">
+              <span>Livraison</span>
+              <span class="cpc__recap-free">Calculée à la validation</span>
+            </div>
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <div class="cpc__recap-line cpc__recap-line--discount">
+                  <span>{{ discount.title }}</span>
+                  <span>-{{ discount.total_allocated_amount | money }}</span>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          <div class="cpc__recap-total">
+            <div>
+              <span class="cpc__recap-total-label">TOTAL</span>
+              <small class="cpc__recap-total-tax">(TVA incluse)</small>
+            </div>
+            <span class="cpc__recap-total-price">{{ cart.total_price | money }}</span>
+          </div>
+
+          <p class="cpc__recap-taxes">Frais de livraison calculés à la validation de la commande</p>
+
+          <a href="/checkout" class="cpc__checkout-btn">Passer la commande</a>
+
+          <div class="cpc__payments">
+            <p class="cpc__payments-label">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Paiement 100% sécurisé
+            </p>
+            <div class="cpc__payment-badges">
+              <div class="cpc__payment-badge" aria-label="Visa">
+                <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" width="40" height="26"><rect width="60" height="40" rx="4" fill="#fff" stroke="#e0e0e0"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="14" font-weight="900" font-family="Arial" fill="#1A1F71">VISA</text></svg>
+              </div>
+              <div class="cpc__payment-badge" aria-label="Mastercard">
+                <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" width="40" height="26"><rect width="60" height="40" rx="4" fill="#fff" stroke="#e0e0e0"/><circle cx="23" cy="20" r="11" fill="#EB001B"/><circle cx="37" cy="20" r="11" fill="#F79E1B"/><path d="M30 11.5a11 11 0 0 1 0 17 11 11 0 0 1 0-17z" fill="#FF5F00"/></svg>
+              </div>
+              <div class="cpc__payment-badge" aria-label="PayPal">
+                <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" width="40" height="26"><rect width="60" height="40" rx="4" fill="#fff" stroke="#e0e0e0"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-size="9" font-weight="800" font-family="Arial" fill="#003087">Pay</text><text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-size="9" font-weight="800" font-family="Arial" fill="#009CDE">Pal</text></svg>
+              </div>
+              <div class="cpc__payment-badge" aria-label="Apple Pay">
+                <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" width="40" height="26"><rect width="60" height="40" rx="4" fill="#fff" stroke="#e0e0e0"/><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-size="8" font-weight="600" font-family="Arial" fill="#000"> Pay</text></svg>
+              </div>
+              <div class="cpc__payment-badge" aria-label="Google Pay">
+                <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" width="40" height="26"><rect width="60" height="40" rx="4" fill="#fff" stroke="#e0e0e0"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="7" font-weight="600" font-family="Arial"><tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e </tspan><tspan fill="#000">Pay</tspan></text></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  {%- endif -%}
+
+  <p class="visually-hidden" id="cart-live-region-text" aria-live="polite" role="status"></p>
+
+</div>
+</div>
+
+<script>
+function cpcChangeQty(btn, delta) {
+  var span  = btn.parentElement.querySelector('.cpc__qty-input');
+  var line  = parseInt(span.dataset.line);
+  var qty   = Math.max(1, parseInt(span.textContent) + delta);
+  span.textContent = qty;
+
+  fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ line: line, quantity: qty })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function() { window.location.reload(); })
+  .catch(function(e) { console.error(e); });
+}
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart-items.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Afficher la disponibilité en stock",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

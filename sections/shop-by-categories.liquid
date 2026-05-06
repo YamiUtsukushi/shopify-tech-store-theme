@@ -1,0 +1,260 @@
+{% comment %}
+  Shop By Categories — Compatible Dawn (Shopify)
+  Fichier : sections/shop-by-categories.liquid
+{% endcomment %}
+
+{{ 'shop-by-categories.css' | asset_url | stylesheet_tag }}
+
+{%- assign pastel_colors = '#FFE4E4,#D4F5F0,#E8DEFF,#FFF4D4,#E2F5D4,#FFE8D4,#D4E4FF,#D4EEFF,#EBEBEB,#FFD4F0,#D4FFE8,#FFF0D4' | split: ',' -%}
+
+<section class="sbc-section" id="sbc-{{ section.id }}">
+
+  {%- comment %} Header {% endcomment -%}
+  <div class="sbc__header">
+    <h2 class="sbc__title" style="font-size: {{ section.settings.title_size }}px; color: {{ section.settings.title_color }};">{{ section.settings.title }}</h2>
+    <a href="/collections/all" class="sbc__see-all">{{ section.settings.see_all_label }}</a>
+  </div>
+
+  {%- comment %} Slider {% endcomment -%}
+  <div class="sbc__slider-wrapper">
+    <button class="sbc__nav sbc__nav--prev" id="sbcPrev-{{ section.id }}" aria-label="Précédent" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="sbc__slider" id="sbcSlider-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'collection_item' -%}
+          {%- assign collection = block.settings.collection -%}
+          {%- if collection != blank -%}
+
+            {%- comment %} Couleur pastel automatique basée sur l'index {% endcomment -%}
+            {%- assign color_index = forloop.index0 | modulo: pastel_colors.size -%}
+            {%- assign auto_color = pastel_colors[color_index] -%}
+
+            {%- comment %} Couleur manuelle si définie dans le bloc {% endcomment -%}
+            {%- if block.settings.card_color != blank -%}
+              {%- assign card_bg = block.settings.card_color -%}
+            {%- else -%}
+              {%- assign card_bg = auto_color -%}
+            {%- endif -%}
+
+            <a href="{{ collection.url }}" class="sbc__card" {{ block.shopify_attributes }}>
+              <div class="sbc__card-img-wrap" style="background: {{ card_bg }}; border-radius: {{ section.settings.card_border_radius }}px;">
+                {%- if collection.image != blank -%}
+                  <img
+                    src="{{ collection.image | image_url: width: 200 }}"
+                    alt="{{ collection.title | escape }}"
+                    class="sbc__card-img"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                {%- elsif collection.products.first and collection.products.first.featured_image -%}
+                  <img
+                    src="{{ collection.products.first.featured_image | image_url: width: 200 }}"
+                    alt="{{ collection.title | escape }}"
+                    class="sbc__card-img"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                {%- else -%}
+                  <div class="sbc__card-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40" opacity="0.3">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                    </svg>
+                  </div>
+                {%- endif -%}
+              </div>
+              <p class="sbc__card-title" style="font-size: {{ section.settings.card_title_size }}px;">{{ collection.title }}</p>
+            </a>
+
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <button class="sbc__nav sbc__nav--next" id="sbcNext-{{ section.id }}" aria-label="Suivant" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var slider  = document.getElementById('sbcSlider-{{ section.id }}');
+  var prevBtn = document.getElementById('sbcPrev-{{ section.id }}');
+  var nextBtn = document.getElementById('sbcNext-{{ section.id }}');
+  if (!slider) return;
+
+  function cardWidth() {
+    var card = slider.querySelector('.sbc__card');
+    if (!card) return 140;
+    return card.offsetWidth + parseInt(getComputedStyle(slider).gap || 16);
+  }
+
+  function updateNav() {
+    if (prevBtn) prevBtn.classList.toggle('is-hidden', slider.scrollLeft <= 0);
+    if (nextBtn) nextBtn.classList.toggle('is-hidden', slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth - 2);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    slider.scrollBy({ left: -(cardWidth() * 3), behavior: 'smooth' });
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    slider.scrollBy({ left: cardWidth() * 3, behavior: 'smooth' });
+  });
+
+  slider.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // ---- Touch drag-to-scroll (mobile) ----
+  var touchStartX = 0;
+  var touchScrollStart = 0;
+
+  slider.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].pageX;
+    touchScrollStart = slider.scrollLeft;
+    slider.style.scrollBehavior = 'auto';
+    slider.classList.add('is-dragging');
+  }, { passive: true });
+
+  slider.addEventListener('touchmove', function(e) {
+    var diff = touchStartX - e.touches[0].pageX;
+    slider.scrollLeft = touchScrollStart + diff;
+    updateNav();
+  }, { passive: true });
+
+  slider.addEventListener('touchend', function() {
+    slider.style.scrollBehavior = 'smooth';
+    slider.classList.remove('is-dragging');
+  }, { passive: true });
+
+  // ---- Mouse drag-to-scroll (desktop) ----
+  var isDown = false;
+  var startX = 0;
+  var scrollStart = 0;
+
+  slider.addEventListener('mousedown', function(e) {
+    isDown = true;
+    slider.classList.add('is-dragging');
+    startX = e.pageX - slider.offsetLeft;
+    scrollStart = slider.scrollLeft;
+    slider.style.scrollBehavior = 'auto';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mouseup', function() {
+    isDown = false;
+    slider.classList.remove('is-dragging');
+    slider.style.scrollBehavior = 'smooth';
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDown) return;
+    e.preventDefault();
+    var x = e.pageX - slider.offsetLeft;
+    slider.scrollLeft = scrollStart - (x - startX) * 1.5;
+    updateNav();
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Shop By Categories",
+  "tag": "section",
+  "class": "sbc-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de la section",
+      "default": "Shop By Categories"
+    },
+    {
+      "type": "text",
+      "id": "see_all_label",
+      "label": "Texte du lien \"Voir tout\"",
+      "default": "Voir toutes les catégories"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Couleur de fond de la section",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du nom des collections",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Arrondi des images",
+      "default": 14
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "color",
+          "id": "card_color",
+          "label": "Couleur de fond (laisser vide = blanc auto)",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop By Categories",
+      "blocks": [
+        { "type": "collection_item" },
+        { "type": "collection_item" },
+        { "type": "collection_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

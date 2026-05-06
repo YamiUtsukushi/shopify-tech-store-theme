@@ -1,0 +1,206 @@
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{{ 'featured-products.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <product-recommendations
+    class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product.id }}"
+  >
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+
+      <div class="fp__header" style="background: #f5f5f5; margin-bottom: 1.5rem;">
+        <h2 class="fp__title" style="color: #111; font-size: 20px;">{{ section.settings.heading }}</h2>
+      </div>
+
+      <div class="fp__grid" style="--fp-cols: {{ section.settings.columns_desktop }};">
+
+        {%- assign now_s = 'now' | date: '%s' | plus: 0 -%}
+
+        {%- for recommendation in recommendations.products -%}
+
+          {%- assign created_s = recommendation.created_at | date: '%s' | plus: 0 -%}
+          {%- assign diff_days = now_s | minus: created_s | divided_by: 86400 -%}
+          {%- assign is_new = false -%}
+          {%- if diff_days <= 30 -%}{%- assign is_new = true -%}{%- endif -%}
+
+          {%- assign has_discount = false -%}
+          {%- assign discount_pct = 0 -%}
+          {%- if recommendation.compare_at_price > recommendation.price -%}
+            {%- assign has_discount = true -%}
+            {%- assign discount_pct = recommendation.compare_at_price | minus: recommendation.price | times: 100 | divided_by: recommendation.compare_at_price -%}
+          {%- endif -%}
+
+          {%- assign main_col = recommendation.collections | first -%}
+
+          <div class="fp__card">
+
+            <a href="{{ recommendation.url }}" class="fp__card-img-link">
+              <div class="fp__badges">
+                {%- if is_new -%}<span class="fp__badge fp__badge--new">New</span>{%- endif -%}
+                {%- if has_discount -%}<span class="fp__badge fp__badge--discount">{{ discount_pct }}% off</span>{%- endif -%}
+              </div>
+              {%- if recommendation.featured_image -%}
+                <img
+                  src="{{ recommendation.featured_image | image_url: width: 400 }}"
+                  alt="{{ recommendation.featured_image.alt | escape }}"
+                  class="fp__card-img"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'fp__card-img fp__placeholder' }}
+              {%- endif -%}
+            </a>
+
+            <div class="fp__card-body">
+              {%- if main_col != blank -%}
+                <p class="fp__card-category">{{ main_col.title }}</p>
+              {%- endif -%}
+
+              <a href="{{ recommendation.url }}" class="fp__card-title">{{ recommendation.title }}</a>
+
+              <div class="fp__card-price">
+                <span class="fp__price-current">{{ recommendation.price | money }}</span>
+                {%- if recommendation.compare_at_price > recommendation.price -%}
+                  <span class="fp__price-compare">{{ recommendation.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+
+              {%- if section.settings.show_stock -%}
+                {%- assign variant = recommendation.selected_or_first_available_variant -%}
+                {%- if recommendation.available -%}
+                  {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 -%}
+                    <p class="fp__stock">En stock ({{ variant.inventory_quantity }} unités), prêt à être expédié</p>
+                  {%- else -%}
+                    <p class="fp__stock">En stock, prêt à être expédié</p>
+                  {%- endif -%}
+                {%- else -%}
+                  <p class="fp__stock fp__stock--out">Rupture de stock</p>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+
+            {%- if recommendation.variants.size == 1 -%}
+              <button
+                type="button"
+                class="fp__btn-cart"
+                style="background: #ec6034; color: #fff;"
+                data-variant-id="{{ recommendation.selected_or_first_available_variant.id }}"
+                onclick="rpAddToCart(this)"
+              >
+                Ajouter au panier
+              </button>
+            {%- else -%}
+              <a href="{{ recommendation.url }}" class="fp__btn-cart fp__btn-cart--options" style="background: #111; color: #fff;">
+                Voir les options
+              </a>
+            {%- endif -%}
+
+          </div>
+
+        {%- endfor -%}
+
+      </div>
+
+    {%- endif -%}
+  </product-recommendations>
+</div>
+
+<script>
+window.rpAddToCart = function(btn) {
+  var variantId = btn.dataset.variantId;
+  window.globalAddToCart(btn, variantId);
+};
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.related-products.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.related-products.settings.paragraph__1.content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "t:sections.related-products.settings.paragraph__1.default",
+      "label": "t:sections.related-products.settings.heading.label"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.related-products.settings.products_to_show.label"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "t:sections.related-products.settings.columns_desktop.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Afficher la disponibilité en stock",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

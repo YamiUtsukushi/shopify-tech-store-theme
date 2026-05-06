@@ -1,0 +1,146 @@
+/* =============================================
+   Brands Ticker — iDhightech2
+   Fichier : assets/brands-ticker.css
+   ============================================= */
+
+.brands-wrapper,
+.brands-wrapper-outer {
+  width: 100%;
+}
+
+.brands-section {
+  padding: 2rem 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.brands__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0 1.5rem;
+}
+
+.brands__title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin: 0;
+}
+
+/* =============================================
+   TICKER
+   ============================================= */
+.brands__ticker-outer {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.brands__ticker {
+  display: flex;
+  width: max-content;
+  animation: brandsTicker var(--brands-speed, 30s) linear infinite;
+}
+
+@keyframes brandsTicker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* =============================================
+   TRACK & ITEMS
+   ============================================= */
+.brands__track {
+  display: flex;
+  align-items: center;
+  gap: var(--brands-gap, 60px);
+  padding: 0.5rem calc(var(--brands-gap, 60px) / 2);
+}
+
+/* =============================================
+   LOGO
+   ============================================= */
+.brands__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brands-logo-bg, #ffffff);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.brands__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+}
+
+.brands__logo {
+  display: block;
+  max-width: var(--brands-logo-width, 120px);
+  max-height: var(--brands-logo-height, 50px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: filter 0.3s, opacity 0.3s, transform 0.2s;
+  opacity: 0.75;
+}
+
+/* Grayscale mode */
+.brands--grayscale .brands__logo {
+  filter: grayscale(100%);
+  opacity: 0.55;
+}
+
+.brands--grayscale a.brands__link:hover .brands__logo {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+a.brands__link:hover .brands__logo {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* =============================================
+   NOM EN FALLBACK (pas de logo)
+   ============================================= */
+.brands__name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #888;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  padding: 0.25rem 0;
+}
+
+/* Grayscale mode — nom stylisé */
+.brands--grayscale .brands__name {
+  color: #bbb;
+}
+
+a.brands__link:hover .brands__name,
+.brands--grayscale a.brands__link:hover .brands__name {
+  color: #ec6034;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 768px) {
+  .brands-section {
+    padding: 1.25rem 0;
+  }
+}

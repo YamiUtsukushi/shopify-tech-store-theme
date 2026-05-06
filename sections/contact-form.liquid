@@ -1,0 +1,333 @@
+{% comment %}
+  Contact Form Amélioré — Compatible Dawn (Shopify)
+  Fichier : sections/contact-form.liquid
+{% endcomment %}
+
+{{ 'contact-form.css' | asset_url | stylesheet_tag }}
+
+<section class="cf-section" id="cf-{{ section.id }}">
+
+  {%- comment %} Header au-dessus des deux colonnes {% endcomment -%}
+  {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+    <div class="cf__header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="cf__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="cf__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="cf__inner">
+
+    {%- comment %} ========== COLONNE GAUCHE — Formulaire ========== {% endcomment -%}
+    <div class="cf__form-col">
+
+      {%- form 'contact', id: 'ContactForm' -%}
+
+        {%- comment %} Succès {% endcomment -%}
+        {%- if form.posted_successfully? -%}
+          <div class="cf__success">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <div>
+              <p class="cf__success-title">Message envoyé avec succès !</p>
+              <p class="cf__success-text">Notre équipe vous répondra dans les plus brefs délais.</p>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Erreurs {% endcomment -%}
+        {%- if form.errors -%}
+          <div class="cf__error">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Veuillez corriger les erreurs ci-dessous.</span>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Ligne 1 : Nom + Email {% endcomment -%}
+        <div class="cf__row">
+          <div class="cf__field">
+            <label class="cf__label" for="ContactForm-name">
+              Nom complet
+            </label>
+            <input
+              class="cf__input"
+              type="text"
+              id="ContactForm-name"
+              name="contact[Nom]"
+              autocomplete="name"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="Jean Dupont"
+            >
+          </div>
+          <div class="cf__field">
+            <label class="cf__label" for="ContactForm-email">
+              Adresse email <span class="cf__required">*</span>
+            </label>
+            <input
+              class="cf__input{% if form.errors contains 'email' %} cf__input--error{% endif %}"
+              type="email"
+              id="ContactForm-email"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              placeholder="jean.dupont@email.com"
+              aria-required="true"
+            >
+            {%- if form.errors contains 'email' -%}
+              <span class="cf__field-error">Veuillez saisir une adresse email valide.</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- comment %} Ligne 2 : Téléphone + N° commande {% endcomment -%}
+        <div class="cf__row">
+          <div class="cf__field">
+            <label class="cf__label" for="ContactForm-phone">Téléphone</label>
+            <input
+              class="cf__input"
+              type="tel"
+              id="ContactForm-phone"
+              name="contact[Téléphone]"
+              autocomplete="tel"
+              pattern="[0-9\-]*"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="06 00 00 00 00"
+            >
+          </div>
+          <div class="cf__field">
+            <label class="cf__label" for="ContactForm-order">Numéro de commande</label>
+            <input
+              class="cf__input"
+              type="text"
+              id="ContactForm-order"
+              name="contact[Numéro de commande]"
+              placeholder="#1234"
+            >
+          </div>
+        </div>
+
+        {%- comment %} Objet de la demande {% endcomment -%}
+        <div class="cf__field">
+          <label class="cf__label" for="ContactForm-subject">Objet de la demande <span class="cf__required">*</span></label>
+          <div class="cf__select-wrap">
+            <select class="cf__input cf__select" id="ContactForm-subject" name="contact[Objet]" required>
+              <option value="" disabled selected>Sélectionnez un objet...</option>
+              <option value="Suivi de commande">📦 Suivi de commande</option>
+              <option value="Retour / Remboursement">↩️ Retour / Remboursement</option>
+              <option value="Produit défectueux">⚠️ Produit défectueux</option>
+              <option value="Question produit">❓ Question sur un produit</option>
+              <option value="Problème de livraison">🚚 Problème de livraison</option>
+              <option value="Autre">💬 Autre</option>
+            </select>
+            <svg class="cf__select-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+
+        {%- comment %} Message {% endcomment -%}
+        <div class="cf__field">
+          <label class="cf__label" for="ContactForm-body">Message <span class="cf__required">*</span></label>
+          <textarea
+            class="cf__input cf__textarea"
+            id="ContactForm-body"
+            name="contact[Message]"
+            rows="6"
+            placeholder="Décrivez votre demande en détail..."
+            required
+          >{{- form.body -}}</textarea>
+        </div>
+
+        {%- comment %} Bouton envoi {% endcomment -%}
+        <button type="submit" class="cf__submit">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Envoyer le message
+        </button>
+
+      {%- endform -%}
+    </div>
+
+    {%- comment %} ========== COLONNE DROITE — Infos contact ========== {% endcomment -%}
+    <div class="cf__info-col">
+
+      {%- comment %} Carte infos {% endcomment -%}
+      <div class="cf__info-card">
+        <h3 class="cf__info-title">{{ section.settings.info_title }}</h3>
+        <p class="cf__info-desc">{{ section.settings.info_desc }}</p>
+
+        <div class="cf__info-items">
+
+          {%- if section.settings.contact_email != blank -%}
+            <div class="cf__info-item">
+              <div class="cf__info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="cf__info-text">
+                <span class="cf__info-label">Email</span>
+                <a href="mailto:{{ section.settings.contact_email }}" class="cf__info-value">{{ section.settings.contact_email }}</a>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.contact_phone != blank -%}
+            <div class="cf__info-item">
+              <div class="cf__info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.12 6.12l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <div class="cf__info-text">
+                <span class="cf__info-label">Téléphone</span>
+                <a href="tel:{{ section.settings.contact_phone }}" class="cf__info-value">{{ section.settings.contact_phone }}</a>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.contact_hours != blank -%}
+            <div class="cf__info-item">
+              <div class="cf__info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="cf__info-text">
+                <span class="cf__info-label">Horaires</span>
+                <span class="cf__info-value">{{ section.settings.contact_hours }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.contact_address != blank -%}
+            <div class="cf__info-item">
+              <div class="cf__info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div class="cf__info-text">
+                <span class="cf__info-label">Adresse</span>
+                <span class="cf__info-value">{{ section.settings.contact_address }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+
+        </div>
+      </div>
+
+      {%- comment %} Carte délai de réponse {% endcomment -%}
+      <div class="cf__delay-card">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        <div>
+          <p class="cf__delay-title">{{ section.settings.delay_title }}</p>
+          <p class="cf__delay-text">{{ section.settings.delay_text }}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Formulaire de contact",
+  "tag": "section",
+  "class": "cf-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Formulaire"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Contactez-nous"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Une question sur votre commande ? Notre équipe est là pour vous aider."
+    },
+    {
+      "type": "header",
+      "content": "Informations de contact"
+    },
+    {
+      "type": "text",
+      "id": "info_title",
+      "label": "Titre bloc infos",
+      "default": "Nos coordonnées"
+    },
+    {
+      "type": "text",
+      "id": "info_desc",
+      "label": "Description",
+      "default": "Notre service client est disponible pour vous accompagner dans vos démarches."
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email de contact",
+      "default": "support@votreboutique.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Téléphone",
+      "default": "01 23 45 67 89"
+    },
+    {
+      "type": "text",
+      "id": "contact_hours",
+      "label": "Horaires",
+      "default": "Lun - Ven : 9h - 18h"
+    },
+    {
+      "type": "text",
+      "id": "contact_address",
+      "label": "Adresse"
+    },
+    {
+      "type": "header",
+      "content": "Délai de réponse"
+    },
+    {
+      "type": "text",
+      "id": "delay_title",
+      "label": "Titre délai",
+      "default": "Réponse rapide garantie"
+    },
+    {
+      "type": "text",
+      "id": "delay_text",
+      "label": "Texte délai",
+      "default": "Nous vous répondons sous 24h ouvrées, du lundi au vendredi."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Formulaire de contact"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1215 @@
+/* =============================================
+   Product Page Custom — iDhightech2
+   Fichier : assets/product-page-custom.css
+   ============================================= */
+
+/* =============================================
+   FOND & LAYOUT
+   ============================================= */
+product-info {
+  background: #fff;
+}
+
+/* =============================================
+   TITRE DU PRODUIT
+   ============================================= */
+.product__title h1,
+.product__title h2 {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem) !important;
+  font-weight: 800 !important;
+  color: #111 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+}
+
+/* =============================================
+   PRIX
+   ============================================= */
+.price--large .price-item--sale,
+.price--large .price-item--regular {
+  color: #ec6034 !important;
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+}
+
+.price--large .price-item--regular.price-item--last,
+.price__sale .price-item--regular {
+  color: #aaa !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  text-decoration: line-through !important;
+}
+
+.badge--sale,
+.price__badge-sale {
+  background: #ec6034 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  padding: 3px 8px !important;
+}
+
+.badge--sold-out,
+.price__badge-sold-out {
+  background: #111 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+}
+
+/* =============================================
+   BADGES NEW + % OFF
+   ============================================= */
+.product__badges {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product__badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.product__badge--new {
+  background: #22c55e;
+  color: #fff;
+}
+
+.product__badge--discount {
+  background: #ec6034;
+  color: #fff;
+}
+
+/* =============================================
+   STOCK / INVENTAIRE
+   ============================================= */
+.product__inventory {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.product__inventory:not(.product__inventory--unavailable) {
+  color: #16a34a !important;
+}
+
+.product__inventory--unavailable {
+  color: #ef4444 !important;
+}
+
+/* =============================================
+   VARIANTES — SWATCH & SELECT
+   ============================================= */
+.swatch-input__input:checked + .swatch-input__label,
+.swatch-input__input:focus + .swatch-input__label {
+  border-color: #ec6034 !important;
+  box-shadow: 0 0 0 2px #ec6034 !important;
+}
+
+.select__select:focus {
+  border-color: #ec6034 !important;
+  box-shadow: 0 0 0 3px rgba(236,96,52,0.15) !important;
+  outline: none !important;
+}
+
+/* =============================================
+   SUPPRIME LA FAUSSE BORDURE DAWN (pseudo-element ::after)
+   ============================================= */
+
+.product-form__submit::after,
+.product-form__submit::before,
+button.shopify-payment-button__button--unbranded::after,
+button.shopify-payment-button__button--unbranded::before {
+  display: none !important;
+  box-shadow: none !important;
+  --shadow-opacity: 0 !important;
+  --border-opacity: 0 !important;
+  --buttons-border-width: 0 !important;
+}
+
+/* Supprime min-width/min-height Dawn */
+.product-form .product-form__submit.button {
+  min-width: unset !important;
+  min-height: unset !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* =============================================
+   QUANTITÉ — même design que /cart
+   ============================================= */
+
+/* Supprime le border Dawn sur le custom element */
+quantity-input.quantity,
+.product-form__quantity quantity-input.quantity {
+  border: 1.5px solid #e0e0e0 !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  height: 44px !important;
+  width: fit-content !important;
+  display: flex !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+quantity-input.quantity .quantity__button::after,
+quantity-input.quantity .quantity__button::before {
+  display: none !important;
+  box-shadow: none !important;
+}
+
+quantity-input.quantity .quantity__button,
+.product-form__quantity quantity-input .quantity__button {
+  width: 44px !important;
+  height: 44px !important;
+  background: #f8f8f8 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  font-size: 1.2rem !important;
+  color: #333 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s, color 0.15s !important;
+  padding: 0 !important;
+  min-width: unset !important;
+}
+
+quantity-input.quantity .quantity__button:hover,
+.product-form__quantity quantity-input .quantity__button:hover {
+  background: #ec6034 !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+quantity-input.quantity .quantity__input,
+.product-form__quantity quantity-input .quantity__input {
+  width: 50px !important;
+  text-align: center !important;
+  border: none !important;
+  border-left: 1px solid #e0e0e0 !important;
+  border-right: 1px solid #e0e0e0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  background: #fff !important;
+  padding: 0 !important;
+  height: 44px !important;
+  -moz-appearance: textfield !important;
+}
+
+quantity-input.quantity .quantity__input::-webkit-outer-spin-button,
+quantity-input.quantity .quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* =============================================
+   BOUTONS — même taille, sans bordure
+   ============================================= */
+.product-form__buttons {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+/* Bouton Ajouter au panier */
+.product-form .product-form__submit.button,
+.product-form__buttons .product-form__submit {
+  background: #111 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.02em !important;
+  transition: background 0.2s !important;
+  height: 50px !important;
+  min-width: unset !important;
+  outline: none !important;
+}
+
+.product-form .product-form__submit.button:hover:not([disabled]),
+.product-form__buttons .product-form__submit:hover:not([disabled]) {
+  background: #333 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.product-form .product-form__submit.button[disabled] {
+  background: #ddd !important;
+  color: #999 !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
+/* Bouton Acheter maintenant */
+.shopify-payment-button__button {
+  border: none !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  height: 50px !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.shopify-payment-button__button--unbranded {
+  background: #ec6034 !important;
+  border: none !important;
+  transition: background 0.2s !important;
+}
+
+.shopify-payment-button__button--unbranded:hover {
+  background: #d4512a !important;
+  border: none !important;
+}
+
+/* =============================================
+   VENDOR / MARQUE
+   ============================================= */
+.product__text.caption-with-letter-spacing {
+  color: #888 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* =============================================
+   DESCRIPTION PRODUIT
+   ============================================= */
+.product__description {
+  font-size: 0.9rem !important;
+  color: #555 !important;
+  line-height: 1.7 !important;
+}
+
+.product__description a {
+  color: #ec6034 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+/* =============================================
+   ACCORDÉON
+   ============================================= */
+.accordion__button {
+  color: #111 !important;
+  font-weight: 600 !important;
+}
+
+.accordion__button:hover {
+  color: #ec6034 !important;
+}
+
+/* =============================================
+   NOTES / TAXES
+   ============================================= */
+.product__tax {
+  font-size: 0.78rem !important;
+  color: #999 !important;
+}
+
+.product__tax a {
+  color: #ec6034 !important;
+}
+
+
+/* =============================================
+   TITRE DU PRODUIT
+   ============================================= */
+.product__title h1,
+.product__title h2 {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem) !important;
+  font-weight: 800 !important;
+  color: #111 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+}
+
+/* =============================================
+   PRIX
+   ============================================= */
+.price--large .price-item--sale,
+.price--large .price-item--regular {
+  color: #ec6034 !important;
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+}
+
+/* Prix barré */
+.price--large .price-item--regular.price-item--last,
+.price__sale .price-item--regular {
+  color: #aaa !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  text-decoration: line-through !important;
+}
+
+/* Badge soldes */
+.badge--sale,
+.price__badge-sale {
+  background: #ec6034 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  padding: 3px 8px !important;
+}
+
+/* Badge épuisé */
+.badge--sold-out,
+.price__badge-sold-out {
+  background: #111 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+}
+
+/* =============================================
+   BADGES NEW + % OFF
+   ============================================= */
+.product__badges {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product__badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.product__badge--new {
+  background: #22c55e;
+  color: #fff;
+}
+
+.product__badge--discount {
+  background: #ec6034;
+  color: #fff;
+}
+
+/* =============================================
+   STOCK / INVENTAIRE
+   ============================================= */
+.product__inventory {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* En stock → vert */
+.product__inventory:not(.product__inventory--unavailable) {
+  color: #16a34a !important;
+}
+
+/* Rupture → rouge */
+.product__inventory--unavailable,
+.product__inventory.visibility-hidden {
+  color: #ef4444 !important;
+}
+
+/* =============================================
+   VARIANTES — SWATCH & SELECT
+   ============================================= */
+.swatch-input__input:checked + .swatch-input__label,
+.swatch-input__input:focus + .swatch-input__label {
+  border-color: #ec6034 !important;
+  box-shadow: 0 0 0 2px #ec6034 !important;
+}
+
+.select__select:focus {
+  border-color: #ec6034 !important;
+  box-shadow: 0 0 0 3px rgba(236,96,52,0.15) !important;
+  outline: none !important;
+}
+
+/* Bouton variante sélectionné */
+.variant-input-wrapper input:checked ~ .btn {
+  border-color: #ec6034 !important;
+  background: #ec6034 !important;
+  color: #fff !important;
+}
+
+/* =============================================
+   QUANTITÉ
+   ============================================= */
+.quantity__button:hover {
+  color: #ec6034 !important;
+  border-color: #ec6034 !important;
+}
+
+.quantity__input:focus {
+  border-color: #ec6034 !important;
+  outline: none !important;
+}
+
+/* =============================================
+   BOUTON AJOUTER AU PANIER
+   ============================================= */
+.product-form__submit {
+  background: #111 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.02em !important;
+  transition: background 0.2s !important;
+  height: 50px !important;
+}
+
+.product-form__submit:hover:not([disabled]) {
+  background: #333 !important;
+  color: #fff !important;
+}
+
+.product-form__submit[disabled] {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+}
+
+/* =============================================
+   BOUTON ACHETER MAINTENANT (dynamic checkout)
+   ============================================= */
+.shopify-payment-button__button--unbranded {
+  background: #ec6034 !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  transition: background 0.2s !important;
+}
+
+.shopify-payment-button__button--unbranded:hover {
+  background: #d4512a !important;
+}
+
+/* =============================================
+   VENDOR / MARQUE
+   ============================================= */
+.product__text.caption-with-letter-spacing {
+  color: #888 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* =============================================
+   DESCRIPTION PRODUIT
+   ============================================= */
+.product__description {
+  font-size: 0.9rem !important;
+  color: #555 !important;
+  line-height: 1.7 !important;
+}
+
+.product__description a {
+  color: #ec6034 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+/* =============================================
+   ACCORDÉON (infos complémentaires)
+   ============================================= */
+.accordion__button {
+  color: #111 !important;
+  font-weight: 600 !important;
+}
+
+.accordion__button:hover {
+  color: #ec6034 !important;
+}
+
+/* =============================================
+   BREADCRUMB
+   ============================================= */
+nav[aria-label="breadcrumbs"] a,
+.breadcrumbs__link {
+  color: #888 !important;
+  text-decoration: none !important;
+  transition: color 0.2s !important;
+}
+
+nav[aria-label="breadcrumbs"] a:hover,
+.breadcrumbs__link:hover {
+  color: #ec6034 !important;
+}
+
+/* =============================================
+   NOTES / TAXES
+   ============================================= */
+.product__tax {
+  font-size: 0.78rem !important;
+  color: #999 !important;
+}
+
+.product__tax a {
+  color: #ec6034 !important;
+}
+
+/* =============================================
+   VENDOR Dawn — remplace par notre style orange
+   ============================================= */
+.product__text.caption-with-letter-spacing {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: #ec6034 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* =============================================
+   QUANTITY — même style que /cart
+   ============================================= */
+quantity-input.quantity,
+.product-form__quantity quantity-input.quantity {
+  border: 1.5px solid #e0e0e0 !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  height: 44px !important;
+  width: fit-content !important;
+  display: flex !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+quantity-input.quantity .quantity__button,
+.product-form__quantity quantity-input .quantity__button {
+  width: 44px !important;
+  height: 44px !important;
+  background: #f8f8f8 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  font-size: 1.2rem !important;
+  color: #333 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s, color 0.15s !important;
+  padding: 0 !important;
+  min-width: unset !important;
+}
+
+quantity-input.quantity .quantity__button:hover {
+  background: #ec6034 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+quantity-input.quantity .quantity__input {
+  width: 50px !important;
+  text-align: center !important;
+  border: none !important;
+  border-left: 1px solid #e0e0e0 !important;
+  border-right: 1px solid #e0e0e0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  background: #fff !important;
+  padding: 0 !important;
+  height: 44px !important;
+  -moz-appearance: textfield !important;
+}
+
+quantity-input.quantity .quantity__input::-webkit-outer-spin-button,
+quantity-input.quantity .quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+
+/* Supprime le pseudo-element border Dawn sur quantity */
+quantity-input.quantity::after,
+quantity-input.quantity::before {
+  display: none !important;
+}
+
+/* =============================================
+   TIMER FLASH-SALE (fiche produit)
+   ============================================= */
+.pdp-timer {
+  background: #ffece4;
+  border: 1px solid #ffd6c5;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 1rem 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.pdp-timer__label {
+  color: #ec6034;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex: 1 1 auto;
+  min-width: 140px;
+}
+
+.pdp-timer__countdown {
+  display: flex;
+  gap: 6px;
+  background: #1f1f24;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.pdp-timer__item {
+  background: transparent;
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 46px;
+}
+
+.pdp-timer__value {
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pdp-timer__unit {
+  color: #ec6034;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+@media screen and (max-width: 600px) {
+  .pdp-timer {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .pdp-timer__label {
+    font-size: 0.88rem;
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .pdp-timer__countdown {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+  .pdp-timer__item {
+    padding: 5px 8px;
+    min-width: 42px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .pdp-timer__item {
+    padding: 4px 6px;
+    min-width: 38px;
+  }
+  .pdp-timer__value {
+    font-size: 0.9rem;
+  }
+  .pdp-timer__unit {
+    font-size: 0.55rem;
+  }
+}
+
+/* =============================================
+   4 ICÔNES (Daily Deals / Return / Payment / Help)
+   ============================================= */
+.pdp-features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+
+.pdp-features__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 4px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  line-height: 1.25;
+}
+
+.pdp-features__item:hover {
+  color: #ec6034;
+  background: #fff5f0;
+}
+
+.pdp-features__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #111;
+  transition: color 0.2s;
+}
+
+.pdp-features__item:hover .pdp-features__icon {
+  color: #ec6034;
+}
+
+.pdp-features__label {
+  display: block;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .pdp-features {
+    gap: 4px;
+    margin-top: 1rem;
+  }
+  .pdp-features__item {
+    font-size: 0.7rem;
+    padding: 6px 2px;
+    gap: 4px;
+  }
+  .pdp-features__icon {
+    width: 30px;
+    height: 30px;
+  }
+  .pdp-features__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Très petit mobile : 2 colonnes pour ne pas écraser le texte */
+@media screen and (max-width: 380px) {
+  .pdp-features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .pdp-features__item {
+    font-size: 0.78rem;
+    padding: 8px 4px;
+  }
+}
+
+/* =============================================
+   ÉLÉMENTS À MASQUER (vendor, share, view-details, sale badge)
+   ============================================= */
+
+/* Vendor / marque (block "Texte" qui contient {{ product.vendor }}) */
+.product__text.caption-with-letter-spacing {
+  display: none !important;
+}
+
+/* Bouton Share */
+.product__info-container .share-button,
+.product__info-container share-button {
+  display: none !important;
+}
+
+/* Lien "View full details" — déjà retiré du Liquid mais sécurise au cas où */
+.product__view-details {
+  display: none !important;
+}
+
+/* Badge "Sale" du snippet price (on garde nos badges custom NEW + X% OFF) */
+.price__badge-sale,
+.badge--sale,
+.price__badge-sold-out:not(.product__badge),
+span.price__badge-sale {
+  display: none !important;
+}
+
+/* =============================================
+   PRIX + BADGES sur la même ligne (badges à DROITE du prix)
+   ============================================= */
+.pdp-price-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin: 0.25rem 0 0.75rem !important;
+  width: 100% !important;
+}
+
+.pdp-price-row__price {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  order: 1 !important;
+}
+
+.pdp-price-row__price .price {
+  width: auto !important;
+  max-width: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+
+.pdp-price-row__badges,
+.pdp-price-row .product__badges {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  gap: 6px !important;
+  flex-wrap: nowrap !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  order: 2 !important;
+}
+
+/* Responsive prix + badges */
+@media screen and (max-width: 480px) {
+  .pdp-price-row {
+    gap: 8px !important;
+  }
+  .pdp-price-row .product__badge {
+    padding: 2px 7px !important;
+    font-size: 0.65rem !important;
+  }
+}
+
+/* =============================================
+   PURCHASE SECTION — Quantité + ATC sur la même ligne, Buy It Now dessous
+   Le form custom contient les 3 éléments comme grid items directs
+   ============================================= */
+.pdp-purchase {
+  margin: 0.5rem 0 1rem !important;
+}
+
+.pdp-purchase__pform {
+  display: block !important;
+  width: 100% !important;
+}
+
+.pdp-purchase__form {
+  display: grid !important;
+  grid-template-columns: auto 1fr !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 12px !important;
+  row-gap: 12px !important;
+  align-items: end !important;
+  width: 100% !important;
+}
+
+/* Cache l'input hidden — il occupe une place dans la grille sinon */
+.pdp-purchase__form > input[type="hidden"] {
+  display: none !important;
+}
+
+/* Quantité : col 1, row 1 */
+.pdp-purchase__form > .pdp-purchase__qty {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.pdp-purchase__qty .quantity__label {
+  margin: 0 !important;
+  font-weight: 600 !important;
+  color: #111 !important;
+  font-size: 0.9rem !important;
+  display: block !important;
+}
+
+/* Add to Cart : col 2, row 1 — même hauteur que le quantity input */
+.pdp-purchase__form > .pdp-purchase__atc {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  align-self: end !important;
+}
+
+/* Buy It Now : pleine largeur (col 1 + col 2), row 2 */
+.pdp-purchase__form > .pdp-purchase__bin {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.pdp-purchase__bin .shopify-payment-button,
+.pdp-purchase__bin .shopify-payment-button__button {
+  width: 100% !important;
+  height: 50px !important;
+}
+
+/* Le wrapper d'erreur : avant le form */
+.pdp-purchase .product-form__error-message-wrapper {
+  width: 100% !important;
+}
+
+/* Responsive : on garde Quantity + ATC sur la même ligne, Buy It Now en dessous */
+@media screen and (max-width: 600px) {
+  .pdp-purchase {
+    margin: 0.5rem 0 0.75rem !important;
+  }
+  .pdp-purchase__form {
+    grid-template-columns: auto 1fr !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 10px !important;
+    row-gap: 10px !important;
+  }
+  .pdp-purchase__form > .pdp-purchase__qty {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+  .pdp-purchase__form > .pdp-purchase__atc {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    font-size: 0.9rem !important;
+    padding: 0 12px !important;
+  }
+  .pdp-purchase__form > .pdp-purchase__bin {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+  }
+  .pdp-purchase__bin .shopify-payment-button,
+  .pdp-purchase__bin .shopify-payment-button__button {
+    height: 48px !important;
+  }
+}
+
+/* Très petit mobile : quantity un peu plus compacte */
+@media screen and (max-width: 380px) {
+  .pdp-purchase__form > .pdp-purchase__atc {
+    font-size: 0.85rem !important;
+    padding: 0 8px !important;
+  }
+  .pdp-purchase__qty quantity-input.quantity {
+    height: 40px !important;
+  }
+  .pdp-purchase__qty quantity-input.quantity .quantity__button {
+    width: 36px !important;
+    height: 40px !important;
+  }
+  .pdp-purchase__qty quantity-input.quantity .quantity__input {
+    width: 38px !important;
+    height: 40px !important;
+  }
+  .pdp-purchase__form > .pdp-purchase__atc {
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+}
+
+/* =============================================
+   FAQ ACCORDÉON (rendu inline via collapsible_tab)
+   ============================================= */
+.pdp-faq {
+  margin: 2.5rem 0 2rem;
+  border-top: 1px solid #ececec;
+}
+
+.pdp-faq__item,
+.product__accordion.pdp-faq__item {
+  border-bottom: 1px solid #ececec;
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.product__accordion.pdp-faq__item details > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  cursor: pointer;
+  font-weight: 700;
+  color: #111;
+  font-size: 1rem;
+  transition: color 0.2s;
+  border: none;
+  background: transparent;
+}
+
+.product__accordion.pdp-faq__item details > summary::-webkit-details-marker,
+.product__accordion.pdp-faq__item details > summary::marker {
+  display: none;
+}
+
+.product__accordion.pdp-faq__item details > summary:hover {
+  color: #ec6034;
+}
+
+/* Cache l'icône caret natif Dawn — on a notre propre chevron */
+.product__accordion.pdp-faq__item details > summary > svg {
+  display: none;
+}
+
+.pdp-faq__summary,
+.product__accordion.pdp-faq__item summary.pdp-faq__summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  cursor: pointer;
+  font-weight: 700;
+  color: #111;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.pdp-faq__summary::-webkit-details-marker {
+  display: none;
+}
+
+.pdp-faq__summary:hover {
+  color: #ec6034;
+}
+
+.pdp-faq__title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pdp-faq__icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.pdp-faq__title {
+  letter-spacing: 0.005em;
+  font-weight: 700;
+  color: #111;
+}
+
+.pdp-faq__chevron {
+  color: #888;
+  transition: transform 0.25s ease, color 0.2s;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+details[open] > summary .pdp-faq__chevron,
+.pdp-faq__item[open] .pdp-faq__chevron {
+  transform: rotate(180deg);
+  color: #ec6034;
+}
+
+.pdp-faq__content,
+.product__accordion.pdp-faq__item .pdp-faq__content {
+  padding: 0 0 1.2rem;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.pdp-faq__content p {
+  margin: 0 0 0.6rem;
+}
+
+.pdp-faq__content p:last-child {
+  margin-bottom: 0;
+}
+
+.pdp-faq__content strong {
+  color: #111;
+}
+
+@media screen and (max-width: 600px) {
+  .pdp-faq {
+    margin: 1.75rem 0 1.5rem;
+  }
+  .pdp-faq__summary,
+  .product__accordion.pdp-faq__item summary.pdp-faq__summary,
+  .product__accordion.pdp-faq__item details > summary {
+    font-size: 0.92rem;
+    padding: 0.9rem 0;
+  }
+  .pdp-faq__content,
+  .product__accordion.pdp-faq__item .pdp-faq__content {
+    font-size: 0.85rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* =============================================
+   TITRE PRODUIT — Fluide
+   ============================================= */
+@media screen and (max-width: 600px) {
+  .product__title h1,
+  .product__title h2 {
+    font-size: clamp(1.15rem, 5vw, 1.5rem) !important;
+  }
+}
+
+/* =============================================
+   DESCRIPTION — Mobile
+   ============================================= */
+@media screen and (max-width: 600px) {
+  .product__description {
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* =============================================
+   VARIANT PICKER — Mobile (touch-friendly)
+   ============================================= */
+@media screen and (max-width: 600px) {
+  .product-form__input {
+    margin-bottom: 0.75rem !important;
+  }
+  .product-form__input.product-form__input--swatch label,
+  .product-form__input.product-form__input--pill label {
+    min-height: 38px !important;
+    padding: 8px 14px !important;
+    font-size: 0.85rem !important;
+  }
+}

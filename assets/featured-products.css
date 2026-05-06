@@ -1,0 +1,322 @@
+/* =============================================
+   Featured Products — iDhightech2
+   Fichier : assets/featured-products.css
+   ============================================= */
+
+.fp-wrapper {
+}
+
+.fp-section {
+  padding: 2rem 1.5rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.fp__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: #f5f5f5 !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.fp__title {
+  font-weight: 700;
+  margin: 0;
+  color: #111 !important;
+}
+
+.fp__view-all {
+  font-size: 1.10rem;
+  font-weight: 500;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.fp__view-all:hover {
+  color: #FF6600;
+}
+
+/* =============================================
+   GRILLE
+   ============================================= */
+.fp__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--fp-cols, 4), 1fr);
+  gap: 20px;
+  padding: 0 3rem;
+}
+
+/* =============================================
+   CARTE PRODUIT
+   ============================================= */
+.fp__card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.fp__card:hover {
+  box-shadow: 0 10px 32px rgba(0,0,0,0.16);
+  transform: translateY(-4px);
+}
+
+/* =============================================
+   BADGES
+   ============================================= */
+.fp__badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 2;
+}
+
+.fp__badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.fp__badge--new {
+  background: #22c55e;
+  color: #fff;
+}
+
+.fp__badge--discount {
+  background: #ec6034;
+  color: #fff;
+}
+
+/* =============================================
+   IMAGE — contain pour garder la qualité
+   ============================================= */
+.fp__card-img-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Overlay gradient bas de l'image */
+.fp__card-img-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.85));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fp__card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  display: block;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  transition: transform 0.4s ease;
+}
+
+.fp__card:hover .fp__card-img {
+  transform: scale(1.04);
+}
+
+.fp__placeholder {
+  width: 100%;
+  height: 200px;
+}
+
+/* =============================================
+   CORPS
+   ============================================= */
+.fp__card-body {
+  padding: 0.9rem 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+/* Catégorie avec pastille orange */
+.fp__card-category {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.fp__card-category::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ec6034;
+  flex-shrink: 0;
+}
+
+/* Titre */
+.fp__card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s;
+  flex-grow: 1;
+}
+
+.fp__card-title:hover {
+  color: #ec6034;
+}
+
+/* Prix */
+.fp__card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.fp__price-current {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ec6034;
+}
+
+.fp__price-compare {
+  font-size: 0.82rem;
+  color: #bbb;
+  text-decoration: line-through;
+}
+
+/* Stock */
+.fp__stock {
+  font-size: 0.72rem;
+  color: #16a34a;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.fp__stock--out {
+  color: #ef4444;
+}
+
+/* =============================================
+   BOUTON — propre, border-radius 0 0 10px 10px
+   ============================================= */
+.fp__btn-cart {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  padding: 13px 0;
+  border: none;
+  border-radius: 0 0 10px 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  background: #ec6034;
+  color: #fff;
+  transition: background 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.fp__btn-cart:hover {
+  background: #d4512a;
+  color: #fff;
+}
+
+.fp__btn-cart--options {
+  display: block;
+  background: #111;
+}
+
+.fp__btn-cart--options:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 1024px) {
+  .fp__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fp-section {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .fp__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .fp__card-img {
+    height: 140px;
+  }
+
+  .fp__card-body {
+    padding: 0.75rem 0.75rem 0.5rem;
+  }
+
+  .fp__header {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+  }
+
+  .fp__view-all {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .fp__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}

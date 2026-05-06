@@ -1,0 +1,200 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "features_enabled": true,
+        "feature_1_icon": "tag",
+        "feature_1_label": "Daily Deals",
+        "feature_1_link": "",
+        "feature_2_icon": "return",
+        "feature_2_label": "Return Policy",
+        "feature_2_link": "",
+        "feature_3_icon": "card",
+        "feature_3_label": "Payment Method",
+        "feature_3_link": "",
+        "feature_4_icon": "help",
+        "feature_4_label": "Help Center 24/7",
+        "feature_4_link": "",
+        "faq_enabled": true,
+        "faq_1_title": "About the Product",
+        "faq_1_content": "",
+        "faq_1_metafield_key": "faq_about",
+        "faq_1_open": false,
+        "faq_2_title": "Product Details",
+        "faq_2_content": "",
+        "faq_2_metafield_key": "faq_details",
+        "faq_2_open": false,
+        "faq_3_title": "Shipping And Return",
+        "faq_3_content": "",
+        "faq_3_metafield_key": "faq_shipping",
+        "faq_3_open": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "show_stock": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "product_highlights_Y4KVCw": {
+      "type": "product-highlights",
+      "blocks": {
+        "card_EP8XC7": {
+          "type": "card",
+          "settings": {
+            "role": "left-main",
+            "video_url": "",
+            "show_play_icon": true,
+            "heading": "Discover the product",
+            "subheading": "Découvrez ce produit en détail.",
+            "text_color": "dark",
+            "show_overlay": false,
+            "overlay_strength": 35,
+            "link": ""
+          }
+        },
+        "card_FTqrw3": {
+          "type": "card",
+          "settings": {
+            "role": "right-top",
+            "video_url": "",
+            "show_play_icon": true,
+            "heading": "Listening To Music Or Taking Calls",
+            "subheading": "Audio devices that can be worn over the ears or inserted into the ear canal.",
+            "text_color": "light",
+            "show_overlay": true,
+            "overlay_strength": 35,
+            "link": ""
+          }
+        },
+        "card_GCiYKq": {
+          "type": "card",
+          "settings": {
+            "role": "right-small-1",
+            "video_url": "",
+            "show_play_icon": true,
+            "heading": "The Smart Maxtsa Mobile Photography",
+            "subheading": "Discover the art of iPhone photography with our expert tips and techniques.",
+            "text_color": "dark",
+            "show_overlay": false,
+            "overlay_strength": 35,
+            "link": ""
+          }
+        },
+        "card_XCGKbE": {
+          "type": "card",
+          "settings": {
+            "role": "right-small-2",
+            "video_url": "",
+            "show_play_icon": true,
+            "heading": "Introducing The Ultimate Gaming Remote",
+            "subheading": "Take your gaming experience to the next level.",
+            "text_color": "light",
+            "show_overlay": true,
+            "overlay_strength": 35,
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_EP8XC7",
+        "card_FTqrw3",
+        "card_GCiYKq",
+        "card_XCGKbE"
+      ],
+      "name": "Product Highlights",
+      "settings": {
+        "section_title": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_highlights_Y4KVCw",
+    "related-products"
+  ]
+}

@@ -1,0 +1,242 @@
+{% comment %}
+  Featured Products — Compatible Dawn (Shopify)
+  Fichier : sections/featured-products.liquid
+  Sélection manuelle via blocs dans le customizer
+{% endcomment %}
+
+{{ 'featured-products.css' | asset_url | stylesheet_tag }}
+
+<section class="fp-section" id="fp-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
+  <div class="fp-wrapper" style="background: {{ section.settings.section_bg }};">
+
+  {%- comment %} Header {% endcomment -%}
+  {%- if section.settings.title != blank -%}
+    <div class="fp__header" style="background: {{ section.settings.header_bg }};">
+      <h2 class="fp__title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+        {{ section.settings.title }}
+      </h2>
+      {%- if section.settings.view_all_url != blank -%}
+        <a href="{{ section.settings.view_all_url }}" class="fp__view-all" style="color: {{ section.settings.title_color }};">Voir tous les produits</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment %} Grille produits — sélection manuelle via blocs {% endcomment -%}
+  <div class="fp__grid" style="--fp-cols: {{ section.settings.columns }};">
+
+    {%- assign now_s = 'now' | date: '%s' | plus: 0 -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product' -%}
+        {%- assign product = block.settings.product -%}
+        {%- if product != blank -%}
+
+          {%- assign show_new = false -%}
+          {%- if section.settings.show_new_badge -%}
+            {%- assign created_s = product.created_at | date: '%s' | plus: 0 -%}
+            {%- assign diff_days = now_s | minus: created_s | divided_by: 86400 -%}
+            {%- if diff_days <= 30 -%}{%- assign show_new = true -%}{%- endif -%}
+          {%- endif -%}
+
+          {%- assign show_discount = false -%}
+          {%- assign discount_pct = 0 -%}
+          {%- if product.compare_at_price > product.price -%}
+            {%- assign show_discount = true -%}
+            {%- assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+          {%- endif -%}
+
+          {%- assign main_col = product.collections | first -%}
+
+          <div class="fp__card" {{ block.shopify_attributes }}>
+
+            <div class="fp__badges">
+              {%- if show_new -%}<span class="fp__badge fp__badge--new">New</span>{%- endif -%}
+              {%- if show_discount -%}<span class="fp__badge fp__badge--discount">{{ discount_pct }}% off</span>{%- endif -%}
+            </div>
+
+            <a href="{{ product.url }}" class="fp__card-img-link">
+              {%- if product.featured_image != blank -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 400 }}"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  class="fp__card-img"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'fp__card-img fp__placeholder' }}
+              {%- endif -%}
+            </a>
+
+            <div class="fp__card-body">
+              {%- if main_col != blank -%}
+                <p class="fp__card-category">{{ main_col.title }}</p>
+              {%- endif -%}
+
+              <a href="{{ product.url }}" class="fp__card-title">{{ product.title }}</a>
+
+              <div class="fp__card-price">
+                <span class="fp__price-current">{{ product.price | money }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="fp__price-compare">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+
+              {%- if section.settings.show_stock -%}
+                {%- if product.available -%}
+                  {%- assign variant = product.selected_or_first_available_variant -%}
+                  {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 -%}
+                    <p class="fp__stock">En stock ({{ variant.inventory_quantity }} unités), prêt à être expédié</p>
+                  {%- else -%}
+                    <p class="fp__stock">En stock, prêt à être expédié</p>
+                  {%- endif -%}
+                {%- else -%}
+                  <p class="fp__stock fp__stock--out">Rupture de stock</p>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+
+            {%- comment %} Bouton en dehors du card-body {% endcomment -%}
+            {%- if product.variants.size == 1 -%}
+              <button
+                type="button"
+                class="fp__btn-cart"
+                style="background: {{ section.settings.btn_color }}; color: {{ section.settings.btn_text_color }};"
+                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                onclick="fpAddToCart(this)"
+              >
+                Ajouter au panier
+              </button>
+            {%- else -%}
+              <a href="{{ product.url }}" class="fp__btn-cart fp__btn-cart--options" style="background: {{ section.settings.btn_color }}; color: {{ section.settings.btn_text_color }};">
+                Voir les options
+              </a>
+            {%- endif -%}
+
+          </div>
+
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>  </div>
+
+</section>
+
+<script>
+window.fpAddToCart = function(btn) {
+  var variantId = btn.dataset.variantId;
+  window.globalAddToCart(btn, variantId);
+};
+</script>
+
+{% schema %}
+{
+  "name": "Produits en vedette",
+  "tag": "section",
+  "class": "fp-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Apparence"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Couleur de fond de la section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Fond du titre",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Produits en vedette"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Nombre de colonnes",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label": "Couleur du bouton",
+      "default": "#ec6034"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Couleur texte du bouton",
+      "default": "#ffffff"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "Lien Voir tous les produits"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_new_badge",
+      "label": "Afficher le badge \"New\" (produit < 30 jours)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Afficher la disponibilité en stock",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produit",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Sélectionner un produit"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produits en vedette",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

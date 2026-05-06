@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "privacy-policy",
+      "settings": {
+        "title": "Politique de confidentialité",
+        "last_update": "Janvier 2025",
+        "intro": "Chez iDhightech2, la protection de vos données personnelles est une priorité. Cette politique vous explique quelles données nous collectons, comment nous les utilisons et quels sont vos droits.",
+        "company_name": "iDhightech2",
+        "address": "1 Rue de la Technologie, 75001 Paris, France",
+        "email": "contact@idhightech2.com",
+        "phone": "01 23 45 67 89"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

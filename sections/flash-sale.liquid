@@ -1,0 +1,430 @@
+{%- comment %}
+  Flash Sale Section — Compatible Dawn (Shopify)
+  Fichier : sections/flash-sale.liquid
+{% endcomment %}
+
+{{ 'flash-sale.css' | asset_url | stylesheet_tag }}
+
+<section class="flash-sale-section" id="flash-sale-{{ section.id }}">
+
+  {%- if section.settings.title != blank -%}
+    <div class="flash-sale__header">
+      <h2 class="flash-sale__title">{{ section.settings.title }}</h2>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="flash-sale__slider-wrapper">
+      <button class="flash-sale__nav flash-sale__nav--prev" aria-label="Précédent">&#8249;</button>
+      <div class="flash-sale__slider" id="flashSlider-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product' -%}
+            {%- assign product = block.settings.product -%}
+            {%- if product != blank -%}
+
+              {%- comment %} Badge calcul {% endcomment -%}
+              {%- assign show_new_badge = false -%}
+              {%- if block.settings.show_new_badge -%}
+                {%- assign now_seconds = 'now' | date: '%s' | plus: 0 -%}
+                {%- assign created_seconds = product.created_at | date: '%s' | plus: 0 -%}
+                {%- assign diff_days = now_seconds | minus: created_seconds | divided_by: 86400 -%}
+                {%- if diff_days <= 30 -%}
+                  {%- assign show_new_badge = true -%}
+                {%- endif -%}
+              {%- endif -%}
+
+              {%- assign show_discount_badge = false -%}
+              {%- assign discount_percent = 0 -%}
+              {%- if product.compare_at_price > product.price -%}
+                {%- assign show_discount_badge = true -%}
+                {%- assign discount_percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+              {%- endif -%}
+
+              {%- comment %} Collection principale {% endcomment -%}
+              {%- assign main_collection = product.collections | first -%}
+
+              <div class="flash-sale__card" {{ block.shopify_attributes }}>
+                <div class="flash-sale__card-badges">
+                  {%- if show_new_badge -%}
+                    <span class="flash-sale__badge flash-sale__badge--new">New</span>
+                  {%- endif -%}
+                  {%- if show_discount_badge -%}
+                    <span class="flash-sale__badge flash-sale__badge--discount">{{ discount_percent }}% off</span>
+                  {%- endif -%}
+                </div>
+
+                <div class="flash-sale__card-image-wrapper">
+                  <a href="{{ product.url }}" class="flash-sale__card-image-link">
+                    {%- if product.featured_image != blank -%}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 300 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        class="flash-sale__card-image"
+                        loading="lazy"
+                        width="300"
+                        height="300"
+                      >
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'flash-sale__card-image flash-sale__placeholder' }}
+                    {%- endif -%}
+                  </a>
+
+                  {%- comment %} Priorité au metafield produit, fallback sur le block setting {% endcomment -%}
+                  {%- assign timer_end = product.metafields.custom.flash_sale_end_date | default: block.settings.end_date -%}
+                  {%- if timer_end != blank -%}
+                    <div class="flash-sale__countdown flash-sale__countdown--overlay" data-end="{{ timer_end }}">
+                      <div class="flash-sale__countdown-item">
+                        <span class="flash-sale__countdown-value" data-days>00</span>
+                        <span class="flash-sale__countdown-label">Days</span>
+                      </div>
+                      <div class="flash-sale__countdown-item">
+                        <span class="flash-sale__countdown-value" data-hours>00</span>
+                        <span class="flash-sale__countdown-label">Hours</span>
+                      </div>
+                      <div class="flash-sale__countdown-item">
+                        <span class="flash-sale__countdown-value" data-mins>00</span>
+                        <span class="flash-sale__countdown-label">Mins</span>
+                      </div>
+                      <div class="flash-sale__countdown-item">
+                        <span class="flash-sale__countdown-value" data-secs>00</span>
+                        <span class="flash-sale__countdown-label">Sec</span>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="flash-sale__card-body">
+                  {%- if main_collection != blank -%}
+                    <p class="flash-sale__card-category">{{ main_collection.title }}</p>
+                  {%- endif -%}
+
+                  <a href="{{ product.url }}" class="flash-sale__card-title">{{ product.title }}</a>
+
+                  <div class="flash-sale__card-price">
+                    <span class="flash-sale__price-current">{{ product.price | money }}</span>
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="flash-sale__price-compare">{{ product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- if section.settings.show_stock -%}
+                    {%- if product.available -%}
+                      {%- assign variant = product.selected_or_first_available_variant -%}
+                      {%- if variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 -%}
+                        <p class="flash-sale__stock">
+                          En stock ({{ variant.inventory_quantity }} unités), prêt à être expédié
+                        </p>
+                      {%- elsif product.available -%}
+                        <p class="flash-sale__stock">En stock, prêt à être expédié</p>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+
+                {%- comment %} Bouton en dehors du card-body {% endcomment -%}
+                {%- if product.variants.size == 1 -%}
+                  <button
+                    type="button"
+                    class="flash-sale__btn-cart"
+                    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                    onclick="flashSaleAddToCart(this)"
+                  >
+                    Ajouter au panier
+                  </button>
+                {%- else -%}
+                  <a href="{{ product.url }}" class="flash-sale__btn-cart flash-sale__btn-cart--options">
+                    + Voir les options
+                  </a>
+                {%- endif -%}
+              </div>
+
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <button class="flash-sale__nav flash-sale__nav--next" aria-label="Suivant">&#8250;</button>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} Bannière Deal Of The Day {% endcomment -%}
+  {%- assign dotd_product = section.settings.dotd_product -%}
+  {%- if dotd_product != blank -%}
+    <div class="flash-sale__dotd">
+      <div class="flash-sale__dotd-top">
+        <div class="flash-sale__dotd-left">
+          <svg class="flash-sale__dotd-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+          <span class="flash-sale__dotd-label">Deal Of The Day</span>
+        </div>
+
+        {%- if section.settings.dotd_end_date != blank -%}
+          <div class="flash-sale__dotd-countdown flash-sale__countdown" data-end="{{ section.settings.dotd_end_date }}">
+            <div class="flash-sale__countdown-item">
+              <span class="flash-sale__countdown-value flash-sale__countdown-value--dotd" data-days>00</span>
+              <span class="flash-sale__countdown-label flash-sale__countdown-label--dotd">Days</span>
+            </div>
+            <span class="flash-sale__dotd-sep">:</span>
+            <div class="flash-sale__countdown-item">
+              <span class="flash-sale__countdown-value flash-sale__countdown-value--dotd" data-hours>00</span>
+              <span class="flash-sale__countdown-label flash-sale__countdown-label--dotd">Hours</span>
+            </div>
+            <span class="flash-sale__dotd-sep">:</span>
+            <div class="flash-sale__countdown-item">
+              <span class="flash-sale__countdown-value flash-sale__countdown-value--dotd" data-mins>00</span>
+              <span class="flash-sale__countdown-label flash-sale__countdown-label--dotd">Mins</span>
+            </div>
+            <span class="flash-sale__dotd-sep">:</span>
+            <div class="flash-sale__countdown-item">
+              <span class="flash-sale__countdown-value flash-sale__countdown-value--dotd" data-secs>00</span>
+              <span class="flash-sale__countdown-label flash-sale__countdown-label--dotd">Sec</span>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <a href="{{ dotd_product.url }}" class="flash-sale__dotd-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        Claim This Offer Now
+      </a>
+    </div>
+  {%- endif -%}
+
+</section>
+
+<style>
+  #flash-sale-{{ section.id }} .flash-sale__card {
+    border-color: {{ section.settings.card_border_color }};
+  }
+  #flash-sale-{{ section.id }} .flash-sale__title {
+    color: {{ section.settings.title_color }};
+  }
+</style>
+
+<script>
+(function() {
+  // ---- Countdown ----
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function parseDate(str) {
+    // Supporte DD-MM-YYYYTHH:MM:SS et YYYY-MM-DDTHH:MM:SS
+    if (!str) return NaN;
+    var parts = str.split('T');
+    var datePart = parts[0];
+    var timePart = parts[1] || '00:00:00';
+    var dateSplit = datePart.split('-');
+    var d, m, y;
+    if (dateSplit[0].length === 4) {
+      // YYYY-MM-DD
+      y = dateSplit[0]; m = dateSplit[1]; d = dateSplit[2];
+    } else {
+      // DD-MM-YYYY
+      d = dateSplit[0]; m = dateSplit[1]; y = dateSplit[2];
+    }
+    return new Date(y + '-' + m + '-' + d + 'T' + timePart).getTime();
+  }
+
+  function updateCountdown(el) {
+    var endDate = parseDate(el.dataset.end);
+    function tick() {
+      var now = Date.now();
+      var diff = endDate - now;
+      if (diff <= 0) {
+        el.querySelectorAll('[data-days],[data-hours],[data-mins],[data-secs]').forEach(function(s){ s.textContent = '00'; });
+        return;
+      }
+      var days  = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff % 86400000) / 3600000);
+      var mins  = Math.floor((diff % 3600000) / 60000);
+      var secs  = Math.floor((diff % 60000) / 1000);
+      var d = el.querySelector('[data-days]');
+      var h = el.querySelector('[data-hours]');
+      var m = el.querySelector('[data-mins]');
+      var s = el.querySelector('[data-secs]');
+      if (d) d.textContent = pad(days);
+      if (h) h.textContent = pad(hours);
+      if (m) m.textContent = pad(mins);
+      if (s) s.textContent = pad(secs);
+      setTimeout(tick, 1000);
+    }
+    tick();
+  }
+
+  document.querySelectorAll('#flash-sale-{{ section.id }} .flash-sale__countdown').forEach(updateCountdown);
+
+  // ---- Slider ----
+  var slider = document.getElementById('flashSlider-{{ section.id }}');
+  if (slider) {
+    var wrapper = slider.closest('.flash-sale__slider-wrapper');
+    var prevBtn = wrapper.querySelector('.flash-sale__nav--prev');
+    var nextBtn = wrapper.querySelector('.flash-sale__nav--next');
+    var cardWidth = function() {
+      var card = slider.querySelector('.flash-sale__card');
+      return card ? card.offsetWidth + 20 : 280;
+    };
+    if (prevBtn) prevBtn.addEventListener('click', function() {
+      slider.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function() {
+      slider.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+    });
+
+    // ---- Affichage conditionnel des boutons ----
+    function updateNav() {
+      var overflows = slider.scrollWidth > slider.clientWidth + 2;
+      var atStart   = slider.scrollLeft <= 0;
+      var atEnd     = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
+
+      if (prevBtn) prevBtn.style.visibility = (!overflows || atStart) ? 'hidden' : 'visible';
+      if (nextBtn) nextBtn.style.visibility = (!overflows || atEnd)   ? 'hidden' : 'visible';
+    }
+
+    slider.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav);
+    setTimeout(updateNav, 100);
+
+    // ---- Touch drag-to-scroll (mobile) ----
+    var touchStartX = 0;
+    var touchScrollStart = 0;
+
+    slider.addEventListener('touchstart', function(e) {
+      touchStartX = e.touches[0].pageX;
+      touchScrollStart = slider.scrollLeft;
+      slider.style.scrollBehavior = 'auto';
+      slider.classList.add('is-dragging');
+    }, { passive: true });
+
+    slider.addEventListener('touchmove', function(e) {
+      slider.scrollLeft = touchScrollStart - (e.touches[0].pageX - touchStartX);
+      updateNav();
+    }, { passive: true });
+
+    slider.addEventListener('touchend', function() {
+      slider.style.scrollBehavior = 'smooth';
+      slider.classList.remove('is-dragging');
+    }, { passive: true });
+
+    // ---- Mouse drag-to-scroll (desktop) ----
+    var isDown = false;
+    var startX = 0;
+    var scrollStart = 0;
+
+    slider.addEventListener('mousedown', function(e) {
+      isDown = true;
+      slider.classList.add('is-dragging');
+      startX = e.pageX - slider.offsetLeft;
+      scrollStart = slider.scrollLeft;
+      slider.style.scrollBehavior = 'auto';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (!isDown) return;
+      isDown = false;
+      slider.classList.remove('is-dragging');
+      slider.style.scrollBehavior = 'smooth';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      slider.scrollLeft = scrollStart - (e.pageX - slider.offsetLeft - startX) * 1.5;
+      updateNav();
+    });
+  }
+
+})();
+</script>
+
+<script>
+window.flashSaleAddToCart = function(btn) {
+  var variantId = btn.dataset.variantId;
+  window.globalAddToCart(btn, variantId);
+};
+</script>
+
+{% schema %}
+{
+  "name": "Flash Sale",
+  "tag": "section",
+  "class": "flash-sale-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de la section",
+      "default": "Flash Sales"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Couleur de la bordure des cartes",
+      "default": "#FF6600"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Afficher la disponibilité en stock",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Deal Of The Day"
+    },
+    {
+      "type": "product",
+      "id": "dotd_product",
+      "label": "Produit Deal Of The Day"
+    },
+    {
+      "type": "text",
+      "id": "dotd_end_date",
+      "label": "Date de fin (Deal Of The Day)",
+      "info": "Format : DD-MM-YYYYTHH:MM:SS ex: 31-12-2025T23:59:59"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produit",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produit"
+        },
+        {
+          "type": "text",
+          "id": "end_date",
+          "label": "Date de fin du compte à rebours",
+          "info": "Format : DD-MM-YYYYTHH:MM:SS ex: 30-06-2025T23:59:59"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_new_badge",
+          "label": "Afficher le badge \"New\" (si produit < 30 jours)",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flash Sale",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,482 @@
+{%- comment %}
+  Product Highlights — Section de mise en valeur (4 cartes)
+  Layout :
+    [ left_main      ] [ right_top                  ]
+    [ left_main      ] [ right_small_1 right_small_2 ]
+{% endcomment -%}
+
+{{ 'product-highlights.css' | asset_url | stylesheet_tag }}
+
+<section class="pdp-highlights" id="pdpHighlights-{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.section_title != blank -%}
+      <h2 class="pdp-highlights__heading">{{ section.settings.section_title }}</h2>
+    {%- endif -%}
+
+    <div class="pdp-highlights__grid">
+      {%- for block in section.blocks -%}
+        {%- assign role = block.settings.role -%}
+        {%- assign overlay_strength = block.settings.overlay_strength | default: 35 -%}
+
+        {%- comment %} ===== Override par metafields produit ===== {% endcomment -%}
+        {%- assign role_key = role | replace: '-', '_' -%}
+        {%- assign mf_prefix = 'highlight_' | append: role_key -%}
+
+        {%- assign image_mf_key = mf_prefix | append: '_image' -%}
+        {%- assign video_mf_key = mf_prefix | append: '_video' -%}
+        {%- assign heading_mf_key = mf_prefix | append: '_heading' -%}
+        {%- assign subheading_mf_key = mf_prefix | append: '_subheading' -%}
+        {%- assign link_mf_key = mf_prefix | append: '_link' -%}
+
+        {%- assign image_mf = product.metafields.custom[image_mf_key] -%}
+        {%- assign video_mf = product.metafields.custom[video_mf_key] -%}
+        {%- assign heading_mf = product.metafields.custom[heading_mf_key] -%}
+        {%- assign subheading_mf = product.metafields.custom[subheading_mf_key] -%}
+        {%- assign link_mf = product.metafields.custom[link_mf_key] -%}
+
+        {%- if image_mf != blank and image_mf.value != blank -%}
+          {%- assign image = image_mf.value -%}
+        {%- else -%}
+          {%- assign image = block.settings.image -%}
+        {%- endif -%}
+
+        {%- if video_mf != blank and video_mf.value != blank -%}
+          {%- assign video = video_mf.value -%}
+        {%- else -%}
+          {%- assign video = block.settings.video_url -%}
+        {%- endif -%}
+
+        {%- if heading_mf != blank and heading_mf.value != blank -%}
+          {%- assign heading = heading_mf.value -%}
+        {%- else -%}
+          {%- assign heading = block.settings.heading -%}
+        {%- endif -%}
+
+        {%- if subheading_mf != blank and subheading_mf.value != blank -%}
+          {%- assign subheading = subheading_mf.value -%}
+        {%- else -%}
+          {%- assign subheading = block.settings.subheading -%}
+        {%- endif -%}
+
+        {%- if link_mf != blank and link_mf.value != blank -%}
+          {%- assign link = link_mf.value -%}
+        {%- else -%}
+          {%- assign link = block.settings.link -%}
+        {%- endif -%}
+
+        {%- comment %} ===== Détection du type de vidéo (YouTube / Vimeo / MP4) ===== {% endcomment -%}
+        {%- assign video_id = '' -%}
+        {%- assign video_type = '' -%}
+        {%- if video != blank -%}
+          {%- if video contains 'youtube.com/watch' -%}
+            {%- assign video_id = video | split: 'v=' | last | split: '&' | first -%}
+            {%- assign video_type = 'youtube' -%}
+          {%- elsif video contains 'youtu.be/' -%}
+            {%- assign video_id = video | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first -%}
+            {%- assign video_type = 'youtube' -%}
+          {%- elsif video contains 'youtube.com/embed/' -%}
+            {%- assign video_id = video | split: 'embed/' | last | split: '?' | first -%}
+            {%- assign video_type = 'youtube' -%}
+          {%- elsif video contains 'vimeo.com/' -%}
+            {%- assign video_id = video | split: 'vimeo.com/' | last | split: '?' | first -%}
+            {%- assign video_type = 'vimeo' -%}
+          {%- else -%}
+            {%- assign video_type = 'mp4' -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if link != blank -%}
+          {%- capture tag_open -%}<a href="{{ link }}" class="pdp-highlights__card pdp-highlights__card--{{ role }}"{{ block.shopify_attributes }}>{%- endcapture -%}
+          {%- assign tag_close = '</a>' -%}
+        {%- else -%}
+          {%- capture tag_open -%}<div class="pdp-highlights__card pdp-highlights__card--{{ role }}"{{ block.shopify_attributes }}>{%- endcapture -%}
+          {%- assign tag_close = '</div>' -%}
+        {%- endif -%}
+
+        {{ tag_open }}
+          {%- comment %} ----- Media affiché par défaut (image > YouTube thumbnail > MP4 inline > placeholder) ----- {% endcomment -%}
+          {%- if image != blank -%}
+            <img
+              src="{{ image | image_url: width: 1200 }}"
+              srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
+              sizes="(max-width: 750px) 100vw, 50vw"
+              alt="{{ image.alt | default: heading | escape }}"
+              class="pdp-highlights__media"
+              loading="lazy"
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+            >
+          {%- elsif video_type == 'youtube' -%}
+            <img
+              src="https://img.youtube.com/vi/{{ video_id }}/maxresdefault.jpg"
+              alt="{{ heading | default: 'Video' | escape }}"
+              class="pdp-highlights__media"
+              loading="lazy"
+              onerror="this.src='https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg'"
+            >
+          {%- elsif video_type == 'mp4' -%}
+            <video
+              src="{{ video }}"
+              class="pdp-highlights__media pdp-highlights__media--video"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="{% if block.settings.poster %}{{ block.settings.poster | image_url: width: 1200 }}{% endif %}"
+            ></video>
+          {%- else -%}
+            <div class="pdp-highlights__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'pdp-highlights__media' }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.show_overlay -%}
+            <span class="pdp-highlights__overlay" style="--ov-strength: {{ overlay_strength | divided_by: 100.0 }};"></span>
+          {%- endif -%}
+
+          {%- if video != blank and block.settings.show_play_icon -%}
+            <button
+              type="button"
+              class="pdp-highlights__play"
+              aria-label="Lire la vidéo"
+              data-pdp-play
+              data-video-type="{{ video_type }}"
+              data-video-id="{{ video_id }}"
+              data-video-url="{{ video | escape }}"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+          {%- endif -%}
+
+          {%- if heading != blank or subheading != blank -%}
+            {%- comment %} Construction des inline styles à partir des réglages {% endcomment -%}
+            {%- assign heading_style = '' -%}
+            {%- if block.settings.heading_color != blank -%}
+              {%- assign heading_style = heading_style | append: 'color:' | append: block.settings.heading_color | append: ';' -%}
+            {%- endif -%}
+            {%- if block.settings.heading_size != blank -%}
+              {%- assign heading_style = heading_style | append: 'font-size:' | append: block.settings.heading_size | append: 'px;' -%}
+            {%- endif -%}
+            {%- if block.settings.heading_weight != blank -%}
+              {%- assign heading_style = heading_style | append: 'font-weight:' | append: block.settings.heading_weight | append: ';' -%}
+            {%- endif -%}
+
+            {%- assign sub_style = '' -%}
+            {%- if block.settings.subheading_color != blank -%}
+              {%- assign sub_style = sub_style | append: 'color:' | append: block.settings.subheading_color | append: ';' -%}
+            {%- endif -%}
+            {%- if block.settings.subheading_size != blank -%}
+              {%- assign sub_style = sub_style | append: 'font-size:' | append: block.settings.subheading_size | append: 'px;' -%}
+            {%- endif -%}
+            {%- if block.settings.subheading_weight != blank -%}
+              {%- assign sub_style = sub_style | append: 'font-weight:' | append: block.settings.subheading_weight | append: ';' -%}
+            {%- endif -%}
+
+            <div class="pdp-highlights__text pdp-highlights__text--{{ block.settings.text_color }}">
+              {%- if heading != blank -%}
+                <h3 class="pdp-highlights__title"{% if heading_style != '' %} style="{{ heading_style }}"{% endif %}>{{ heading }}</h3>
+              {%- endif -%}
+              {%- if subheading != blank -%}
+                <p class="pdp-highlights__subtitle"{% if sub_style != '' %} style="{{ sub_style }}"{% endif %}>{{ subheading }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {{ tag_close }}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  // Lecture vidéo au clic sur le bouton play (YouTube / Vimeo / MP4)
+  document.querySelectorAll('#pdpHighlights-{{ section.id }} [data-pdp-play]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var card = btn.closest('.pdp-highlights__card');
+      if (!card) return;
+
+      var type = btn.dataset.videoType;
+      var id = btn.dataset.videoId;
+      var url = btn.dataset.videoUrl;
+
+      var iframeSrc = '';
+      if (type === 'youtube' && id) {
+        iframeSrc = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      } else if (type === 'vimeo' && id) {
+        iframeSrc = 'https://player.vimeo.com/video/' + id + '?autoplay=1&dnt=1';
+      }
+
+      // Cache l'overlay et le bouton play
+      var overlay = card.querySelector('.pdp-highlights__overlay');
+      if (overlay) overlay.style.display = 'none';
+      btn.classList.add('is-hidden');
+
+      if (iframeSrc) {
+        // YouTube / Vimeo : remplace le media par un iframe
+        var media = card.querySelector('.pdp-highlights__media');
+        var iframe = document.createElement('iframe');
+        iframe.src = iframeSrc;
+        iframe.className = 'pdp-highlights__media pdp-highlights__media--iframe';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('title', 'Video');
+        if (media) {
+          media.replaceWith(iframe);
+        } else {
+          card.insertBefore(iframe, card.firstChild);
+        }
+      } else if (type === 'mp4' && url) {
+        // MP4 inline : active controls + play
+        var videoEl = card.querySelector('video');
+        if (videoEl) {
+          videoEl.controls = true;
+          videoEl.muted = false;
+          videoEl.play();
+        } else {
+          // Pas de <video> existant (cas où une image était affichée à la place) → on en crée un
+          var newVideo = document.createElement('video');
+          newVideo.src = url;
+          newVideo.className = 'pdp-highlights__media pdp-highlights__media--video';
+          newVideo.controls = true;
+          newVideo.autoplay = true;
+          newVideo.playsInline = true;
+          var media = card.querySelector('.pdp-highlights__media');
+          if (media) {
+            media.replaceWith(newVideo);
+          }
+        }
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Highlights",
+  "tag": "section",
+  "class": "section pdp-highlights-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Titre de la section (optionnel)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Carte",
+      "settings": [
+        {
+          "type": "select",
+          "id": "role",
+          "label": "Position dans la grille",
+          "info": "Détermine l'emplacement et la taille de la carte",
+          "options": [
+            { "value": "left-main", "label": "Gauche (grande, pleine hauteur)" },
+            { "value": "right-top",  "label": "Droite haut (large)" },
+            { "value": "right-small-1", "label": "Droite bas — gauche" },
+            { "value": "right-small-2", "label": "Droite bas — droite" }
+          ],
+          "default": "left-main"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL vidéo (optionnel — MP4 hébergé)",
+          "info": "Si rempli, prend le pas sur l'image. URL .mp4 directe (Files Shopify ou CDN)."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster vidéo (optionnel)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_play_icon",
+          "label": "Afficher le bouton play (si vidéo)",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Texte affiché en overlay"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titre"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Sous-titre"
+        },
+        {
+          "type": "select",
+          "id": "text_color",
+          "label": "Couleur du texte (par défaut)",
+          "info": "Utilisée si tu ne définis pas de couleur custom ci-dessous.",
+          "options": [
+            { "value": "light", "label": "Clair (sur fond sombre)" },
+            { "value": "dark",  "label": "Foncé (sur fond clair)" }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "header",
+          "content": "Titre — Style"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Couleur du titre",
+          "info": "Laisse vide pour utiliser la couleur par défaut."
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Taille du titre",
+          "min": 12,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "default": 22
+        },
+        {
+          "type": "select",
+          "id": "heading_weight",
+          "label": "Graisse du titre",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extra bold" }
+          ],
+          "default": "800"
+        },
+        {
+          "type": "header",
+          "content": "Sous-titre — Style"
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Couleur du sous-titre",
+          "info": "Laisse vide pour utiliser la couleur par défaut."
+        },
+        {
+          "type": "range",
+          "id": "subheading_size",
+          "label": "Taille du sous-titre",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "select",
+          "id": "subheading_weight",
+          "label": "Graisse du sous-titre",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay",
+          "label": "Afficher un voile foncé sur l'image",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "overlay_strength",
+          "label": "Force du voile (%)",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "default": 35
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Lien (optionnel)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Highlights",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "role": "left-main",
+            "heading": "Discover the product",
+            "subheading": "Découvrez ce produit en détail.",
+            "show_overlay": false,
+            "text_color": "dark",
+            "heading_size": 28,
+            "subheading_size": 14
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "role": "right-top",
+            "heading": "Listening To Music Or Taking Calls",
+            "subheading": "Audio devices that can be worn over the ears or inserted into the ear canal.",
+            "heading_size": 22,
+            "subheading_size": 14
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "role": "right-small-1",
+            "heading": "The Smart Maxtsa Mobile Photography",
+            "subheading": "Discover the art of iPhone photography with our expert tips and techniques.",
+            "text_color": "dark",
+            "show_overlay": false,
+            "heading_size": 16,
+            "subheading_size": 12
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "role": "right-small-2",
+            "heading": "Introducing The Ultimate Gaming Remote",
+            "subheading": "Take your gaming experience to the next level.",
+            "heading_size": 16,
+            "subheading_size": 12
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

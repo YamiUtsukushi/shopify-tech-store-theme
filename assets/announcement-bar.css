@@ -1,0 +1,220 @@
+/* =============================================
+   Announcement Bar — Dawn Theme Compatible
+   Fichier : assets/announcement-bar.css
+   ============================================= */
+
+/* --- Barre principale --- */
+.announcement-bar {
+  background: linear-gradient(90deg, #000000 0%, #1a0a00 30%, #7a2d00 65%, #FF6600 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: 38px;
+  position: relative;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =============================================
+   GAUCHE — Réseaux sociaux
+   ============================================= */
+.announcement-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.announcement-bar__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.2s, transform 0.15s;
+  line-height: 1;
+}
+
+.announcement-bar__social-link:hover {
+  color: #ffffff;
+  transform: scale(1.2);
+}
+
+/* =============================================
+   CENTRE — Messages défilants
+   ============================================= */
+.announcement-bar__center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 100%;
+  pointer-events: none;
+}
+
+.announcement-bar__slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcement-bar__slide {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 1rem;
+
+  /* État initial : invisible en bas */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: none;
+  pointer-events: none;
+}
+
+/* Slide active — visible au centre */
+.announcement-bar__slide.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: auto;
+}
+
+/* Slide qui sort — monte vers le haut */
+.announcement-bar__slide.is-exit {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+/* =============================================
+   DROITE — Sélecteur de langue
+   ============================================= */
+.announcement-bar__right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.announcement-bar__lang {
+  position: relative;
+}
+
+.announcement-bar__lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.announcement-bar__lang-btn:hover,
+.announcement-bar__lang-btn.is-open {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.announcement-bar__lang-chevron {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.announcement-bar__lang-btn.is-open .announcement-bar__lang-chevron {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.announcement-bar__lang-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #1a0a00;
+  border: 1px solid rgba(255, 102, 0, 0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  min-width: 130px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+}
+
+.announcement-bar__lang-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.announcement-bar__lang-option {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.82rem;
+  padding: 9px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.announcement-bar__lang-option:hover {
+  background: rgba(255, 102, 0, 0.2);
+  color: #fff;
+}
+
+.announcement-bar__lang-option--active {
+  color: #FF6600;
+  font-weight: 600;
+}
+
+.announcement-bar__lang-option--active:hover {
+  background: rgba(255, 102, 0, 0.15);
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 768px) {
+  .announcement-bar {
+    padding: 0 0.75rem;
+    height: 36px;
+  }
+
+  .announcement-bar__left {
+    gap: 8px;
+  }
+
+  .announcement-bar__slide {
+    font-size: 0.75rem;
+  }
+
+  /* Cacher TikTok et X sur très petit écran si besoin */
+  @media screen and (max-width: 480px) {
+    .announcement-bar__social-link:nth-child(n+4) {
+      display: none;
+    }
+  }
+}

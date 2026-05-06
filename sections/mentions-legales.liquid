@@ -1,0 +1,332 @@
+{% comment %}
+  Mentions Légales — Compatible Dawn (Shopify)
+  Fichier : sections/mentions-legales.liquid
+{% endcomment %}
+
+{{ 'mentions-legales.css' | asset_url | stylesheet_tag }}
+
+<section class="ml-section" id="ml-{{ section.id }}">
+
+  {%- comment %} Header {% endcomment -%}
+  <div class="ml__header">
+    <h1 class="ml__title">{{ section.settings.title }}</h1>
+    <p class="ml__update">Dernière mise à jour : {{ section.settings.last_update }}</p>
+  </div>
+
+  <div class="ml__inner">
+
+    {%- comment %} Sommaire {% endcomment -%}
+    <div class="ml__toc">
+      <p class="ml__toc-title">Sommaire</p>
+      <ol class="ml__toc-list">
+        <li><a href="#ml-editeur" class="ml__toc-link">Éditeur du site</a></li>
+        <li><a href="#ml-hebergeur" class="ml__toc-link">Hébergeur</a></li>
+        <li><a href="#ml-propriete" class="ml__toc-link">Propriété intellectuelle</a></li>
+        <li><a href="#ml-responsabilite" class="ml__toc-link">Responsabilité</a></li>
+        <li><a href="#ml-donnees" class="ml__toc-link">Données personnelles</a></li>
+        <li><a href="#ml-cookies" class="ml__toc-link">Cookies</a></li>
+        <li><a href="#ml-contact" class="ml__toc-link">Contact</a></li>
+      </ol>
+    </div>
+
+    {%- comment %} Contenu {% endcomment -%}
+    <div class="ml__content">
+
+      {%- comment %} 1. Éditeur {% endcomment -%}
+      <div class="ml__block" id="ml-editeur">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">1</span>
+          Éditeur du site
+        </h2>
+        <div class="ml__block-body">
+          <p>Le présent site est édité par :</p>
+          <div class="ml__info-grid">
+            <div class="ml__info-item">
+              <span class="ml__info-label">Raison sociale</span>
+              <span class="ml__info-value">{{ section.settings.company_name }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Forme juridique</span>
+              <span class="ml__info-value">{{ section.settings.company_type }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Capital social</span>
+              <span class="ml__info-value">{{ section.settings.capital }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">SIRET</span>
+              <span class="ml__info-value">{{ section.settings.siret }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">N° TVA intracommunautaire</span>
+              <span class="ml__info-value">{{ section.settings.tva }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Siège social</span>
+              <span class="ml__info-value">{{ section.settings.address }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Téléphone</span>
+              <span class="ml__info-value">{{ section.settings.phone }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Email</span>
+              <span class="ml__info-value">{{ section.settings.email }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Directeur de la publication</span>
+              <span class="ml__info-value">{{ section.settings.director }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 2. Hébergeur {% endcomment -%}
+      <div class="ml__block" id="ml-hebergeur">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">2</span>
+          Hébergeur
+        </h2>
+        <div class="ml__block-body">
+          <p>Le site est hébergé par :</p>
+          <div class="ml__info-grid">
+            <div class="ml__info-item">
+              <span class="ml__info-label">Société</span>
+              <span class="ml__info-value">{{ section.settings.host_name }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Adresse</span>
+              <span class="ml__info-value">{{ section.settings.host_address }}</span>
+            </div>
+            <div class="ml__info-item">
+              <span class="ml__info-label">Site web</span>
+              <span class="ml__info-value">
+                <a href="{{ section.settings.host_website }}" target="_blank" rel="noopener" class="ml__link">{{ section.settings.host_website }}</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 3. Propriété intellectuelle {% endcomment -%}
+      <div class="ml__block" id="ml-propriete">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">3</span>
+          Propriété intellectuelle
+        </h2>
+        <div class="ml__block-body">
+          <p>L'ensemble du contenu de ce site (textes, images, vidéos, logos, icônes, sons, logiciels, etc.) est la propriété exclusive de <strong>{{ section.settings.company_name }}</strong> ou de ses partenaires, et est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.</p>
+          <p>Toute reproduction, représentation, modification, publication, adaptation ou exploitation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation écrite préalable de <strong>{{ section.settings.company_name }}</strong>.</p>
+          <p>Toute exploitation non autorisée du site ou de l'un quelconque des éléments qu'il contient sera considérée comme constitutive d'une contrefaçon et poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de Propriété Intellectuelle.</p>
+        </div>
+      </div>
+
+      {%- comment %} 4. Responsabilité {% endcomment -%}
+      <div class="ml__block" id="ml-responsabilite">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">4</span>
+          Limitation de responsabilité
+        </h2>
+        <div class="ml__block-body">
+          <p><strong>{{ section.settings.company_name }}</strong> s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site, dont elle se réserve le droit de corriger, à tout moment et sans préavis, le contenu.</p>
+          <p>Toutefois, <strong>{{ section.settings.company_name }}</strong> ne peut garantir l'exactitude, la précision ou l'exhaustivité des informations mises à disposition sur ce site. En conséquence, <strong>{{ section.settings.company_name }}</strong> décline toute responsabilité pour tout dommage résultant notamment d'une imprécision ou inexactitude des informations disponibles sur ce site.</p>
+          <p>Le site peut contenir des liens hypertextes vers d'autres sites internet. Ces liens sont fournis à titre informatif uniquement. <strong>{{ section.settings.company_name }}</strong> n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.</p>
+        </div>
+      </div>
+
+      {%- comment %} 5. Données personnelles {% endcomment -%}
+      <div class="ml__block" id="ml-donnees">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">5</span>
+          Données personnelles
+        </h2>
+        <div class="ml__block-body">
+          <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi n°78-17 du 6 janvier 1978 modifiée relative à l'informatique, aux fichiers et aux libertés, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, de portabilité et d'opposition au traitement de vos données personnelles.</p>
+          <p>Les données personnelles collectées sur ce site sont utilisées uniquement dans le cadre de votre relation commerciale avec <strong>{{ section.settings.company_name }}</strong> et ne sont en aucun cas cédées à des tiers sans votre consentement explicite.</p>
+          <p>Pour exercer vos droits ou pour toute question relative au traitement de vos données personnelles, vous pouvez nous contacter à l'adresse suivante : <a href="mailto:{{ section.settings.email }}" class="ml__link">{{ section.settings.email }}</a>.</p>
+          <p>Vous disposez également du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) — <a href="https://www.cnil.fr" target="_blank" rel="noopener" class="ml__link">www.cnil.fr</a>.</p>
+        </div>
+      </div>
+
+      {%- comment %} 6. Cookies {% endcomment -%}
+      <div class="ml__block" id="ml-cookies">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">6</span>
+          Cookies
+        </h2>
+        <div class="ml__block-body">
+          <p>Le site <strong>{{ shop.domain }}</strong> utilise des cookies afin d'améliorer votre expérience de navigation et de mesurer l'audience du site.</p>
+          <p>Un cookie est un petit fichier texte déposé sur votre terminal lors de la visite d'un site. Il permet au site de mémoriser des informations sur votre visite, comme votre langue préférée et d'autres paramètres.</p>
+          <div class="ml__table-wrap">
+            <table class="ml__table">
+              <thead>
+                <tr>
+                  <th>Type de cookie</th>
+                  <th>Finalité</th>
+                  <th>Durée</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cookies essentiels</td>
+                  <td>Fonctionnement du panier, session utilisateur</td>
+                  <td>Session</td>
+                </tr>
+                <tr>
+                  <td>Cookies analytiques</td>
+                  <td>Mesure d'audience (Google Analytics)</td>
+                  <td>13 mois</td>
+                </tr>
+                <tr>
+                  <td>Cookies marketing</td>
+                  <td>Publicité ciblée et remarketing</td>
+                  <td>90 jours</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Vous pouvez à tout moment paramétrer votre navigateur pour refuser les cookies. Cependant, certaines fonctionnalités du site pourraient ne plus être disponibles.</p>
+        </div>
+      </div>
+
+      {%- comment %} 7. Contact {% endcomment -%}
+      <div class="ml__block" id="ml-contact">
+        <h2 class="ml__block-title">
+          <span class="ml__block-num">7</span>
+          Contact
+        </h2>
+        <div class="ml__block-body">
+          <p>Pour toute question relative aux présentes mentions légales, vous pouvez nous contacter :</p>
+          <div class="ml__contact-box">
+            <div class="ml__contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:{{ section.settings.email }}" class="ml__link">{{ section.settings.email }}</a>
+            </div>
+            <div class="ml__contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.12 6.12l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>{{ section.settings.phone }}</span>
+            </div>
+            <div class="ml__contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>{{ section.settings.address }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Mentions légales",
+  "tag": "section",
+  "class": "ml-wrapper",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "En-tête"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de la page",
+      "default": "Mentions légales"
+    },
+    {
+      "type": "text",
+      "id": "last_update",
+      "label": "Date de mise à jour",
+      "default": "Janvier 2025"
+    },
+    {
+      "type": "header",
+      "content": "Informations société"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Raison sociale",
+      "default": "iDhightech2"
+    },
+    {
+      "type": "text",
+      "id": "company_type",
+      "label": "Forme juridique",
+      "default": "SARL"
+    },
+    {
+      "type": "text",
+      "id": "capital",
+      "label": "Capital social",
+      "default": "10 000 €"
+    },
+    {
+      "type": "text",
+      "id": "siret",
+      "label": "Numéro SIRET",
+      "default": "XXX XXX XXX XXXXX"
+    },
+    {
+      "type": "text",
+      "id": "tva",
+      "label": "N° TVA intracommunautaire",
+      "default": "FR XX XXX XXX XXX"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Adresse du siège social",
+      "default": "1 Rue de la Technologie, 75001 Paris, France"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Téléphone",
+      "default": "01 23 45 67 89"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "contact@idhightech2.com"
+    },
+    {
+      "type": "text",
+      "id": "director",
+      "label": "Directeur de la publication",
+      "default": "Prénom Nom"
+    },
+    {
+      "type": "header",
+      "content": "Hébergeur"
+    },
+    {
+      "type": "text",
+      "id": "host_name",
+      "label": "Nom de l'hébergeur",
+      "default": "Shopify Inc."
+    },
+    {
+      "type": "text",
+      "id": "host_address",
+      "label": "Adresse de l'hébergeur",
+      "default": "151 O'Connor Street, Ground floor, Ottawa, Ontario, K2P 2L8, Canada"
+    },
+    {
+      "type": "text",
+      "id": "host_website",
+      "label": "Site web de l'hébergeur",
+      "default": "https://www.shopify.com"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mentions légales"
+    }
+  ]
+}
+{% endschema %}

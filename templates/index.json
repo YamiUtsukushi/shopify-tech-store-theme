@@ -1,0 +1,556 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_slider_XzzkVx": {
+      "type": "hero-slider",
+      "blocks": {
+        "slide_tPra44": {
+          "type": "slide",
+          "settings": {
+            "bg_image": "shopify://shop_images/1_ca78f0d7-709a-4448-bdfc-e497bd907a94.jpg",
+            "bg_color": "#1a3a6b",
+            "overlay_opacity": 30,
+            "title": "SMART PHONE",
+            "subtitle": "Mega Music Sale",
+            "badge_text": "02-06 Sep",
+            "badge_color": "#ffa500",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "cta_color": "#1a73e8",
+            "cta_text_color": "#ffffff"
+          }
+        },
+        "slide_mXk3H7": {
+          "type": "slide",
+          "settings": {
+            "bg_image": "shopify://shop_images/2_49f9fab5-12f6-445d-90d5-0b14b6c03233.jpg",
+            "bg_color": "#1a3a6b",
+            "overlay_opacity": 30,
+            "title": "TABLETTES",
+            "subtitle": "Offres Exclusives",
+            "badge_text": "Jusqu'à -40%",
+            "badge_color": "#ffa500",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "cta_color": "#1a73e8",
+            "cta_text_color": "#ffffff"
+          }
+        },
+        "slide_fMDPeL": {
+          "type": "slide",
+          "settings": {
+            "bg_image": "shopify://shop_images/3_5a1c9183-18c1-47a8-99b0-f786fed18370.jpg",
+            "bg_color": "#1a3a6b",
+            "overlay_opacity": 30,
+            "title": "AUDIO",
+            "subtitle": "Son Immersif",
+            "badge_text": "Nouveautés 2025",
+            "badge_color": "#ffa500",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "cta_color": "#1a73e8",
+            "cta_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "slide_tPra44",
+        "slide_mXk3H7",
+        "slide_fMDPeL"
+      ],
+      "name": "Hero Slider",
+      "settings": {
+        "slider_height": 50,
+        "autoplay_delay": 5,
+        "ticker_text": "Electronics Extravaganza: Unmissable Deals !",
+        "ticker_bg": "#111111",
+        "ticker_text_color": "#ffffff"
+      }
+    },
+    "shop_by_categories_G8KwzJ": {
+      "type": "shop-by-categories",
+      "blocks": {
+        "collection_item_RAdaYW": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "electromenager",
+            "card_color": "#ffffff"
+          }
+        },
+        "collection_item_CbrX6R": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "gaming",
+            "card_color": "#ffffff"
+          }
+        },
+        "collection_item_CPCbje": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "objets-connectes",
+            "card_color": "#ffffff"
+          }
+        },
+        "collection_item_CVCAME": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "tablets",
+            "card_color": "#ffffff"
+          }
+        },
+        "collection_item_jgtcak": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "tv-image-son",
+            "card_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_RAdaYW",
+        "collection_item_CbrX6R",
+        "collection_item_CPCbje",
+        "collection_item_CVCAME",
+        "collection_item_jgtcak"
+      ],
+      "name": "Shop By Categories",
+      "settings": {
+        "title": "Shop By Categories",
+        "see_all_label": "Voir toutes les catégories",
+        "section_bg": "#f5f5f5",
+        "title_color": "#111111",
+        "title_size": 14,
+        "card_title_size": 14,
+        "card_border_radius": 14
+      }
+    },
+    "flash_sale_tT33jA": {
+      "type": "flash-sale",
+      "blocks": {
+        "product_9Ngxd6": {
+          "type": "product",
+          "settings": {
+            "product": "gaming-rtx-4080",
+            "end_date": "",
+            "show_new_badge": true
+          }
+        },
+        "product_LRnN9G": {
+          "type": "product",
+          "settings": {
+            "product": "tv-4k-55",
+            "end_date": "02-05-2026T23:59:59",
+            "show_new_badge": true
+          }
+        },
+        "product_enrndm": {
+          "type": "product",
+          "settings": {
+            "product": "console-gaming",
+            "end_date": "",
+            "show_new_badge": true
+          }
+        },
+        "product_fV6dbA": {
+          "type": "product",
+          "settings": {
+            "product": "casque-bluetooth",
+            "end_date": "",
+            "show_new_badge": true
+          }
+        }
+      },
+      "block_order": [
+        "product_9Ngxd6",
+        "product_LRnN9G",
+        "product_enrndm",
+        "product_fV6dbA"
+      ],
+      "name": "Flash Sale",
+      "settings": {
+        "title": "Flash Sales",
+        "title_color": "#111111",
+        "card_border_color": "#ff6600",
+        "show_stock": false,
+        "dotd_product": "tablets-amazon-fire-hd",
+        "dotd_end_date": "02-05-2026T23:59:59"
+      }
+    },
+    "featured_products_4QyLAR": {
+      "type": "featured-products",
+      "blocks": {
+        "product_qbggNw": {
+          "type": "product",
+          "settings": {
+            "product": "electromenager-lave-linge-lg"
+          }
+        },
+        "product_tWdPx3": {
+          "type": "product",
+          "settings": {
+            "product": "tablets-lenovo-tab-p12"
+          }
+        },
+        "product_9mWiTj": {
+          "type": "product",
+          "settings": {
+            "product": "tablets-galaxy-tab-s9"
+          }
+        },
+        "product_9DiPtc": {
+          "type": "product",
+          "settings": {
+            "product": "gaming-manette-dualsense"
+          }
+        },
+        "product_UfKCVt": {
+          "type": "product",
+          "settings": {
+            "product": "audio-galaxy-buds-pro2"
+          }
+        },
+        "product_kwBq4d": {
+          "type": "product",
+          "settings": {
+            "product": "tablets-onyx-boox"
+          }
+        },
+        "product_YxnkgN": {
+          "type": "product",
+          "settings": {
+            "product": "tablets-huawei-matepad"
+          }
+        },
+        "product_fef9nd": {
+          "type": "product",
+          "settings": {
+            "product": "electromenager-aspirateur-robot"
+          }
+        }
+      },
+      "block_order": [
+        "product_qbggNw",
+        "product_tWdPx3",
+        "product_9mWiTj",
+        "product_9DiPtc",
+        "product_UfKCVt",
+        "product_kwBq4d",
+        "product_YxnkgN",
+        "product_fef9nd"
+      ],
+      "name": "Produits en vedette (Perso)",
+      "settings": {
+        "section_bg": "#ffffff",
+        "header_bg": "#f5f5f5",
+        "title": "Tous nos Produits",
+        "title_color": "#111111",
+        "title_size": 14,
+        "columns": 4,
+        "btn_color": "#ff6600",
+        "btn_text_color": "#ffffff",
+        "view_all_url": "shopify://collections/all",
+        "show_new_badge": true,
+        "show_stock": false
+      }
+    },
+    "brands_ticker_9fCpDB": {
+      "type": "brands-ticker",
+      "name": "Bandeau Marques",
+      "settings": {
+        "section_bg": "#ffffff",
+        "title": "",
+        "title_size": 12,
+        "title_color": "#111111",
+        "title_align": "center",
+        "logo_bg": "#ffffff",
+        "logo_width": 200,
+        "logo_height": 100,
+        "gap": 20,
+        "speed": 60,
+        "grayscale": false,
+        "pause_on_hover": true
+      }
+    },
+    "features_bar_Q3F8LE": {
+      "type": "features-bar",
+      "blocks": {
+        "feature_XMTJqq": {
+          "type": "feature",
+          "settings": {
+            "icon": "delivery",
+            "title": "Livraison offerte",
+            "description": "Dès 50€ d'achat en France",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_Nfb8dc": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "title": "Retours sous 30 jours",
+            "description": "Satisfait ou remboursé",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_a66rRn": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Garantie 2 ans",
+            "description": "Sur tous nos produits",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_cdzFkM": {
+          "type": "feature",
+          "settings": {
+            "icon": "support",
+            "title": "Service après vente",
+            "description": "Du lundi au vendredi 9h-18h",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_XbmVAD": {
+          "type": "feature",
+          "settings": {
+            "icon": "price",
+            "title": "Meilleurs prix garantis",
+            "description": "Nous remboursons la différence",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_7pJjmX": {
+          "type": "feature",
+          "settings": {
+            "icon": "lock",
+            "title": "Paiement sécurisé",
+            "description": "SSL 256 bits",
+            "link_text": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_XMTJqq",
+        "feature_Nfb8dc",
+        "feature_a66rRn",
+        "feature_cdzFkM",
+        "feature_XbmVAD",
+        "feature_7pJjmX"
+      ],
+      "name": "Barre Avantages",
+      "settings": {
+        "bg_color": "#111111",
+        "text_color": "#ffffff",
+        "link_color": "#ec6034",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "global_link_text": "",
+        "global_link_url": ""
+      }
+    },
+    "customer_reviews_bfFGQ8": {
+      "type": "customer-reviews",
+      "blocks": {
+        "review_cdqcfJ": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "127",
+            "review_text": "Produit absolument incroyable ! La qualité sonore est exceptionnelle et le confort est au rendez-vous. Je recommande vivement à tous les amateurs d'audio.",
+            "author_name": "Thomas Martin",
+            "author_role": "Client vérifié"
+          }
+        },
+        "review_KDJipR": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "98",
+            "review_text": "Livraison ultra rapide et produit conforme à la description. Le service client est très réactif. Une expérience d'achat parfaite du début à la fin.",
+            "author_name": "Sophie Dubois",
+            "author_role": "Acheteuse régulière"
+          }
+        },
+        "review_aXVrey": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "214",
+            "review_text": "Je suis impressionné par la qualité de fabrication. Le produit est solide, élégant et fonctionne parfaitement. Exactement ce que je cherchais.",
+            "author_name": "Lucas Bernard",
+            "author_role": "Ingénieur"
+          }
+        },
+        "review_NfQ7qJ": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "76",
+            "review_text": "Très bon rapport qualité-prix. Le produit dépasse mes attentes. La batterie tient vraiment longtemps et la connexion Bluetooth est stable.",
+            "author_name": "Camille Petit",
+            "author_role": "Designer"
+          }
+        },
+        "review_FEpFzd": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "183",
+            "review_text": "Parfait pour mon usage quotidien ! La qualité d'image est bluffante et la prise en main est intuitive. Je ne regrette absolument pas mon achat.",
+            "author_name": "Antoine Lefebvre",
+            "author_role": "Photographe"
+          }
+        },
+        "review_mg4qnT": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "92",
+            "review_text": "Excellent produit, rien à redire. La qualité est au top et le prix est très compétitif. Je recommande cette boutique les yeux fermés.",
+            "author_name": "Marie Lambert",
+            "author_role": "Cliente vérifiée"
+          }
+        },
+        "review_B3abn6": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "145",
+            "review_text": "Produit de très bonne qualité, bien emballé et livré rapidement. L'installation est simple et les performances sont au niveau attendu.",
+            "author_name": "Julien Moreau",
+            "author_role": "Technicien"
+          }
+        },
+        "review_VAUbpV": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "231",
+            "review_text": "Je suis fan ! Ce produit a complètement transformé mon expérience gaming. La réactivité est impressionnante et le son est cristallin.",
+            "author_name": "Emma Richard",
+            "author_role": "Gamer"
+          }
+        },
+        "review_KVr9FU": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "67",
+            "review_text": "Superbe produit, très bien conçu. La prise en main est agréable et les fonctionnalités sont nombreuses. Un achat que je ne regrette pas du tout.",
+            "author_name": "Nicolas Simon",
+            "author_role": "Manager"
+          }
+        },
+        "review_84kcbG": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "189",
+            "review_text": "La qualité est vraiment au rendez-vous. Le produit est conforme aux photos et la livraison a été très rapide. Je recommande sans hésiter.",
+            "author_name": "Laura Michel",
+            "author_role": "CEO"
+          }
+        },
+        "review_gxCgh3": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "112",
+            "review_text": "Très satisfait de mon achat. Le produit est robuste et performant. Le service après-vente est également très professionnel et à l'écoute.",
+            "author_name": "Paul Durand",
+            "author_role": "Chef de projet"
+          }
+        },
+        "review_pzP4qN": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "304",
+            "review_text": "Incroyable ! Je ne pensais pas que ce produit serait aussi bon. La qualité de construction est remarquable et les performances dépassent mes espérances.",
+            "author_name": "Isabelle Fontaine",
+            "author_role": "Architecte"
+          }
+        },
+        "review_znzRA4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "88",
+            "review_text": "Produit reçu en parfait état, emballage soigné. Les caractéristiques correspondent parfaitement à l'annonce. Je suis totalement satisfait.",
+            "author_name": "Kevin Rousseau",
+            "author_role": "Développeur"
+          }
+        },
+        "review_mBVAKr": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "156",
+            "review_text": "Excellent achat ! La qualité du produit est vraiment supérieure. Le rapport qualité-prix est imbattable et la livraison était très rapide.",
+            "author_name": "Chloé Blanc",
+            "author_role": "Étudiante"
+          }
+        },
+        "review_HtVDCr": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "267",
+            "review_text": "Ce produit est tout simplement parfait. La qualité sonore est exceptionnelle, le design est élégant et l'autonomie est bluffante. 100% recommandé !",
+            "author_name": "Marc Dupont",
+            "author_role": "Musicien"
+          }
+        }
+      },
+      "block_order": [
+        "review_cdqcfJ",
+        "review_KDJipR",
+        "review_aXVrey",
+        "review_NfQ7qJ",
+        "review_FEpFzd",
+        "review_mg4qnT",
+        "review_B3abn6",
+        "review_VAUbpV",
+        "review_KVr9FU",
+        "review_84kcbG",
+        "review_gxCgh3",
+        "review_pzP4qN",
+        "review_znzRA4",
+        "review_mBVAKr",
+        "review_HtVDCr"
+      ],
+      "name": "Avis clients",
+      "settings": {
+        "section_bg": "#ffffff",
+        "header_bg": "#ffffff",
+        "title": "Avis Clients",
+        "title_color": "#111111",
+        "title_size": 20,
+        "card_border_color": "#ff6600"
+      }
+    }
+  },
+  "order": [
+    "hero_slider_XzzkVx",
+    "shop_by_categories_G8KwzJ",
+    "flash_sale_tT33jA",
+    "featured_products_4QyLAR",
+    "brands_ticker_9fCpDB",
+    "features_bar_Q3F8LE",
+    "customer_reviews_bfFGQ8"
+  ]
+}

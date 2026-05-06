@@ -1,0 +1,270 @@
+/* =============================================
+   Collection Cards — iDhightech2
+   Fichier : assets/collection-cards.css
+   ============================================= */
+
+/* =============================================
+   FOND GRIS
+   ============================================= */
+.section-collection-padding,
+.section-collection-padding.gradient,
+#product-grid {
+  background: #f5f5f5 !important;
+}
+
+/* =============================================
+   CARTE — supprime style Dawn, applique le nôtre
+   ============================================= */
+.card--card,
+.card--standard .card__inner {
+  border: none !important;
+  border-radius: 10px !important;
+}
+
+.card--card:after,
+.card--standard .card__inner:after,
+.card--card:before,
+.card--standard .card__inner:before {
+  display: none !important;
+  box-shadow: none !important;
+}
+
+.product-card-wrapper .card {
+  background: #fff !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10) !important;
+  transition: box-shadow 0.2s, transform 0.2s !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-card-wrapper .card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.16) !important;
+  transform: translateY(-3px);
+}
+
+.product-card-wrapper .card__inner {
+  background: #fff !important;
+}
+
+/* Image taille fixe — uniquement sur card--card */
+.product-card-wrapper .card--card .card__inner {
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.product-card-wrapper .card--card .card__media,
+.product-card-wrapper .card--card .card__inner .card__media {
+  background: #fff !important;
+  height: 220px !important;
+  min-height: 220px !important;
+  max-height: 220px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  padding-bottom: 0 !important;
+}
+
+.product-card-wrapper .card--card .card__media .media,
+.product-card-wrapper .card--card .card__inner .media {
+  position: relative !important;
+  height: 220px !important;
+  padding-bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.product-card-wrapper .card--card .card__media img,
+.product-card-wrapper .card--card .card__inner img {
+  width: auto !important;
+  max-width: 100% !important;
+  height: 200px !important;
+  max-height: 200px !important;
+  object-fit: contain !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+/* Carte flex colonne pour aligner titre/prix */
+.product-card-wrapper .card--card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.product-card-wrapper .card--card > .card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  padding: 0 !important;
+}
+
+.product-card-wrapper .card--card .card__information {
+  padding: 0.9rem 1rem 0.5rem !important;
+  flex: 1 !important;
+}
+
+.product-card-wrapper .card--card .card-information {
+  padding: 0 1rem 1rem !important;
+  margin-top: auto !important;
+}
+
+/* =============================================
+   BADGES NEW + % OFF
+   ============================================= */
+.product-card-wrapper .card__badges-custom {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 3;
+}
+
+.product-card-wrapper .badge-custom {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.product-card-wrapper .badge-custom--new {
+  background: #22c55e;
+  color: #fff;
+}
+
+.product-card-wrapper .badge-custom--discount {
+  background: #ec6034;
+  color: #fff;
+}
+
+/* Cache le badge Dawn natif (positionné sur l'image) */
+.product-card-wrapper .card__badge {
+  display: none !important;
+}
+
+/* Nos badges custom — au dessus de l'image en haut à gauche */
+.product-card-wrapper .card__badges-custom {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 3;
+}
+
+/* =============================================
+   TITRE
+   ============================================= */
+.product-card-wrapper .card__heading a {
+  font-weight: 700 !important;
+  color: #111 !important;
+  transition: color 0.2s !important;
+  text-decoration: none !important;
+}
+
+.product-card-wrapper .card__heading a:hover {
+  color: #ec6034 !important;
+  text-decoration: none !important;
+}
+
+/* =============================================
+   PRIX
+   ============================================= */
+.product-card-wrapper .price-item--sale {
+  color: #111 !important;
+  font-weight: 700 !important;
+}
+
+.product-card-wrapper .price-item--regular:not(:only-child) {
+  color: #aaa !important;
+  text-decoration: line-through !important;
+  font-weight: 400 !important;
+}
+
+/* =============================================
+   BOUTON AJOUTER AU PANIER — au survol
+   ============================================= */
+.product-card-wrapper .card__quick-add-custom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 2;
+}
+
+.product-card-wrapper:hover .card__quick-add-custom {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card__quick-add-btn {
+  display: block;
+  width: 100%;
+  background: #ec6034;
+  color: #fff;
+  border: none;
+  border-radius: 0 0 10px 10px;
+  padding: 13px 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+}
+
+.card__quick-add-btn:hover {
+  background: #d4512a;
+  color: #fff;
+}
+
+.card__quick-add-btn--options {
+  background: #111;
+}
+
+.card__quick-add-btn--options:hover {
+  background: #333;
+}
+
+/* Padding bas des infos pour laisser place au bouton */
+.product-card-wrapper .card-information {
+  padding-bottom: 1rem !important;
+}
+
+/* =============================================
+   QUICK ADD NATIF Dawn — on le cache
+   ============================================= */
+.product-card-wrapper .quick-add {
+  display: none !important;
+}
+
+.product-card-wrapper .card--card .card__inner.ratio {
+  display: block !important;
+}
+
+.product-card-wrapper .card--card .card__inner.ratio::before {
+  display: none !important;
+  padding-bottom: 0 !important;
+}
+
+/* =============================================
+   Responsive — 2 colonnes mobile
+   ============================================= */
+@media screen and (max-width: 749px) {
+  .product-card-wrapper .card__quick-add-custom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

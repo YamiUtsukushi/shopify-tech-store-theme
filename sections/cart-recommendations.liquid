@@ -1,0 +1,229 @@
+{% comment %}
+  Cart Recommendations — iDhightech2
+  Fichier : sections/cart-recommendations.liquid
+  - Si panier non vide → recommandations basées sur le 1er produit du panier
+  - Si panier vide → 4 produits aléatoires de la boutique
+{% endcomment %}
+
+{{ 'featured-products.css' | asset_url | stylesheet_tag }}
+
+<div class="cart-reco-wrapper" id="cart-reco-{{ section.id }}">
+  <div class="fp-section">
+
+    <div class="fp__header" style="background: {{ section.settings.header_bg }} !important;">
+      <h2 class="fp__title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+        {{ section.settings.title }}
+      </h2>
+    </div>
+
+    <div class="fp__grid" id="cart-reco-grid-{{ section.id }}" style="--fp-cols: {{ section.settings.columns }};">
+      {%- comment %} Chargé dynamiquement par JS {% endcomment -%}
+      <div class="cart-reco__loading">
+        <div class="cart-reco__spinner"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.cart-reco-wrapper {
+  background: {{ section.settings.section_bg }};
+}
+.cart-reco-wrapper .fp__header {
+  background: {{ section.settings.header_bg }} !important;
+}
+.cart-reco__loading {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+.cart-reco__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f0f0f0;
+  border-top-color: #ec6034;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<script>
+(function() {
+  var grid = document.getElementById('cart-reco-grid-{{ section.id }}');
+  if (!grid) return;
+
+  var cartItems = {{ cart.items | json }};
+  var columns = {{ section.settings.columns }};
+  var showStock = {{ section.settings.show_stock }};
+
+  function renderCard(product) {
+    var now = Date.now();
+    var created = new Date(product.published_at).getTime();
+    var diffDays = (now - created) / (1000 * 60 * 60 * 24);
+    var isNew = diffDays <= 30;
+    var comparePrice = product.variants[0].compare_at_price;
+    var price = product.variants[0].price;
+    var hasDiscount = comparePrice && comparePrice > price;
+    var discountPct = hasDiscount ? Math.round((comparePrice - price) / comparePrice * 100) : 0;
+    var available = product.variants[0].available;
+    var inventory = product.variants[0].inventory_quantity;
+    var variantId = product.variants[0].id;
+    var hasMultipleVariants = product.variants.length > 1;
+    var imageUrl = product.featured_image ? product.featured_image + '&width=400' : '';
+    var categoryTitle = product.collections && product.collections[0] ? product.collections[0].title : '';
+
+    var badgesHtml = '';
+    if (isNew) badgesHtml += '<span class="fp__badge fp__badge--new">New</span>';
+    if (hasDiscount) badgesHtml += '<span class="fp__badge fp__badge--discount">' + discountPct + '% off</span>';
+
+    var priceHtml = '<span class="fp__price-current">' + formatMoney(price) + '</span>';
+    if (hasDiscount) priceHtml += '<span class="fp__price-compare">' + formatMoney(comparePrice) + '</span>';
+
+    var stockHtml = '';
+    if (showStock) {
+      if (available) {
+        stockHtml = inventory > 0
+          ? '<p class="fp__stock">En stock (' + inventory + ' unités), prêt à être expédié</p>'
+          : '<p class="fp__stock">En stock, prêt à être expédié</p>';
+      } else {
+        stockHtml = '<p class="fp__stock fp__stock--out">Rupture de stock</p>';
+      }
+    }
+
+    var btnHtml = hasMultipleVariants
+      ? '<a href="/products/' + product.handle + '" class="fp__btn-cart fp__btn-cart--options" style="background:#111;color:#fff;">Voir les options</a>'
+      : '<button type="button" class="fp__btn-cart" style="background:#ec6034;color:#fff;" data-variant-id="' + variantId + '" onclick="cartRecoAddToCart(this)">Ajouter au panier</button>';
+
+    return '<div class="fp__card">'
+      + '<a href="/products/' + product.handle + '" class="fp__card-img-link">'
+      + '<div class="fp__badges">' + badgesHtml + '</div>'
+      + (imageUrl ? '<img src="' + imageUrl + '" alt="' + product.title + '" class="fp__card-img" loading="lazy" width="400" height="400">' : '')
+      + '</a>'
+      + '<div class="fp__card-body">'
+      + (categoryTitle ? '<p class="fp__card-category">' + categoryTitle + '</p>' : '')
+      + '<a href="/products/' + product.handle + '" class="fp__card-title">' + product.title + '</a>'
+      + '<div class="fp__card-price">' + priceHtml + '</div>'
+      + stockHtml
+      + '</div>'
+      + btnHtml
+      + '</div>';
+  }
+
+  function formatMoney(cents) {
+    return '\u20ac' + (cents / 100).toFixed(2).replace('.', ',');
+  }
+
+  function renderProducts(products) {
+    grid.innerHTML = products.slice(0, columns).map(renderCard).join('');
+  }
+
+  function loadFallback() {
+    // Panier vide → produits aléatoires
+    fetch('/collections/all/products.json?limit=50')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var products = data.products;
+        // Shuffle
+        for (var i = products.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = products[i]; products[i] = products[j]; products[j] = temp;
+        }
+        renderProducts(products);
+      })
+      .catch(function() { grid.innerHTML = ''; });
+  }
+
+  if (cartItems.length > 0) {
+    // Basé sur le 1er produit du panier
+    var productId = cartItems[0].product_id;
+    fetch('/recommendations/products.json?product_id=' + productId + '&limit=' + (columns * 2))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.products && data.products.length > 0) {
+          renderProducts(data.products);
+        } else {
+          loadFallback();
+        }
+      })
+      .catch(loadFallback);
+  } else {
+    loadFallback();
+  }
+
+})();
+
+window.cartRecoAddToCart = function(btn) {
+  var variantId = btn.dataset.variantId;
+  window.globalAddToCart(btn, variantId);
+};
+</script>
+
+{% schema %}
+{
+  "name": "Produits suggérés panier",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Apparence"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Couleur de fond",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Fond du titre",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Vous aimerez aussi"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Nombre de colonnes",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Afficher la disponibilité en stock",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produits suggérés panier"
+    }
+  ]
+}
+{% endschema %}

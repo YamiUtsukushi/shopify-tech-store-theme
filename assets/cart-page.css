@@ -1,0 +1,249 @@
+/* =============================================
+   Cart Page Override — iDhightech2
+   Fichier : assets/cart-page.css
+   ============================================= */
+
+/* =============================================
+   FOND GRIS
+   ============================================= */
+cart-items,
+#main-cart-footer {
+  background: #f5f5f5 !important;
+}
+
+/* =============================================
+   EN-TÊTE PANIER
+   ============================================= */
+.title-wrapper-with-link {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-wrapper-with-link .title--primary {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.title-wrapper-with-link .underlined-link {
+  font-size: 0.85rem;
+  color: #555;
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+}
+
+.title-wrapper-with-link .underlined-link:hover {
+  color: #ec6034;
+}
+
+/* =============================================
+   TABLEAU DES ARTICLES
+   ============================================= */
+.cart-items {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+  border: none !important;
+}
+
+/* En-tête tableau */
+.cart-items thead tr {
+  background: #f8f8f8;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.cart-items thead th {
+  padding: 1rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+/* Lignes article */
+.cart-item {
+  border-bottom: 1px solid #f0f0f0 !important;
+  transition: background 0.15s;
+}
+
+.cart-item:last-child {
+  border-bottom: none !important;
+}
+
+.cart-item:hover {
+  background: #fafafa;
+}
+
+/* Image produit */
+.cart-item__image-container {
+  border-radius: 8px !important;
+  overflow: hidden;
+  background: #f8f8f8 !important;
+  border: none !important;
+}
+
+.cart-item__image {
+  border-radius: 8px;
+}
+
+/* Nom produit */
+.cart-item__name {
+  color: #111 !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+
+.cart-item__name:hover {
+  color: #ec6034 !important;
+}
+
+/* Prix */
+.cart-item__final-price,
+.price--end {
+  color: #111 !important;
+  font-weight: 700 !important;
+}
+
+.cart-item__old-price {
+  color: #aaa !important;
+}
+
+/* Boutons quantité */
+.quantity__button {
+  border-color: #e0e0e0 !important;
+  color: #333 !important;
+  border-radius: 5px !important;
+  transition: border-color 0.15s, background 0.15s, color 0.15s !important;
+}
+
+.quantity__button:hover {
+  border-color: #ec6034 !important;
+  background: #fff5ee !important;
+  color: #ec6034 !important;
+}
+
+.quantity__input {
+  border-color: #e0e0e0 !important;
+  color: #111 !important;
+  font-weight: 600 !important;
+}
+
+/* Bouton supprimer */
+.cart-item__remove {
+  color: #e53935 !important;
+  transition: opacity 0.2s !important;
+}
+
+.cart-item__remove:hover {
+  opacity: 0.7 !important;
+}
+
+/* =============================================
+   FOOTER — TOTAL & BOUTON COMMANDER
+   ============================================= */
+.cart__footer {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 1.5rem !important;
+}
+
+/* Total */
+.totals {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1rem;
+}
+
+.totals__total {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #555 !important;
+  margin: 0 !important;
+}
+
+.totals__total-value {
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  color: #111 !important;
+  margin: 0 !important;
+}
+
+/* Note taxes */
+.tax-note {
+  font-size: 0.78rem !important;
+  color: #999 !important;
+  display: block;
+  margin-bottom: 1.25rem;
+}
+
+/* Bouton commander */
+.cart__checkout-button {
+  background: #111 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  padding: 0.9rem 2rem !important;
+  width: 100% !important;
+  transition: background 0.2s !important;
+  letter-spacing: 0.02em !important;
+}
+
+.cart__checkout-button:hover {
+  background: #222 !important;
+}
+
+/* Boutons de paiement additionnels */
+.cart__dynamic-checkout-buttons {
+  margin-top: 0.75rem;
+}
+
+/* =============================================
+   PANIER VIDE
+   ============================================= */
+.cart__empty-text {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: #555 !important;
+}
+
+.cart__warnings .button {
+  background: #ec6034 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  padding: 0.85rem 2rem !important;
+  transition: background 0.2s !important;
+}
+
+.cart__warnings .button:hover {
+  background: #d4512a !important;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 749px) {
+  .title-wrapper-with-link {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

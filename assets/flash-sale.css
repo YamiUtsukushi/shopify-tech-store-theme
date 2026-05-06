@@ -1,0 +1,565 @@
+/* =============================================
+   Flash Sale Section — Dawn Theme Compatible
+   Fichier : assets/flash-sale.css
+   ============================================= */
+
+/* --- Wrapper section --- */
+.flash-sale-wrapper {
+  background: #f5f5f5;
+}
+
+.flash-sale-section {
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --- Header --- */
+.flash-sale__header {
+  margin-bottom: 1.5rem;
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+
+.flash-sale__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --- Slider wrapper --- */
+.flash-sale__slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- Navigation boutons --- */
+.flash-sale__nav {
+  flex-shrink: 0;
+  background: #ec6034;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(236,96,52,0.3);
+  transition: background 0.2s, transform 0.15s;
+  z-index: 2;
+}
+
+.flash-sale__nav:hover {
+  background: #d4512a;
+  transform: scale(1.08);
+}
+
+/* --- Slider track --- */
+.flash-sale__slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 0.5rem 0.25rem 1rem;
+  flex: 1;
+}
+
+.flash-sale__slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Carte produit --- */
+.flash-sale__card {
+  flex: 0 0 220px;
+  min-width: 220px;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.flash-sale__card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  transform: translateY(-3px);
+}
+
+/* --- Badges --- */
+.flash-sale__card-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1;
+}
+
+.flash-sale__badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.flash-sale__badge--new {
+  background: #22c55e;
+  color: #fff;
+}
+
+.flash-sale__badge--discount {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* --- Image wrapper (position relative pour overlay countdown) --- */
+.flash-sale__card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Image produit --- */
+.flash-sale__card-image-link {
+  display: block;
+  background: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+
+.flash-sale__card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+.flash-sale__placeholder {
+  width: 100%;
+  height: 160px;
+}
+
+/* --- Countdown base (partagé carte + DOTD) --- */
+.flash-sale__countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px 4px;
+}
+
+/* --- Countdown en overlay sur l'image (cartes produit uniquement) --- */
+.flash-sale__countdown--overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  backdrop-filter: none;
+  z-index: 2;
+}
+
+.flash-sale__countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 36px;
+}
+
+.flash-sale__countdown-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.1;
+}
+
+.flash-sale__countdown-label {
+  font-size: 0.58rem;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* --- Corps de la carte --- */
+.flash-sale__card-body {
+  padding: 0.85rem 0.9rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.flash-sale__card-category {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.flash-sale__card-category::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ec6034;
+  flex-shrink: 0;
+}
+
+.flash-sale__card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.flash-sale__card-title:hover {
+  color: #FF6600;
+}
+
+/* --- Prix --- */
+.flash-sale__card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.flash-sale__price-current {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ec6034;
+}
+
+.flash-sale__price-compare {
+  font-size: 0.82rem;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+/* --- Stock --- */
+.flash-sale__stock {
+  font-size: 0.72rem;
+  color: #16a34a;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* --- Bouton Add to Cart --- */
+.flash-sale__btn-cart {
+  display: block;
+  width: calc(100% + 1.8rem);
+  margin-top: auto;
+  margin-left: -0.9rem;
+  margin-right: -0.9rem;
+  padding: 13px 0;
+  background: #ec6034;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.flash-sale__btn-cart:hover {
+  background: #d4512a;
+  color: #fff;
+}
+
+.flash-sale__btn-cart--options {
+  background: #fff;
+  color: #ec6034;
+  border-top: 2px solid #ec6034;
+  border-radius: 0;
+}
+
+.flash-sale__btn-cart--options:hover {
+  background: #ec6034;
+  color: #fff;
+}
+
+/* =============================================
+   Bannière Deal Of The Day
+   ============================================= */
+.flash-sale__dotd {
+  margin-top: 2rem;
+  background: linear-gradient(90deg, #000000 0%, #1a0a00 30%, #7a2d00 65%, #FF6600 100%);
+  border-radius: 12px;
+  padding: 1.2rem 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  box-shadow: 0 4px 24px rgba(255,102,0,0.25);
+}
+
+/* dotd-top — conteneur titre + countdown */
+.flash-sale__dotd-top {
+  display: contents;
+}
+
+.flash-sale__dotd-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+
+.flash-sale__dotd-icon {
+  color: #ec6034;
+  flex-shrink: 0;
+}
+
+.flash-sale__dotd-label {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Countdown dans la bannière DOTD */
+.flash-sale__dotd-countdown {
+  background: transparent;
+  border-top: none;
+  padding: 0;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+}
+
+.flash-sale__countdown-value--dotd {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.flash-sale__countdown-label--dotd {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.flash-sale__dotd-sep {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 14px;
+}
+
+/* Bouton CTA DOTD */
+.flash-sale__dotd-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+  width: 100%;
+  max-width: 320px;
+}
+
+.flash-sale__dotd-cta:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: #fff;
+  color: #fff;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+
+/* Tablette 1024px */
+@media screen and (max-width: 1024px) {
+  .flash-sale-section {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .flash-sale__card {
+    flex: 0 0 190px;
+    min-width: 190px;
+  }
+
+  .flash-sale__card-image {
+    height: 140px;
+  }
+}
+
+/* Empêche le scroll horizontal global */
+.flash-sale-wrapper {
+  overflow-x: hidden;
+}
+
+/* Mobile 768px */
+@media screen and (max-width: 768px) {
+  .flash-sale-section {
+    padding: 1rem 1.5rem;
+  }
+
+  .flash-sale__header {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .flash-sale__title {
+    font-size: 1.1rem;
+  }
+
+  /* Cache les boutons nav sur mobile */
+  .flash-sale__nav {
+    display: none;
+  }
+
+  /* Slider tactile */
+  .flash-sale__slider {
+    gap: 12px;
+    scroll-snap-type: x mandatory;
+    cursor: grab;
+    padding: 0.5rem 0.25rem 1rem;
+  }
+
+  .flash-sale__slider.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+  }
+
+  /* Cartes plus petites — 2 partiellement visibles */
+  .flash-sale__card {
+    flex: 0 0 160px;
+    min-width: 160px;
+    scroll-snap-align: start;
+  }
+
+  .flash-sale__card-image {
+    height: 120px;
+  }
+
+  .flash-sale__card-body {
+    padding: 0.7rem 0.75rem 0.5rem;
+    gap: 4px;
+  }
+
+  .flash-sale__card-title {
+    font-size: 0.82rem;
+  }
+
+  .flash-sale__price-current {
+    font-size: 0.9rem;
+  }
+
+  /* Fix bouton — supprime les marges négatives sur mobile */
+  .flash-sale__btn-cart {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* DOTD bannière — centré en colonne comme le desktop */
+  .flash-sale__dotd {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    gap: 0.5rem;
+  }
+
+  .flash-sale__dotd-top {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .flash-sale__dotd-left {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .flash-sale__dotd-label {
+    font-size: 1rem;
+  }
+
+  .flash-sale__dotd-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .flash-sale__dotd-countdown {
+    justify-content: center;
+    width: 100%;
+    gap: 4px;
+    padding: 0;
+  }
+
+  .flash-sale__countdown-value--dotd {
+    font-size: 1.4rem;
+  }
+
+  .flash-sale__countdown-label--dotd {
+    font-size: 0.6rem;
+  }
+
+  .flash-sale__dotd-sep {
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+  }
+
+  .flash-sale__dotd-cta {
+    width: auto;
+    max-width: none;
+    padding: 8px 16px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Petit mobile 480px */
+@media screen and (max-width: 480px) {
+  .flash-sale__card {
+    flex: 0 0 145px;
+    min-width: 145px;
+  }
+
+  .flash-sale__card-image {
+    height: 110px;
+  }
+}

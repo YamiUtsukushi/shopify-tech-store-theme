@@ -1,0 +1,388 @@
+{% comment %}
+  Hero Slider — Compatible Dawn (Shopify)
+  Fichier : sections/hero-slider.liquid
+{% endcomment %}
+
+{{ 'hero-slider.css' | asset_url | stylesheet_tag }}
+
+<section class="hero-slider" id="hero-slider-{{ section.id }}" style="height: {{ section.settings.slider_height }}vh;">
+
+  {%- comment %} ========== SLIDES ========== {% endcomment -%}
+  <div class="hero-slider__track" id="heroTrack-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'slide' -%}
+        <div
+          class="hero-slider__slide{% if forloop.first %} is-active{% endif %}"
+          {{ block.shopify_attributes }}
+          style="
+            {%- if block.settings.bg_image != blank -%}
+              background-image: url('{{ block.settings.bg_image | image_url: width: 1920 }}');
+            {%- else -%}
+              background-color: {{ block.settings.bg_color }};
+            {%- endif -%}
+          "
+        >
+          {%- comment %} Overlay {% endcomment -%}
+          <div class="hero-slider__overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+
+          {%- comment %} Contenu {% endcomment -%}
+          <div class="hero-slider__content">
+            {%- if block.settings.title != blank -%}
+              <h2 class="hero-slider__title" data-animate="title">{{ block.settings.title }}</h2>
+            {%- endif -%}
+
+            {%- if block.settings.subtitle != blank -%}
+              <p class="hero-slider__subtitle" data-animate="subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.badge_text != blank -%}
+              <p class="hero-slider__badge" data-animate="badge" style="color: {{ block.settings.badge_color }};">
+                {{ block.settings.badge_text }}
+              </p>
+            {%- endif -%}
+
+            {%- if block.settings.cta_label != blank -%}
+              <a
+                href="{{ block.settings.cta_url }}"
+                class="hero-slider__cta"
+                data-animate="cta"
+                style="background: {{ block.settings.cta_color }}; color: {{ block.settings.cta_text_color }};"
+              >
+                {{ block.settings.cta_label }}
+              </a>
+            {%- endif -%}
+          </div>
+
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+    {%- comment %} ========== TICKER ========== {% endcomment -%}
+  {%- if section.settings.ticker_text != blank -%}
+    <div class="hero-slider__ticker" style="background: {{ section.settings.ticker_bg }};">
+      <div class="hero-slider__ticker-track">
+        {%- assign ticker_repeat = 8 -%}
+        {%- for i in (1..ticker_repeat) -%}
+          <span class="hero-slider__ticker-item" style="color: {{ section.settings.ticker_text_color }};">
+            {{ section.settings.ticker_text }}
+            <span class="hero-slider__ticker-dot">•</span>
+          </span>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ========== NAVIGATION ========== {% endcomment -%}
+  <div class="hero-slider__nav">
+    <button class="hero-slider__arrow hero-slider__arrow--prev" id="heroPrev-{{ section.id }}" aria-label="Slide précédent" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="hero-slider__dots" id="heroDots-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'slide' -%}
+          <button
+            class="hero-slider__dot{% if forloop.first %} is-active{% endif %}"
+            data-index="{{ forloop.index0 }}"
+            aria-label="Slide {{ forloop.index }}"
+            type="button"
+          ></button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <button class="hero-slider__arrow hero-slider__arrow--next" id="heroNext-{{ section.id }}" aria-label="Slide suivant" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var sectionId   = '{{ section.id }}';
+  var autoDelay   = {{ section.settings.autoplay_delay | times: 1000 }};
+  var track       = document.getElementById('heroTrack-' + sectionId);
+  if (!track) return;
+
+  var slides      = track.querySelectorAll('.hero-slider__slide');
+  var dots        = document.querySelectorAll('#heroDots-' + sectionId + ' .hero-slider__dot');
+  var prevBtn     = document.getElementById('heroPrev-' + sectionId);
+  var nextBtn     = document.getElementById('heroNext-' + sectionId);
+  var current     = 0;
+  var total       = slides.length;
+  var autoTimer   = null;
+  var animTimer   = null;
+
+  // Séquence d'animation des éléments du slide
+  var animOrder = ['title', 'subtitle', 'badge', 'cta'];
+  var animDelays = { title: 0, subtitle: 350, badge: 650, cta: 950 };
+
+  function resetSlideAnimations(slide) {
+    animOrder.forEach(function(key) {
+      var el = slide.querySelector('[data-animate="' + key + '"]');
+      if (el) {
+        el.classList.remove('anim-in');
+        el.style.transitionDelay = '0ms';
+      }
+    });
+  }
+
+  function runSlideAnimations(slide) {
+    if (animTimer) clearTimeout(animTimer);
+    animOrder.forEach(function(key) {
+      var el = slide.querySelector('[data-animate="' + key + '"]');
+      if (!el) return;
+      el.classList.remove('anim-in');
+      void el.offsetWidth; // force reflow
+      var delay = animDelays[key];
+      setTimeout(function() {
+        el.style.transitionDelay = '0ms';
+        el.classList.add('anim-in');
+      }, delay);
+    });
+  }
+
+  function goTo(index) {
+    // Sortie slide actuel
+    slides[current].classList.remove('is-active');
+    slides[current].classList.add('is-exit');
+    dots[current] && dots[current].classList.remove('is-active');
+    resetSlideAnimations(slides[current]);
+
+    var prev = current;
+    current = (index + total) % total;
+
+    // Entrée nouveau slide
+    setTimeout(function() {
+      slides[prev].classList.remove('is-exit');
+    }, 600);
+
+    slides[current].classList.add('is-active');
+    dots[current] && dots[current].classList.add('is-active');
+    runSlideAnimations(slides[current]);
+  }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(function() { goTo(current + 1); }, autoDelay);
+  }
+
+  function stopAuto() {
+    if (autoTimer) clearInterval(autoTimer);
+  }
+
+  // Init : animer le premier slide
+  runSlideAnimations(slides[0]);
+
+  // Flèches
+  if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); startAuto(); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); startAuto(); });
+
+  // Dots
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      goTo(parseInt(dot.dataset.index));
+      startAuto();
+    });
+  });
+
+  // Autoplay
+  startAuto();
+
+  // Pause au survol
+  var section = document.getElementById('hero-slider-' + sectionId);
+  if (section) {
+    section.addEventListener('mouseenter', stopAuto);
+    section.addEventListener('mouseleave', startAuto);
+  }
+
+  // Swipe tactile
+  var touchStartX = 0;
+  track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', function(e) {
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      goTo(diff > 0 ? current + 1 : current - 1);
+      startAuto();
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "tag": "section",
+  "class": "hero-slider-wrapper",
+  "settings": [
+    {
+      "type": "range",
+      "id": "slider_height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Hauteur du slider",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Durée d'affichage de chaque slide",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Bandeau défilant (ticker)"
+    },
+    {
+      "type": "text",
+      "id": "ticker_text",
+      "label": "Texte du bandeau",
+      "default": "Electronics Extravaganza: Unmissable Deals!"
+    },
+    {
+      "type": "color",
+      "id": "ticker_bg",
+      "label": "Couleur de fond du bandeau",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "ticker_text_color",
+      "label": "Couleur du texte du bandeau",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Arrière-plan"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Image de fond"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Couleur de fond (si pas d'image)",
+          "default": "#1a3a6b"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "unit": "%",
+          "label": "Opacité de l'overlay sombre",
+          "default": 30
+        },
+        {
+          "type": "header",
+          "content": "Contenu"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "SMART PHONE"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sous-titre",
+          "default": "Mega Music Sale"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Texte court (date / promo)",
+          "default": "02-06 Sep"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Couleur du texte court",
+          "default": "#FFA500"
+        },
+        {
+          "type": "header",
+          "content": "Bouton CTA"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Texte du bouton",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "Lien du bouton"
+        },
+        {
+          "type": "color",
+          "id": "cta_color",
+          "label": "Couleur de fond du bouton",
+          "default": "#1a73e8"
+        },
+        {
+          "type": "color",
+          "id": "cta_text_color",
+          "label": "Couleur du texte du bouton",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "SMART PHONE",
+            "subtitle": "Mega Music Sale",
+            "badge_text": "02-06 Sep"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "TABLETTES",
+            "subtitle": "Offres Exclusives",
+            "badge_text": "Jusqu'à -40%"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "AUDIO",
+            "subtitle": "Son Immersif",
+            "badge_text": "Nouveautés 2025"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

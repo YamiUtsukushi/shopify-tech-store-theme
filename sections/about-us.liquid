@@ -1,0 +1,477 @@
+{% comment %}
+  À Propos — iDhightech2 — Compatible Dawn (Shopify)
+  Fichier : sections/about-us.liquid
+{% endcomment %}
+
+{{ 'about-us.css' | asset_url | stylesheet_tag }}
+
+<div class="about" id="about-{{ section.id }}">
+
+  {%- comment %} ========== HERO ========== {% endcomment -%}
+  <div class="about__hero">
+    {%- if section.settings.hero_image != blank -%}
+      <div class="about__hero-img-wrap">
+        <img
+          src="{{ section.settings.hero_image | image_url: width: 1920 }}"
+          alt="{{ section.settings.hero_title }}"
+          class="about__hero-img"
+          loading="eager"
+          width="1920"
+          height="600"
+        >
+        <div class="about__hero-overlay"></div>
+      </div>
+    {%- else -%}
+      <div class="about__hero-gradient"></div>
+    {%- endif -%}
+    <div class="about__hero-content">
+      <p class="about__hero-eyebrow">{{ section.settings.hero_eyebrow }}</p>
+      <h1 class="about__hero-title">{{ section.settings.hero_title }}</h1>
+      <p class="about__hero-subtitle">{{ section.settings.hero_subtitle }}</p>
+    </div>
+  </div>
+
+  {%- comment %} ========== HISTOIRE ========== {% endcomment -%}
+  <div class="about__story">
+    <div class="about__story-inner">
+      <div class="about__story-text">
+        <span class="about__section-eyebrow">{{ section.settings.story_eyebrow }}</span>
+        <h2 class="about__section-title">{{ section.settings.story_title }}</h2>
+        <div class="about__story-body">{{ section.settings.story_text }}</div>
+      </div>
+      <div class="about__story-visual">
+        {%- if section.settings.story_image != blank -%}
+          <img
+            src="{{ section.settings.story_image | image_url: width: 600 }}"
+            alt="Notre histoire"
+            class="about__story-img"
+            loading="lazy"
+            width="600"
+            height="500"
+          >
+        {%- else -%}
+          <div class="about__story-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="80" height="80" opacity="0.2">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment %} ========== CHIFFRES CLÉS ========== {% endcomment -%}
+  {%- if section.settings.show_stats -%}
+    <div class="about__stats">
+      <div class="about__stats-inner">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="about__stat" {{ block.shopify_attributes }}>
+              <span class="about__stat-value">{{ block.settings.value }}</span>
+              <span class="about__stat-label">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ========== VALEURS ========== {% endcomment -%}
+  <div class="about__values">
+    <div class="about__values-inner">
+      <div class="about__section-header">
+        <span class="about__section-eyebrow">{{ section.settings.values_eyebrow }}</span>
+        <h2 class="about__section-title">{{ section.settings.values_title }}</h2>
+      </div>
+      <div class="about__values-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'value' -%}
+            <div class="about__value-card" {{ block.shopify_attributes }}>
+              <div class="about__value-icon">{{ block.settings.icon }}</div>
+              <h3 class="about__value-title">{{ block.settings.title }}</h3>
+              <p class="about__value-text">{{ block.settings.text }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment %} ========== ÉQUIPE ========== {% endcomment -%}
+  {%- if section.settings.show_team -%}
+    <div class="about__team">
+      <div class="about__team-inner">
+        <div class="about__section-header">
+          <span class="about__section-eyebrow">{{ section.settings.team_eyebrow }}</span>
+          <h2 class="about__section-title">{{ section.settings.team_title }}</h2>
+          <p class="about__team-subtitle">{{ section.settings.team_subtitle }}</p>
+        </div>
+        <div class="about__team-grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'team_member' -%}
+              <div class="about__member" {{ block.shopify_attributes }}>
+                <div class="about__member-photo-wrap">
+                  {%- if block.settings.photo != blank -%}
+                    <img
+                      src="{{ block.settings.photo | image_url: width: 300 }}"
+                      alt="{{ block.settings.name }}"
+                      class="about__member-photo"
+                      loading="lazy"
+                      width="300"
+                      height="300"
+                    >
+                  {%- else -%}
+                    <div class="about__member-placeholder">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+                </div>
+                <h3 class="about__member-name">{{ block.settings.name }}</h3>
+                <p class="about__member-role">{{ block.settings.role }}</p>
+                {%- if block.settings.bio != blank -%}
+                  <p class="about__member-bio">{{ block.settings.bio }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ========== POURQUOI NOUS ========== {% endcomment -%}
+  <div class="about__why">
+    <div class="about__why-inner">
+      <div class="about__section-header">
+        <span class="about__section-eyebrow">{{ section.settings.why_eyebrow }}</span>
+        <h2 class="about__section-title">{{ section.settings.why_title }}</h2>
+      </div>
+      <div class="about__why-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'why_item' -%}
+            <div class="about__why-item" {{ block.shopify_attributes }}>
+              <div class="about__why-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="about__why-title">{{ block.settings.title }}</h3>
+                <p class="about__why-text">{{ block.settings.text }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment %} ========== CTA FINAL ========== {% endcomment -%}
+  <div class="about__cta">
+    <div class="about__cta-inner">
+      <h2 class="about__cta-title">{{ section.settings.cta_title }}</h2>
+      <p class="about__cta-text">{{ section.settings.cta_text }}</p>
+      <div class="about__cta-btns">
+        {%- if section.settings.cta_btn1_label != blank -%}
+          <a href="{{ section.settings.cta_btn1_url }}" class="about__cta-btn about__cta-btn--primary">{{ section.settings.cta_btn1_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.cta_btn2_label != blank -%}
+          <a href="{{ section.settings.cta_btn2_url }}" class="about__cta-btn about__cta-btn--secondary">{{ section.settings.cta_btn2_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "À propos",
+  "tag": "section",
+  "class": "about-wrapper",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Image de fond (optionnel)"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Texte au-dessus du titre",
+      "default": "Bienvenue chez"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Titre principal",
+      "default": "iDhightech2"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Accroche",
+      "default": "Votre destination high-tech de confiance — qualité, innovation et passion pour la technologie."
+    },
+    {
+      "type": "header",
+      "content": "Notre histoire"
+    },
+    {
+      "type": "text",
+      "id": "story_eyebrow",
+      "label": "Texte au-dessus du titre",
+      "default": "Notre histoire"
+    },
+    {
+      "type": "text",
+      "id": "story_title",
+      "label": "Titre section",
+      "default": "Nés de la passion pour la technologie"
+    },
+    {
+      "type": "richtext",
+      "id": "story_text",
+      "label": "Texte de l'histoire",
+      "default": "<p>iDhightech2 est née d'une passion profonde pour la technologie et d'une conviction simple : chaque personne mérite d'accéder aux meilleurs produits électroniques sans compromis sur la qualité ni sur le prix.</p><p>Fondée par des passionnés du numérique, notre boutique s'est rapidement imposée comme une référence dans le domaine de l'électronique grand public. Nous sélectionnons rigoureusement chaque produit de notre catalogue pour garantir des performances optimales et une durabilité exemplaire.</p><p>Aujourd'hui, iDhightech2 c'est une équipe de professionnels engagés, des milliers de clients satisfaits à travers l'Europe, et une promesse : vous offrir le meilleur de la technologie avec un service irréprochable.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image",
+      "label": "Image section histoire"
+    },
+    {
+      "type": "header",
+      "content": "Chiffres clés"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Afficher les chiffres clés",
+      "info": "Modifiez chaque chiffre via les blocs \"Chiffre clé\" dans le panneau de gauche",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Nos valeurs"
+    },
+    {
+      "type": "text",
+      "id": "values_eyebrow",
+      "label": "Texte au-dessus du titre",
+      "default": "Ce qui nous définit"
+    },
+    {
+      "type": "text",
+      "id": "values_title",
+      "label": "Titre section",
+      "default": "Nos valeurs fondamentales"
+    },
+    {
+      "type": "header",
+      "content": "Notre équipe"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_team",
+      "label": "Afficher la section équipe",
+      "info": "Modifiez chaque membre via les blocs \"Membre de l'équipe\" dans le panneau de gauche",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "team_eyebrow",
+      "label": "Texte au-dessus du titre",
+      "default": "Les visages derrière iDhightech2"
+    },
+    {
+      "type": "text",
+      "id": "team_title",
+      "label": "Titre section",
+      "default": "Notre équipe"
+    },
+    {
+      "type": "text",
+      "id": "team_subtitle",
+      "label": "Sous-titre équipe",
+      "default": "Des passionnés de technologie à votre service, chaque jour."
+    },
+    {
+      "type": "header",
+      "content": "Pourquoi nous choisir"
+    },
+    {
+      "type": "text",
+      "id": "why_eyebrow",
+      "label": "Texte au-dessus du titre",
+      "default": "Nos engagements"
+    },
+    {
+      "type": "text",
+      "id": "why_title",
+      "label": "Titre section",
+      "default": "Pourquoi choisir iDhightech2 ?"
+    },
+    {
+      "type": "header",
+      "content": "CTA final"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "Titre",
+      "default": "Prêt à découvrir notre univers high-tech ?"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texte",
+      "default": "Explorez notre catalogue et trouvez les produits qui correspondent à vos besoins et à votre budget."
+    },
+    {
+      "type": "text",
+      "id": "cta_btn1_label",
+      "label": "Bouton 1 — Texte",
+      "default": "Découvrir nos produits"
+    },
+    {
+      "type": "url",
+      "id": "cta_btn1_url",
+      "label": "Bouton 1 — URL"
+    },
+    {
+      "type": "text",
+      "id": "cta_btn2_label",
+      "label": "Bouton 2 — Texte",
+      "default": "Nous contacter"
+    },
+    {
+      "type": "url",
+      "id": "cta_btn2_url",
+      "label": "Bouton 2 — URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Chiffre clé",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Valeur",
+          "default": "500+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Description",
+          "default": "Produits disponibles"
+        }
+      ]
+    },
+    {
+      "type": "value",
+      "name": "Valeur",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icône (emoji)",
+          "default": "⚡"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Innovation"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Nous sélectionnons les produits les plus innovants du marché pour vous offrir le meilleur de la technologie."
+        }
+      ]
+    },
+    {
+      "type": "team_member",
+      "name": "Membre de l'équipe",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nom",
+          "default": "Prénom Nom"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Rôle / Poste",
+          "default": "Fondateur"
+        },
+        {
+          "type": "textarea",
+          "id": "bio",
+          "label": "Courte biographie"
+        }
+      ]
+    },
+    {
+      "type": "why_item",
+      "name": "Argument",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Produits certifiés"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Tous nos produits sont authentiques et certifiés par les fabricants officiels."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "À propos",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "500+", "label": "Produits disponibles" } },
+        { "type": "stat", "settings": { "value": "15 000+", "label": "Clients satisfaits" } },
+        { "type": "stat", "settings": { "value": "48h", "label": "Livraison express" } },
+        { "type": "stat", "settings": { "value": "2 ans", "label": "Garantie produits" } },
+        { "type": "value", "settings": { "icon": "⚡", "title": "Innovation", "text": "Nous sélectionnons les produits les plus innovants du marché pour vous offrir le meilleur de la technologie actuelle." } },
+        { "type": "value", "settings": { "icon": "🏆", "title": "Qualité", "text": "Chaque produit est soigneusement vérifié avant d'intégrer notre catalogue. Zéro compromis sur la qualité." } },
+        { "type": "value", "settings": { "icon": "💬", "title": "Service client", "text": "Notre équipe est disponible du lundi au vendredi pour répondre à toutes vos questions et vous accompagner." } },
+        { "type": "value", "settings": { "icon": "💰", "title": "Prix compétitifs", "text": "Nous négocions directement avec les fabricants pour vous proposer les meilleurs prix du marché." } },
+        { "type": "team_member", "settings": { "name": "Alexandre Martin", "role": "Fondateur & CEO", "bio": "Passionné de technologie depuis l'enfance, Alexandre a fondé iDhightech2 avec la vision de rendre la high-tech accessible à tous." } },
+        { "type": "team_member", "settings": { "name": "Sophie Dubois", "role": "Directrice Marketing", "bio": "Experte en e-commerce, Sophie orchestre la stratégie digitale d'iDhightech2 avec créativité et précision." } },
+        { "type": "team_member", "settings": { "name": "Lucas Bernard", "role": "Responsable Technique", "bio": "Lucas veille à ce que chaque produit référencé réponde aux standards de qualité les plus élevés." } },
+        { "type": "team_member", "settings": { "name": "Emma Petit", "role": "Service Client", "bio": "Emma et son équipe sont là pour vous accompagner à chaque étape de votre expérience d'achat." } },
+        { "type": "why_item", "settings": { "title": "Produits 100% authentiques", "text": "Tous nos produits sont achetés directement auprès des fabricants officiels. Aucun risque de contrefaçon." } },
+        { "type": "why_item", "settings": { "title": "Livraison rapide et sécurisée", "text": "Expédition sous 24h pour toute commande passée avant 14h. Suivi en temps réel disponible." } },
+        { "type": "why_item", "settings": { "title": "Retours gratuits sous 30 jours", "text": "Pas satisfait ? Retournez votre article sous 30 jours, sans question et sans frais." } },
+        { "type": "why_item", "settings": { "title": "Paiement 100% sécurisé", "text": "Vos données bancaires sont protégées par un cryptage SSL 256 bits. Paiement en 3x sans frais disponible." } },
+        { "type": "why_item", "settings": { "title": "Garantie 2 ans sur tous les produits", "text": "Tous nos produits bénéficient de la garantie légale de 2 ans, avec SAV réactif en cas de problème." } },
+        { "type": "why_item", "settings": { "title": "Service client réactif", "text": "Notre équipe répond sous 24h ouvrées. Par email, téléphone ou formulaire de contact." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

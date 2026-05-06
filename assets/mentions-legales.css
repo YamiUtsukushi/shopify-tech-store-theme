@@ -1,0 +1,288 @@
+/* =============================================
+   Mentions Légales — Dawn Theme Compatible
+   Fichier : assets/mentions-legales.css
+   ============================================= */
+
+.ml-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.ml__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.ml__title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.ml__update {
+  font-size: 0.85rem;
+  color: #999;
+  margin: 0;
+}
+
+/* =============================================
+   LAYOUT — sommaire + contenu
+   ============================================= */
+.ml__inner {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* =============================================
+   SOMMAIRE (sticky)
+   ============================================= */
+.ml__toc {
+  position: sticky;
+  top: 2rem;
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1.5px solid #f0f0f0;
+}
+
+.ml__toc-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #999;
+  margin: 0 0 1rem;
+}
+
+.ml__toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: toc;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml__toc-link {
+  display: block;
+  font-size: 0.85rem;
+  color: #555;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+
+.ml__toc-link:hover {
+  background: #fff;
+  color: #FF6600;
+}
+
+/* =============================================
+   BLOCS DE CONTENU
+   ============================================= */
+.ml__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ml__block {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  scroll-margin-top: 2rem;
+}
+
+.ml__block:last-child {
+  border-bottom: none;
+}
+
+.ml__block-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 1.5rem;
+}
+
+.ml__block-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #000 0%, #FF6600 100%);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.ml__block-body {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.ml__block-body p {
+  margin: 0 0 1rem;
+}
+
+.ml__block-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ml__block-body strong {
+  color: #111;
+  font-weight: 600;
+}
+
+.ml__link {
+  color: #FF6600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
+}
+
+.ml__link:hover {
+  opacity: 0.75;
+}
+
+/* =============================================
+   GRILLE INFOS SOCIÉTÉ
+   ============================================= */
+.ml__info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 1rem;
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 1.25rem;
+  border: 1.5px solid #f0f0f0;
+}
+
+.ml__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ml__info-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #aaa;
+}
+
+.ml__info-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111;
+}
+
+/* =============================================
+   TABLEAU COOKIES
+   ============================================= */
+.ml__table-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  border-radius: 8px;
+  border: 1.5px solid #e0e0e0;
+}
+
+.ml__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.ml__table th {
+  background: #111;
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+.ml__table td {
+  padding: 10px 14px;
+  color: #444;
+  border-top: 1px solid #f0f0f0;
+}
+
+.ml__table tr:nth-child(even) td {
+  background: #fafafa;
+}
+
+/* =============================================
+   BOÎTE CONTACT
+   ============================================= */
+.ml__contact-box {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1.5px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ml__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.ml__contact-item svg {
+  color: #FF6600;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 900px) {
+  .ml__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .ml__toc {
+    position: static;
+  }
+
+  .ml__info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .ml-section {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .ml__block-title {
+    font-size: 1.05rem;
+  }
+}

@@ -1,0 +1,115 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "facebook_url": "https://www.instagram.com/",
+        "instagram_url": "https://www.instagram.com/",
+        "youtube_url": "https://www.instagram.com/",
+        "tiktok_url": "https://www.instagram.com/",
+        "twitter_url": "https://www.instagram.com/",
+        "message_1": "Bienvenue sur notre boutique !",
+        "message_2": "Profitez de -40% sur toute la boutique 🎉",
+        "slide_interval": 4
+      }
+    },
+    "header": {
+      "type": "header",
+      "disabled": true,
+      "settings": {
+        "logo_position": "middle-left",
+        "mobile_logo_position": "center",
+        "menu": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": true,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "enable_customer_avatar": true,
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "custom_header_RCpdYy": {
+      "type": "custom-header",
+      "blocks": {
+        "collection_link_byN7fA": {
+          "type": "collection_link",
+          "settings": {
+            "collection": "electromenager"
+          }
+        },
+        "collection_link_wNH4kU": {
+          "type": "collection_link",
+          "settings": {
+            "collection": "tablets"
+          }
+        },
+        "collection_link_8LiPYX": {
+          "type": "collection_link",
+          "settings": {
+            "collection": "tv-image-son"
+          }
+        },
+        "collection_link_tnhJhT": {
+          "type": "collection_link",
+          "settings": {
+            "collection": "objets-connectes"
+          }
+        },
+        "collection_link_W3Ntr7": {
+          "type": "collection_link",
+          "settings": {
+            "collection": "gaming"
+          }
+        }
+      },
+      "block_order": [
+        "collection_link_byN7fA",
+        "collection_link_wNH4kU",
+        "collection_link_8LiPYX",
+        "collection_link_tnhJhT",
+        "collection_link_W3Ntr7"
+      ],
+      "name": "En-tête personnalisé",
+      "settings": {
+        "top_bg": "#ffffff",
+        "top_text_color": "#111111",
+        "logo": "shopify://shop_images/logo_test.png",
+        "logo_width": 150,
+        "search_btn_color": "#ff6600",
+        "featured_product": "tv-4k-55",
+        "featured_end_date": "19-04-2025T23:59:59",
+        "nav_bg": "#ffffff",
+        "nav_text_color": "#111111",
+        "nav_hover_color": "#ff6600",
+        "menu": "main-menu",
+        "secondary_link_1_label": "Features",
+        "secondary_link_1_url": "",
+        "secondary_link_2_label": "À propos de nous",
+        "secondary_link_2_url": "shopify://pages/a-propos-de-nous",
+        "secondary_link_3_label": "FAQ",
+        "secondary_link_3_url": "shopify://pages/faq"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header",
+    "custom_header_RCpdYy"
+  ]
+}

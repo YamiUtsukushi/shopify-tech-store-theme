@@ -1,0 +1,535 @@
+/* =============================================
+   À Propos — Dawn Theme Compatible
+   Fichier : assets/about-us.css
+   ============================================= */
+
+.about {
+  overflow: hidden;
+}
+
+/* =============================================
+   ÉLÉMENTS COMMUNS
+   ============================================= */
+.about__section-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #FF6600;
+  margin-bottom: 0.6rem;
+}
+
+.about__section-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.about__section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about__section-header .about__section-title {
+  margin-bottom: 0;
+}
+
+/* =============================================
+   HERO
+   ============================================= */
+.about__hero {
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.about__hero-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #000000 0%, #1a0a00 40%, #7a2d00 75%, #FF6600 100%);
+}
+
+.about__hero-img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.about__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about__hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(122,45,0,0.6) 100%);
+}
+
+.about__hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+.about__hero-eyebrow {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 0.75rem;
+  display: block;
+}
+
+.about__hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  display: block;
+}
+
+.about__hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+  line-height: 1.6;
+  display: block;
+}
+
+/* =============================================
+   HISTOIRE
+   ============================================= */
+.about__story {
+  padding: 5rem 1.5rem;
+  background: #fff;
+}
+
+.about__story-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about__story-text .about__section-title {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.about__story-body {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.about__story-body p {
+  margin: 0 0 1rem;
+}
+
+.about__story-body p:last-child {
+  margin-bottom: 0;
+}
+
+.about__story-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  display: block;
+}
+
+.about__story-placeholder {
+  width: 100%;
+  height: 420px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f5f5f5, #ebebeb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ddd;
+}
+
+/* =============================================
+   CHIFFRES CLÉS
+   ============================================= */
+.about__stats {
+  background: linear-gradient(135deg, #000000 0%, #1a0a00 40%, #7a2d00 75%, #FF6600 100%);
+  padding: 3.5rem 1.5rem;
+}
+
+.about__stats-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.about__stat-value {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.about__stat-label {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* =============================================
+   VALEURS
+   ============================================= */
+.about__values {
+  padding: 5rem 1.5rem;
+  background: #f8f8f8;
+}
+
+.about__values-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about__values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.about__value-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border: 1.5px solid #f0f0f0;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.about__value-card:hover {
+  border-color: #FF6600;
+  box-shadow: 0 8px 24px rgba(255,102,0,0.12);
+  transform: translateY(-4px);
+}
+
+.about__value-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.about__value-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 0.75rem;
+}
+
+.about__value-text {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =============================================
+   ÉQUIPE
+   ============================================= */
+.about__team {
+  padding: 5rem 1.5rem;
+  background: #fff;
+}
+
+.about__team-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about__team-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.5rem 0 0;
+  line-height: 1.6;
+}
+
+.about__team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.about__member {
+  text-align: center;
+}
+
+.about__member-photo-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.about__member-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  transition: border-color 0.2s;
+}
+
+.about__member:hover .about__member-photo {
+  border-color: #FF6600;
+}
+
+.about__member-placeholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: 3px dashed #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: #ccc;
+}
+
+.about__member-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 0.25rem;
+}
+
+.about__member-role {
+  font-size: 0.82rem;
+  color: #FF6600;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.75rem;
+}
+
+.about__member-bio {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =============================================
+   POURQUOI NOUS
+   ============================================= */
+.about__why {
+  padding: 5rem 1.5rem;
+  background: #f8f8f8;
+}
+
+.about__why-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about__why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.about__why-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1.5px solid #f0f0f0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.about__why-item:hover {
+  border-color: #FF6600;
+  box-shadow: 0 4px 16px rgba(255,102,0,0.1);
+}
+
+.about__why-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: #fff5ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF6600;
+  flex-shrink: 0;
+}
+
+.about__why-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 0.4rem;
+}
+
+.about__why-text {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =============================================
+   CTA FINAL
+   ============================================= */
+.about__cta {
+  background: linear-gradient(135deg, #000000 0%, #1a0a00 40%, #7a2d00 75%, #FF6600 100%);
+  padding: 5rem 1.5rem;
+}
+
+.about__cta-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about__cta-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.about__cta-text {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0 0 2rem;
+  line-height: 1.6;
+}
+
+.about__cta-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.about__cta-btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.about__cta-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.about__cta-btn--primary {
+  background: #fff;
+  color: #111;
+}
+
+.about__cta-btn--secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.6);
+}
+
+.about__cta-btn--secondary:hover {
+  border-color: #fff;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media screen and (max-width: 1024px) {
+  .about__values-grid,
+  .about__team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about__stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about__why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about__story-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about__story-img,
+  .about__story-placeholder {
+    height: 280px;
+  }
+
+  .about__values-grid,
+  .about__team-grid,
+  .about__why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about__stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .about__hero {
+    min-height: 320px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about__stats-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about__cta-btns {
+    flex-direction: column;
+  }
+
+  .about__cta-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

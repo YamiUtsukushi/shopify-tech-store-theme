@@ -1,0 +1,381 @@
+{% comment %}
+  Customer Reviews — Compatible Dawn (Shopify)
+  Fichier : sections/customer-reviews.liquid
+{% endcomment %}
+
+{{ 'customer-reviews.css' | asset_url | stylesheet_tag }}
+
+<section class="cr-section" id="cr-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
+
+  {%- comment %} Header {% endcomment -%}
+  {%- if section.settings.title != blank -%}
+    <div class="cr__header" style="background: {{ section.settings.header_bg }};">
+      <h2 class="cr__title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+        {{ section.settings.title }}
+      </h2>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} Slider {% endcomment -%}
+  <div class="cr__slider-wrapper">
+    <button class="cr__nav cr__nav--prev" id="crPrev-{{ section.id }}" aria-label="Précédent" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="cr__slider" id="crSlider-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          {%- assign rating = block.settings.rating -%}
+
+          <div class="cr__card" style="border-color: {{ section.settings.card_border_color }};" {{ block.shopify_attributes }}>
+
+            {%- comment %} Étoiles {% endcomment -%}
+            <div class="cr__stars-row">
+              <div class="cr__stars">
+                {%- for i in (1..5) -%}
+                  {%- if i <= rating -%}
+                    <svg class="cr__star cr__star--full" viewBox="0 0 24 24" fill="#FFC107" width="18" height="18">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  {%- else -%}
+                    <svg class="cr__star cr__star--empty" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="1.5" width="18" height="18">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+              <span class="cr__rating-text">{{ rating }} | {{ block.settings.review_count }} Avis</span>
+            </div>
+
+            {%- comment %} Texte de l'avis {% endcomment -%}
+            {%- if block.settings.review_text != blank -%}
+              <p class="cr__review-text">"{{ block.settings.review_text }}"</p>
+            {%- endif -%}
+
+            {%- comment %} Auteur {% endcomment -%}
+            <div class="cr__author">
+              {%- if block.settings.author_photo != blank -%}
+                <img
+                  src="{{ block.settings.author_photo | image_url: width: 100 }}"
+                  alt="{{ block.settings.author_name | escape }}"
+                  class="cr__author-photo"
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="cr__author-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+              {%- endif -%}
+              <div class="cr__author-info">
+                <p class="cr__author-name">{{ block.settings.author_name }}</p>
+                {%- if block.settings.author_role != blank -%}
+                  <p class="cr__author-role">{{ block.settings.author_role }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <button class="cr__nav cr__nav--next" id="crNext-{{ section.id }}" aria-label="Suivant" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var slider  = document.getElementById('crSlider-{{ section.id }}');
+  var prevBtn = document.getElementById('crPrev-{{ section.id }}');
+  var nextBtn = document.getElementById('crNext-{{ section.id }}');
+  if (!slider) return;
+
+  function cardWidth() {
+    var card = slider.querySelector('.cr__card');
+    if (!card) return 280;
+    return card.offsetWidth + parseInt(getComputedStyle(slider).gap || 20);
+  }
+
+  function updateNav() {
+    var overflows = slider.scrollWidth > slider.clientWidth + 2;
+    var atStart   = slider.scrollLeft <= 0;
+    var atEnd     = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
+    if (prevBtn) prevBtn.style.visibility = (!overflows || atStart) ? 'hidden' : 'visible';
+    if (nextBtn) nextBtn.style.visibility = (!overflows || atEnd)   ? 'hidden' : 'visible';
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    slider.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+  });
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    slider.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+  });
+
+  slider.addEventListener('scroll', updateNav, { passive: true });
+  window.addEventListener('resize', updateNav);
+  setTimeout(updateNav, 100);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Avis clients",
+  "tag": "section",
+  "class": "cr-wrapper",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Fond de la section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Fond du titre",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Loved By Customers"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Couleur du titre",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Couleur de la bordure des cartes",
+      "default": "#FF6600"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Avis",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Note",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "review_count",
+          "label": "Nombre d'avis",
+          "default": "5"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Texte de l'avis"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_photo",
+          "label": "Photo de l'auteur"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Nom de l'auteur",
+          "default": "Client satisfait"
+        },
+        {
+          "type": "text",
+          "id": "author_role",
+          "label": "Rôle / Poste",
+          "default": "Client vérifié"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avis clients",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "127",
+            "review_text": "Produit absolument incroyable ! La qualité sonore est exceptionnelle et le confort est au rendez-vous. Je recommande vivement à tous les amateurs d'audio.",
+            "author_name": "Thomas Martin",
+            "author_role": "Client vérifié"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "98",
+            "review_text": "Livraison ultra rapide et produit conforme à la description. Le service client est très réactif. Une expérience d'achat parfaite du début à la fin.",
+            "author_name": "Sophie Dubois",
+            "author_role": "Acheteuse régulière"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "214",
+            "review_text": "Je suis impressionné par la qualité de fabrication. Le produit est solide, élégant et fonctionne parfaitement. Exactement ce que je cherchais.",
+            "author_name": "Lucas Bernard",
+            "author_role": "Ingénieur"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "76",
+            "review_text": "Très bon rapport qualité-prix. Le produit dépasse mes attentes. La batterie tient vraiment longtemps et la connexion Bluetooth est stable.",
+            "author_name": "Camille Petit",
+            "author_role": "Designer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "183",
+            "review_text": "Parfait pour mon usage quotidien ! La qualité d'image est bluffante et la prise en main est intuitive. Je ne regrette absolument pas mon achat.",
+            "author_name": "Antoine Lefebvre",
+            "author_role": "Photographe"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "92",
+            "review_text": "Excellent produit, rien à redire. La qualité est au top et le prix est très compétitif. Je recommande cette boutique les yeux fermés.",
+            "author_name": "Marie Lambert",
+            "author_role": "Cliente vérifiée"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "145",
+            "review_text": "Produit de très bonne qualité, bien emballé et livré rapidement. L'installation est simple et les performances sont au niveau attendu.",
+            "author_name": "Julien Moreau",
+            "author_role": "Technicien"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "231",
+            "review_text": "Je suis fan ! Ce produit a complètement transformé mon expérience gaming. La réactivité est impressionnante et le son est cristallin.",
+            "author_name": "Emma Richard",
+            "author_role": "Gamer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "67",
+            "review_text": "Superbe produit, très bien conçu. La prise en main est agréable et les fonctionnalités sont nombreuses. Un achat que je ne regrette pas du tout.",
+            "author_name": "Nicolas Simon",
+            "author_role": "Manager"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "189",
+            "review_text": "La qualité est vraiment au rendez-vous. Le produit est conforme aux photos et la livraison a été très rapide. Je recommande sans hésiter.",
+            "author_name": "Laura Michel",
+            "author_role": "CEO"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_text": "Très satisfait de mon achat. Le produit est robuste et performant. Le service après-vente est également très professionnel et à l'écoute.",
+            "review_count": "112",
+            "author_name": "Paul Durand",
+            "author_role": "Chef de projet"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "304",
+            "review_text": "Incroyable ! Je ne pensais pas que ce produit serait aussi bon. La qualité de construction est remarquable et les performances dépassent mes espérances.",
+            "author_name": "Isabelle Fontaine",
+            "author_role": "Architecte"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "88",
+            "review_text": "Produit reçu en parfait état, emballage soigné. Les caractéristiques correspondent parfaitement à l'annonce. Je suis totalement satisfait.",
+            "author_name": "Kevin Rousseau",
+            "author_role": "Développeur"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_count": "156",
+            "review_text": "Excellent achat ! La qualité du produit est vraiment supérieure. Le rapport qualité-prix est imbattable et la livraison était très rapide.",
+            "author_name": "Chloé Blanc",
+            "author_role": "Étudiante"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_count": "267",
+            "review_text": "Ce produit est tout simplement parfait. La qualité sonore est exceptionnelle, le design est élégant et l'autonomie est bluffante. 100% recommandé !",
+            "author_name": "Marc Dupont",
+            "author_role": "Musicien"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

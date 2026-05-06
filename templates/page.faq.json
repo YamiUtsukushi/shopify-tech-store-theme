@@ -1,0 +1,219 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "faq",
+      "settings": {
+        "title": "Questions fréquentes",
+        "subtitle": "Retrouvez les réponses à vos questions les plus fréquentes.",
+        "cta_text": "Vous n'avez pas trouvé votre réponse ?",
+        "cta_label": "Contactez notre service client",
+        "cta_url": "/pages/contact"
+      },
+      "blocks": {
+        "block-cmd-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Quels sont les délais de livraison ?",
+            "answer": "<p>Nos délais de livraison standard sont de <strong>2 à 5 jours ouvrés</strong> en France métropolitaine. Pour la livraison express, comptez <strong>24 à 48h</strong>. Les commandes passées avant 14h sont expédiées le jour même.</p>"
+          }
+        },
+        "block-cmd-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Comment suivre ma commande ?",
+            "answer": "<p>Dès l'expédition de votre commande, vous recevrez un <strong>email de confirmation</strong> contenant un numéro de suivi. Vous pouvez suivre votre colis directement sur le site du transporteur ou depuis votre espace compte sous la rubrique <strong>\"Mes commandes\"</strong>.</p>"
+          }
+        },
+        "block-cmd-3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Livrez-vous à l'international ?",
+            "answer": "<p>Oui, nous livrons dans toute l'<strong>Union Européenne</strong> ainsi qu'en Suisse, au Royaume-Uni et au Canada. Les délais pour les livraisons internationales sont de <strong>5 à 10 jours ouvrés</strong>.</p>"
+          }
+        },
+        "block-cmd-4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "Puis-je modifier ou annuler ma commande ?",
+            "answer": "<p>Vous pouvez modifier ou annuler votre commande <strong>dans les 2 heures suivant la passation</strong> en nous contactant par email ou téléphone. Passé ce délai, la commande est transmise à notre entrepôt et ne peut plus être modifiée.</p>"
+          }
+        },
+        "block-cmd-5": {
+          "type": "faq_item",
+          "settings": {
+            "category": "commandes",
+            "question": "La livraison est-elle gratuite ?",
+            "answer": "<p>La livraison est <strong>offerte pour toute commande supérieure à 50€</strong>. En dessous de ce montant, des frais de port de 4,99€ s'appliquent.</p>"
+          }
+        },
+        "block-ret-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Quelle est votre politique de retour ?",
+            "answer": "<p>Vous disposez de <strong>30 jours</strong> après réception pour retourner un article. Le produit doit être dans son <strong>emballage d'origine</strong>, non utilisé et accompagné de tous ses accessoires.</p>"
+          }
+        },
+        "block-ret-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Dans quel délai serai-je remboursé ?",
+            "answer": "<p>Une fois votre retour reçu et validé, le remboursement est effectué sous <strong>5 à 7 jours ouvrés</strong> sur votre moyen de paiement initial.</p>"
+          }
+        },
+        "block-ret-3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Comment initier un retour ?",
+            "answer": "<p>Connectez-vous à votre compte, allez dans <strong>\"Mes commandes\"</strong> et sélectionnez l'article à retourner. Vous recevrez une étiquette de retour par email.</p>"
+          }
+        },
+        "block-ret-4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "retours",
+            "question": "Que faire si je reçois un produit endommagé ?",
+            "answer": "<p>Contactez-nous <strong>dans les 48h</strong> suivant la réception avec des photos du produit. Nous organiserons un échange ou un remboursement complet à nos frais.</p>"
+          }
+        },
+        "block-prod-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Quelle est la durée de garantie des produits ?",
+            "answer": "<p>Tous nos produits bénéficient de la <strong>garantie légale de conformité de 2 ans</strong>. Certains produits disposent également d'une garantie constructeur supplémentaire.</p>"
+          }
+        },
+        "block-prod-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Les produits sont-ils compatibles avec tous les appareils ?",
+            "answer": "<p>La compatibilité est indiquée sur chaque fiche produit. Notre service client est disponible pour vous conseiller sur la compatibilité d'un produit avec vos appareils existants.</p>"
+          }
+        },
+        "block-prod-3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "produits",
+            "question": "Les produits vendus sont-ils neufs ?",
+            "answer": "<p>Oui, <strong>tous nos produits sont neufs</strong>, achetés directement auprès des fabricants ou de distributeurs officiels.</p>"
+          }
+        },
+        "block-pay-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "paiement",
+            "question": "Quels moyens de paiement acceptez-vous ?",
+            "answer": "<p>Nous acceptons les paiements par <strong>Visa, Mastercard, PayPal, Apple Pay et Google Pay</strong>. Nous proposons également le paiement en <strong>3 ou 4 fois sans frais</strong> pour les commandes supérieures à 100€.</p>"
+          }
+        },
+        "block-pay-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "paiement",
+            "question": "Mes informations bancaires sont-elles sécurisées ?",
+            "answer": "<p>Oui. Nous utilisons un <strong>protocole SSL 256 bits</strong>. Vos informations bancaires ne sont jamais stockées sur nos serveurs.</p>"
+          }
+        },
+        "block-pay-3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "paiement",
+            "question": "Puis-je obtenir une facture ?",
+            "answer": "<p>Oui, une <strong>facture est automatiquement générée</strong> pour chaque commande et disponible dans votre espace compte sous \"Mes commandes\".</p>"
+          }
+        },
+        "block-cpt-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "compte",
+            "question": "Comment créer un compte ?",
+            "answer": "<p>Cliquez sur <strong>\"Créer un compte\"</strong>, renseignez votre email et choisissez un mot de passe. Vous recevrez un email de confirmation pour activer votre compte.</p>"
+          }
+        },
+        "block-cpt-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "compte",
+            "question": "J'ai oublié mon mot de passe, que faire ?",
+            "answer": "<p>Cliquez sur <strong>\"Mot de passe oublié\"</strong> sur la page de connexion. Vous recevrez un lien de réinitialisation valable 24h.</p>"
+          }
+        },
+        "block-cpt-3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "compte",
+            "question": "Comment modifier mes informations personnelles ?",
+            "answer": "<p>Connectez-vous à votre compte et accédez à <strong>\"Mes informations\"</strong>. Vous pouvez modifier votre nom, email, téléphone et adresses de livraison.</p>"
+          }
+        },
+        "block-sup-1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "support",
+            "question": "Quels sont les horaires du service client ?",
+            "answer": "<p>Notre service client est disponible <strong>du lundi au vendredi de 9h à 18h</strong>. En dehors de ces horaires, laissez-nous un message via le formulaire de contact.</p>"
+          }
+        },
+        "block-sup-2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "support",
+            "question": "Dans quel délai répondez-vous aux messages ?",
+            "answer": "<p>Nous nous engageons à répondre à tous les messages dans un délai de <strong>24h ouvrées</strong>.</p>"
+          }
+        },
+        "block-sup-3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "support",
+            "question": "Comment nous contacter ?",
+            "answer": "<p>Vous pouvez nous joindre via <strong>notre formulaire de contact</strong>, par email ou par téléphone. Munissez-vous de votre numéro de commande pour accélérer le traitement.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "block-cmd-1",
+        "block-cmd-2",
+        "block-cmd-3",
+        "block-cmd-4",
+        "block-cmd-5",
+        "block-ret-1",
+        "block-ret-2",
+        "block-ret-3",
+        "block-ret-4",
+        "block-prod-1",
+        "block-prod-2",
+        "block-prod-3",
+        "block-pay-1",
+        "block-pay-2",
+        "block-pay-3",
+        "block-cpt-1",
+        "block-cpt-2",
+        "block-cpt-3",
+        "block-sup-1",
+        "block-sup-2",
+        "block-sup-3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

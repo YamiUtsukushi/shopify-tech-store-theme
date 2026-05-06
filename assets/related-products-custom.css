@@ -1,0 +1,49 @@
+/* =============================================
+   Related Products Custom — iDhightech2
+   Fichier : assets/related-products-custom.css
+   ============================================= */
+
+/* Fond gris sur toute la section */
+.color-scheme-1.gradient:has(product-recommendations),
+product-recommendations {
+  background: #f5f5f5;
+}
+
+/* Wrapper fond gris pleine largeur */
+.section:has(product-recommendations),
+div:has(> product-recommendations) {
+  background: #f5f5f5;
+}
+
+/* Titre de la section */
+.related-products__heading {
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  color: #111 !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 1.5rem !important;
+  padding: 1rem 1.25rem !important;
+  background: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  display: block !important;
+}
+
+/* Cards — surcharge Dawn via collection-cards.css déjà chargé */
+/* On ajoute juste le fond gris sur la grille */
+product-recommendations .product-grid {
+  background: #f5f5f5;
+  padding: 0.5rem 0 1rem;
+}
+
+/* Hover titre produit en orange */
+product-recommendations .card__heading a:hover {
+  color: #ec6034 !important;
+}
+
+/* Badge en orange */
+product-recommendations .badge--sale {
+  background: #ec6034 !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+}

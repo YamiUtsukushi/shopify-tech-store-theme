@@ -1,0 +1,467 @@
+{% comment %}
+  Politique de Confidentialité — Compatible Dawn (Shopify)
+  Fichier : sections/politique-confidentialite.liquid
+{% endcomment %}
+
+{{ 'privacy-policy.css' | asset_url | stylesheet_tag }}
+
+<section class="pc-section" id="pc-{{ section.id }}">
+
+  {%- comment %} Header {% endcomment -%}
+  <div class="pc__header">
+    <h1 class="pc__title">{{ section.settings.title }}</h1>
+    <p class="pc__update">Dernière mise à jour : {{ section.settings.last_update }}</p>
+    <p class="pc__intro">{{ section.settings.intro }}</p>
+  </div>
+
+  <div class="pc__inner">
+
+    {%- comment %} Sommaire {% endcomment -%}
+    <div class="pc__toc">
+      <p class="pc__toc-title">Sommaire</p>
+      <ol class="pc__toc-list">
+        <li><a href="#pc-collecte" class="pc__toc-link">Données collectées</a></li>
+        <li><a href="#pc-utilisation" class="pc__toc-link">Utilisation des données</a></li>
+        <li><a href="#pc-partage" class="pc__toc-link">Partage des données</a></li>
+        <li><a href="#pc-conservation" class="pc__toc-link">Conservation des données</a></li>
+        <li><a href="#pc-securite" class="pc__toc-link">Sécurité des données</a></li>
+        <li><a href="#pc-droits" class="pc__toc-link">Vos droits</a></li>
+        <li><a href="#pc-cookies" class="pc__toc-link">Cookies & traceurs</a></li>
+        <li><a href="#pc-mineurs" class="pc__toc-link">Mineurs</a></li>
+        <li><a href="#pc-modifications" class="pc__toc-link">Modifications</a></li>
+        <li><a href="#pc-contact" class="pc__toc-link">Nous contacter</a></li>
+      </ol>
+    </div>
+
+    {%- comment %} Contenu {% endcomment -%}
+    <div class="pc__content">
+
+      {%- comment %} 1. Données collectées {% endcomment -%}
+      <div class="pc__block" id="pc-collecte">
+        <h2 class="pc__block-title"><span class="pc__block-num">1</span>Données collectées</h2>
+        <div class="pc__block-body">
+          <p>Dans le cadre de votre utilisation de notre site <strong>{{ shop.domain }}</strong> et de nos services, <strong>{{ section.settings.company_name }}</strong> est amenée à collecter et traiter les données personnelles suivantes :</p>
+
+          <div class="pc__category">
+            <div class="pc__category-header">
+              <span class="pc__category-icon">👤</span>
+              <h3 class="pc__category-title">Données d'identification</h3>
+            </div>
+            <ul class="pc__list">
+              <li>Nom et prénom</li>
+              <li>Adresse email</li>
+              <li>Numéro de téléphone</li>
+              <li>Adresse postale (livraison et facturation)</li>
+            </ul>
+          </div>
+
+          <div class="pc__category">
+            <div class="pc__category-header">
+              <span class="pc__category-icon">💳</span>
+              <h3 class="pc__category-title">Données de paiement</h3>
+            </div>
+            <ul class="pc__list">
+              <li>Informations de carte bancaire (traitées de manière sécurisée par nos prestataires de paiement certifiés PCI-DSS)</li>
+              <li>Historique des transactions</li>
+            </ul>
+            <p class="pc__note">⚠️ <strong>{{ section.settings.company_name }}</strong> ne stocke jamais vos données bancaires sur ses propres serveurs.</p>
+          </div>
+
+          <div class="pc__category">
+            <div class="pc__category-header">
+              <span class="pc__category-icon">🛒</span>
+              <h3 class="pc__category-title">Données de navigation et d'achat</h3>
+            </div>
+            <ul class="pc__list">
+              <li>Historique des commandes et achats</li>
+              <li>Produits consultés et ajoutés au panier</li>
+              <li>Adresse IP et données de connexion</li>
+              <li>Type de navigateur et système d'exploitation</li>
+              <li>Pages visitées et durée des sessions</li>
+            </ul>
+          </div>
+
+          <div class="pc__category">
+            <div class="pc__category-header">
+              <span class="pc__category-icon">💬</span>
+              <h3 class="pc__category-title">Données de communication</h3>
+            </div>
+            <ul class="pc__list">
+              <li>Messages envoyés via notre formulaire de contact</li>
+              <li>Correspondances avec notre service client</li>
+              <li>Avis et évaluations laissés sur nos produits</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 2. Utilisation {% endcomment -%}
+      <div class="pc__block" id="pc-utilisation">
+        <h2 class="pc__block-title"><span class="pc__block-num">2</span>Utilisation des données</h2>
+        <div class="pc__block-body">
+          <p>Vos données personnelles sont collectées et traitées pour les finalités suivantes :</p>
+          <div class="pc__purposes">
+            <div class="pc__purpose-item">
+              <div class="pc__purpose-icon">✅</div>
+              <div>
+                <strong>Exécution des commandes</strong>
+                <p>Traitement, préparation, expédition et suivi de vos commandes. Base légale : exécution du contrat.</p>
+              </div>
+            </div>
+            <div class="pc__purpose-item">
+              <div class="pc__purpose-icon">✅</div>
+              <div>
+                <strong>Gestion de votre compte client</strong>
+                <p>Création et gestion de votre espace personnel, historique de commandes, gestion des retours. Base légale : exécution du contrat.</p>
+              </div>
+            </div>
+            <div class="pc__purpose-item">
+              <div class="pc__purpose-icon">✅</div>
+              <div>
+                <strong>Service après-vente</strong>
+                <p>Traitement de vos demandes, réclamations et questions. Base légale : exécution du contrat et intérêt légitime.</p>
+              </div>
+            </div>
+            <div class="pc__purpose-item">
+              <div class="pc__purpose-icon">✅</div>
+              <div>
+                <strong>Obligations légales et comptables</strong>
+                <p>Conservation des factures et données de transaction conformément aux obligations légales. Base légale : obligation légale.</p>
+              </div>
+            </div>
+            <div class="pc__purpose-item">
+              <div class="pc__purpose-icon">📧</div>
+              <div>
+                <strong>Communications commerciales</strong>
+                <p>Envoi de newsletters, offres promotionnelles et actualités (uniquement avec votre consentement). Base légale : consentement.</p>
+              </div>
+            </div>
+            <div class="pc__purpose-item">
+              <div class="pc__purpose-icon">📊</div>
+              <div>
+                <strong>Amélioration de nos services</strong>
+                <p>Analyse de l'utilisation du site pour améliorer votre expérience. Base légale : intérêt légitime.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 3. Partage {% endcomment -%}
+      <div class="pc__block" id="pc-partage">
+        <h2 class="pc__block-title"><span class="pc__block-num">3</span>Partage des données</h2>
+        <div class="pc__block-body">
+          <p><strong>{{ section.settings.company_name }}</strong> ne vend jamais vos données personnelles à des tiers. Nous pouvons cependant partager vos données avec les catégories de destinataires suivantes, dans le strict cadre nécessaire à l'exécution de nos services :</p>
+          <div class="pc__partners">
+            <div class="pc__partner">
+              <strong>Prestataires de paiement</strong>
+              <p>Stripe, PayPal, Apple Pay, Google Pay — pour le traitement sécurisé des transactions.</p>
+            </div>
+            <div class="pc__partner">
+              <strong>Transporteurs et logistique</strong>
+              <p>Colissimo, Chronopost, DHL — pour l'expédition et la livraison de vos commandes.</p>
+            </div>
+            <div class="pc__partner">
+              <strong>Hébergeur et infrastructure</strong>
+              <p>Shopify Inc. — pour l'hébergement de la boutique et le traitement des données associées.</p>
+            </div>
+            <div class="pc__partner">
+              <strong>Outils analytiques</strong>
+              <p>Google Analytics — pour la mesure d'audience, avec anonymisation des données activée.</p>
+            </div>
+            <div class="pc__partner">
+              <strong>Autorités compétentes</strong>
+              <p>Sur demande des autorités légales, judiciaires ou réglementaires compétentes.</p>
+            </div>
+          </div>
+          <p>Tous nos prestataires sont soumis à des obligations contractuelles strictes garantissant la protection de vos données conformément au RGPD.</p>
+        </div>
+      </div>
+
+      {%- comment %} 4. Conservation {% endcomment -%}
+      <div class="pc__block" id="pc-conservation">
+        <h2 class="pc__block-title"><span class="pc__block-num">4</span>Conservation des données</h2>
+        <div class="pc__block-body">
+          <p>Vos données personnelles sont conservées pendant les durées suivantes :</p>
+          <div class="pc__table-wrap">
+            <table class="pc__table">
+              <thead>
+                <tr>
+                  <th>Type de données</th>
+                  <th>Durée de conservation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Données de compte client</td>
+                  <td>3 ans après la dernière activité</td>
+                </tr>
+                <tr>
+                  <td>Données de commandes et factures</td>
+                  <td>10 ans (obligation comptable)</td>
+                </tr>
+                <tr>
+                  <td>Données de paiement</td>
+                  <td>13 mois après la transaction</td>
+                </tr>
+                <tr>
+                  <td>Données de navigation (cookies)</td>
+                  <td>13 mois maximum</td>
+                </tr>
+                <tr>
+                  <td>Données de contact (formulaire)</td>
+                  <td>3 ans après la dernière interaction</td>
+                </tr>
+                <tr>
+                  <td>Données marketing (newsletter)</td>
+                  <td>Jusqu'au retrait du consentement</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 5. Sécurité {% endcomment -%}
+      <div class="pc__block" id="pc-securite">
+        <h2 class="pc__block-title"><span class="pc__block-num">5</span>Sécurité des données</h2>
+        <div class="pc__block-body">
+          <p><strong>{{ section.settings.company_name }}</strong> met en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès non autorisé, modification, divulgation ou destruction :</p>
+          <div class="pc__security-grid">
+            <div class="pc__security-item">
+              <span class="pc__security-icon">🔒</span>
+              <div>
+                <strong>Chiffrement SSL/TLS</strong>
+                <p>Toutes les communications entre votre navigateur et notre serveur sont chiffrées via un protocole SSL 256 bits.</p>
+              </div>
+            </div>
+            <div class="pc__security-item">
+              <span class="pc__security-icon">🛡️</span>
+              <div>
+                <strong>Certification PCI-DSS</strong>
+                <p>Nos prestataires de paiement sont certifiés PCI-DSS, garantissant la sécurité des transactions bancaires.</p>
+              </div>
+            </div>
+            <div class="pc__security-item">
+              <span class="pc__security-icon">🔐</span>
+              <div>
+                <strong>Accès restreint</strong>
+                <p>L'accès à vos données est strictement limité aux personnes habilitées et nécessaires à l'exécution du service.</p>
+              </div>
+            </div>
+            <div class="pc__security-item">
+              <span class="pc__security-icon">📋</span>
+              <div>
+                <strong>Conformité RGPD</strong>
+                <p>Nos pratiques sont conformes au Règlement Général sur la Protection des Données (UE) 2016/679.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 6. Vos droits {% endcomment -%}
+      <div class="pc__block" id="pc-droits">
+        <h2 class="pc__block-title"><span class="pc__block-num">6</span>Vos droits</h2>
+        <div class="pc__block-body">
+          <p>Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :</p>
+          <div class="pc__rights-grid">
+            <div class="pc__right-item">
+              <span class="pc__right-icon">👁️</span>
+              <strong>Droit d'accès</strong>
+              <p>Obtenir une copie de vos données personnelles que nous traitons.</p>
+            </div>
+            <div class="pc__right-item">
+              <span class="pc__right-icon">✏️</span>
+              <strong>Droit de rectification</strong>
+              <p>Corriger des données inexactes ou incomplètes vous concernant.</p>
+            </div>
+            <div class="pc__right-item">
+              <span class="pc__right-icon">🗑️</span>
+              <strong>Droit à l'effacement</strong>
+              <p>Demander la suppression de vos données dans les cas prévus par la loi.</p>
+            </div>
+            <div class="pc__right-item">
+              <span class="pc__right-icon">⏸️</span>
+              <strong>Droit à la limitation</strong>
+              <p>Limiter le traitement de vos données dans certaines circonstances.</p>
+            </div>
+            <div class="pc__right-item">
+              <span class="pc__right-icon">📦</span>
+              <strong>Droit à la portabilité</strong>
+              <p>Recevoir vos données dans un format structuré et lisible par machine.</p>
+            </div>
+            <div class="pc__right-item">
+              <span class="pc__right-icon">🚫</span>
+              <strong>Droit d'opposition</strong>
+              <p>Vous opposer au traitement de vos données à des fins de prospection commerciale.</p>
+            </div>
+          </div>
+          <div class="pc__rights-cta">
+            <p>Pour exercer l'un de ces droits, contactez-nous à : <a href="mailto:{{ section.settings.email }}" class="pc__link">{{ section.settings.email }}</a></p>
+            <p>Nous nous engageons à répondre à votre demande dans un délai d'<strong>un mois</strong>. Vous disposez également du droit d'introduire une réclamation auprès de la <strong>CNIL</strong> : <a href="https://www.cnil.fr" target="_blank" rel="noopener" class="pc__link">www.cnil.fr</a></p>
+          </div>
+        </div>
+      </div>
+
+      {%- comment %} 7. Cookies {% endcomment -%}
+      <div class="pc__block" id="pc-cookies">
+        <h2 class="pc__block-title"><span class="pc__block-num">7</span>Cookies & traceurs</h2>
+        <div class="pc__block-body">
+          <p>Notre site utilise des cookies et traceurs pour améliorer votre expérience. Lors de votre première visite, un bandeau vous demande votre consentement pour les cookies non essentiels.</p>
+          <div class="pc__table-wrap">
+            <table class="pc__table">
+              <thead>
+                <tr>
+                  <th>Catégorie</th>
+                  <th>Exemples</th>
+                  <th>Finalité</th>
+                  <th>Consentement requis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Essentiels</strong></td>
+                  <td>Session, panier</td>
+                  <td>Fonctionnement du site</td>
+                  <td>Non</td>
+                </tr>
+                <tr>
+                  <td><strong>Analytiques</strong></td>
+                  <td>Google Analytics</td>
+                  <td>Mesure d'audience</td>
+                  <td>Oui</td>
+                </tr>
+                <tr>
+                  <td><strong>Marketing</strong></td>
+                  <td>Facebook Pixel</td>
+                  <td>Publicité ciblée</td>
+                  <td>Oui</td>
+                </tr>
+                <tr>
+                  <td><strong>Préférences</strong></td>
+                  <td>Langue, devise</td>
+                  <td>Personnalisation</td>
+                  <td>Non</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Vous pouvez modifier vos préférences de cookies à tout moment depuis les paramètres de votre navigateur.</p>
+        </div>
+      </div>
+
+      {%- comment %} 8. Mineurs {% endcomment -%}
+      <div class="pc__block" id="pc-mineurs">
+        <h2 class="pc__block-title"><span class="pc__block-num">8</span>Mineurs</h2>
+        <div class="pc__block-body">
+          <p>Nos services sont destinés aux personnes âgées de <strong>18 ans et plus</strong>. Nous ne collectons pas sciemment de données personnelles concernant des mineurs de moins de 16 ans sans le consentement préalable de leurs parents ou tuteurs légaux.</p>
+          <p>Si vous êtes parent ou tuteur et que vous pensez que votre enfant nous a fourni des données personnelles sans votre consentement, veuillez nous contacter immédiatement à <a href="mailto:{{ section.settings.email }}" class="pc__link">{{ section.settings.email }}</a> afin que nous puissions supprimer ces informations.</p>
+        </div>
+      </div>
+
+      {%- comment %} 9. Modifications {% endcomment -%}
+      <div class="pc__block" id="pc-modifications">
+        <h2 class="pc__block-title"><span class="pc__block-num">9</span>Modifications de la politique</h2>
+        <div class="pc__block-body">
+          <p><strong>{{ section.settings.company_name }}</strong> se réserve le droit de modifier la présente politique de confidentialité à tout moment. En cas de modification substantielle, vous serez informé par email ou via une notification sur le site.</p>
+          <p>La date de dernière mise à jour est indiquée en haut de cette page. Nous vous encourageons à consulter régulièrement cette page pour rester informé de nos pratiques en matière de confidentialité.</p>
+          <p>Votre utilisation continue de notre site après toute modification constitue votre acceptation de la politique révisée.</p>
+        </div>
+      </div>
+
+      {%- comment %} 10. Contact DPO {% endcomment -%}
+      <div class="pc__block" id="pc-contact">
+        <h2 class="pc__block-title"><span class="pc__block-num">10</span>Nous contacter</h2>
+        <div class="pc__block-body">
+          <p>Pour toute question relative à notre politique de confidentialité ou pour exercer vos droits, contactez notre responsable de la protection des données :</p>
+          <div class="pc__contact-box">
+            <div class="pc__contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <div>
+                <strong>{{ section.settings.company_name }}</strong>
+                <p>{{ section.settings.address }}</p>
+              </div>
+            </div>
+            <div class="pc__contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:{{ section.settings.email }}" class="pc__link">{{ section.settings.email }}</a>
+            </div>
+            <div class="pc__contact-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.12 6.12l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:{{ section.settings.phone }}" class="pc__link">{{ section.settings.phone }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Politique confidentialité",
+  "tag": "section",
+  "class": "pc-wrapper",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "En-tête"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Politique de confidentialité"
+    },
+    {
+      "type": "text",
+      "id": "last_update",
+      "label": "Date de mise à jour",
+      "default": "Janvier 2025"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Chez iDhightech2, la protection de vos données personnelles est une priorité. Cette politique vous explique quelles données nous collectons, comment nous les utilisons et quels sont vos droits."
+    },
+    {
+      "type": "header",
+      "content": "Informations société"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Nom de la société",
+      "default": "iDhightech2"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Adresse",
+      "default": "1 Rue de la Technologie, 75001 Paris, France"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email de contact",
+      "default": "contact@idhightech2.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Téléphone",
+      "default": "01 23 45 67 89"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Politique confidentialité"
+    }
+  ]
+}
+{% endschema %}

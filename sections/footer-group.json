@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "custom_footer_FBCga9": {
+      "type": "custom-footer",
+      "name": "Pied de page",
+      "settings": {
+        "footer_logo_width": 140,
+        "about_text": "Votre boutique électronique de confiance. Retrouvez les meilleures marques au meilleur prix.",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_youtube": "",
+        "social_tiktok": "",
+        "social_twitter": "",
+        "col2_title": "Service Client",
+        "link_faq_label": "FAQ",
+        "link_faq_url": "shopify://pages/faq",
+        "link_tracking_label": "Suivi de commande",
+        "link_tracking_url": "shopify://pages/faq",
+        "link_returns_label": "Retours & remboursements",
+        "link_returns_url": "shopify://pages/faq",
+        "link_shipping_label": "Livraison & délais",
+        "link_shipping_url": "shopify://pages/faq",
+        "link_contact_label": "Contactez-nous",
+        "link_contact_url": "shopify://pages/contact",
+        "col4_title": "Mon Compte",
+        "link_wishlist_label": "Ma liste de souhaits",
+        "link_wishlist_url": "",
+        "link_about_label": "À propos de nous",
+        "link_about_url": "shopify://pages/a-propos-de-nous",
+        "copyright_text": "Tous droits réservés.",
+        "show_visa": true,
+        "show_mastercard": true,
+        "show_paypal": true,
+        "show_applepay": true,
+        "show_googlepay": true
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "custom_footer_FBCga9",
+    "footer"
+  ]
+}

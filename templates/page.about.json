@@ -1,0 +1,200 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "about-us",
+      "blocks": {
+        "stat-1": {
+          "type": "stat",
+          "settings": {
+            "value": "500+",
+            "label": "Produits disponibles"
+          }
+        },
+        "stat-2": {
+          "type": "stat",
+          "settings": {
+            "value": "15 000+",
+            "label": "Clients satisfaits"
+          }
+        },
+        "stat-3": {
+          "type": "stat",
+          "settings": {
+            "value": "48h",
+            "label": "Livraison express"
+          }
+        },
+        "stat-4": {
+          "type": "stat",
+          "settings": {
+            "value": "2 ans",
+            "label": "Garantie produits"
+          }
+        },
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "icon": "⚡",
+            "title": "Innovation",
+            "text": "Nous sélectionnons les produits les plus innovants du marché pour vous offrir le meilleur de la technologie actuelle."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "icon": "🏆",
+            "title": "Qualité",
+            "text": "Chaque produit est soigneusement vérifié avant d'intégrer notre catalogue. Zéro compromis sur la qualité."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "icon": "💬",
+            "title": "Service client",
+            "text": "Notre équipe est disponible du lundi au vendredi pour répondre à toutes vos questions et vous accompagner."
+          }
+        },
+        "value-4": {
+          "type": "value",
+          "settings": {
+            "icon": "💰",
+            "title": "Prix compétitifs",
+            "text": "Nous négocions directement avec les fabricants pour vous proposer les meilleurs prix du marché."
+          }
+        },
+        "member-1": {
+          "type": "team_member",
+          "settings": {
+            "name": "Alexandre Martin",
+            "role": "Fondateur & CEO",
+            "bio": "Passionné de technologie depuis l'enfance, Alexandre a fondé iDhightech2 avec la vision de rendre la high-tech accessible à tous."
+          }
+        },
+        "member-2": {
+          "type": "team_member",
+          "settings": {
+            "name": "Sophie Dubois",
+            "role": "Directrice Marketing",
+            "bio": "Experte en e-commerce, Sophie orchestre la stratégie digitale d'iDhightech2 avec créativité et précision."
+          }
+        },
+        "member-3": {
+          "type": "team_member",
+          "settings": {
+            "name": "Lucas Bernard",
+            "role": "Responsable Technique",
+            "bio": "Lucas veille à ce que chaque produit référencé réponde aux standards de qualité les plus élevés."
+          }
+        },
+        "member-4": {
+          "type": "team_member",
+          "settings": {
+            "name": "Emma Petit",
+            "role": "Service Client",
+            "bio": "Emma et son équipe sont là pour vous accompagner à chaque étape de votre expérience d'achat."
+          }
+        },
+        "why-1": {
+          "type": "why_item",
+          "settings": {
+            "title": "Produits 100% authentiques",
+            "text": "Tous nos produits sont achetés directement auprès des fabricants officiels. Aucun risque de contrefaçon."
+          }
+        },
+        "why-2": {
+          "type": "why_item",
+          "settings": {
+            "title": "Livraison rapide et sécurisée",
+            "text": "Expédition sous 24h pour toute commande passée avant 14h. Suivi en temps réel disponible."
+          }
+        },
+        "why-3": {
+          "type": "why_item",
+          "settings": {
+            "title": "Retours gratuits sous 30 jours",
+            "text": "Pas satisfait ? Retournez votre article sous 30 jours, sans question et sans frais."
+          }
+        },
+        "why-4": {
+          "type": "why_item",
+          "settings": {
+            "title": "Paiement 100% sécurisé",
+            "text": "Vos données bancaires sont protégées par un cryptage SSL 256 bits. Paiement en 3x sans frais disponible."
+          }
+        },
+        "why-5": {
+          "type": "why_item",
+          "settings": {
+            "title": "Garantie 2 ans sur tous les produits",
+            "text": "Tous nos produits bénéficient de la garantie légale de 2 ans, avec SAV réactif en cas de problème."
+          }
+        },
+        "why-6": {
+          "type": "why_item",
+          "settings": {
+            "title": "Service client réactif",
+            "text": "Notre équipe répond sous 24h ouvrées. Par email, téléphone ou formulaire de contact."
+          }
+        }
+      },
+      "block_order": [
+        "stat-1",
+        "stat-2",
+        "stat-3",
+        "stat-4",
+        "value-1",
+        "value-2",
+        "value-3",
+        "value-4",
+        "member-1",
+        "member-2",
+        "member-3",
+        "member-4",
+        "why-1",
+        "why-2",
+        "why-3",
+        "why-4",
+        "why-5",
+        "why-6"
+      ],
+      "settings": {
+        "hero_image": "shopify://shop_images/3_5a1c9183-18c1-47a8-99b0-f786fed18370.jpg",
+        "hero_eyebrow": "Bienvenue chez",
+        "hero_title": "iDhightech2",
+        "hero_subtitle": "Votre destination high-tech de confiance — qualité, innovation et passion pour la technologie.",
+        "story_eyebrow": "Notre histoire",
+        "story_title": "Nés de la passion pour la technologie",
+        "story_text": "<p>iDhightech2 est née d'une passion profonde pour la technologie et d'une conviction simple : chaque personne mérite d'accéder aux meilleurs produits électroniques sans compromis sur la qualité ni sur le prix.</p><p>Fondée par des passionnés du numérique, notre boutique s'est rapidement imposée comme une référence dans le domaine de l'électronique grand public. Nous sélectionnons rigoureusement chaque produit de notre catalogue pour garantir des performances optimales et une durabilité exemplaire.</p><p>Aujourd'hui, iDhightech2 c'est une équipe de professionnels engagés, des milliers de clients satisfaits à travers l'Europe, et une promesse : vous offrir le meilleur de la technologie avec un service irréprochable.</p>",
+        "story_image": "shopify://shop_images/2_49f9fab5-12f6-445d-90d5-0b14b6c03233.jpg",
+        "show_stats": true,
+        "values_eyebrow": "Ce qui nous définit",
+        "values_title": "Nos valeurs fondamentales",
+        "show_team": true,
+        "team_eyebrow": "Les visages derrière iDhightech2",
+        "team_title": "Notre équipe",
+        "team_subtitle": "Des passionnés de technologie à votre service, chaque jour.",
+        "why_eyebrow": "Nos engagements",
+        "why_title": "Pourquoi choisir iDhightech2 ?",
+        "cta_title": "Prêt à découvrir notre univers high-tech ?",
+        "cta_text": "Explorez notre catalogue et trouvez les produits qui correspondent à vos besoins et à votre budget.",
+        "cta_btn1_label": "Découvrir nos produits",
+        "cta_btn1_url": "/collections/all",
+        "cta_btn2_label": "Nous contacter",
+        "cta_btn2_url": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
