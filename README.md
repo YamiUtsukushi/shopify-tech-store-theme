@@ -6,7 +6,8 @@ Thème Shopify Online Store 2.0 basé sur Dawn, conçu pour une boutique high-te
 
 ## 🌐 Application déployée
 
-🔗 **[Voir la boutique en ligne](https://votre-boutique.myshopify.com)** *(à remplir)*
+🔗 **[Voir la boutique en ligne](https://test-perso-dev.myshopify.com/)** 
+- **Si mot de passe demandé, c'est `test`**
 
 ---
 
@@ -16,7 +17,7 @@ Thème Shopify Online Store 2.0 basé sur Dawn, conçu pour une boutique high-te
 - **Liquid** — moteur de templating Shopify
 - **HTML5 / CSS3** — markup sémantique et styles custom (architecture BEM)
 - **JavaScript (Vanilla)** — galerie produit, compte à rebours, lecteur vidéo YouTube/Vimeo, accordéons
-- **Theme Dawn** — thème de base Shopify (refonte complète de la fiche produit)
+- **Theme Dawn** — thème de base Shopify
 - **Shopify Metafields** — personnalisation granulaire par produit
 - **Embed YouTube / Vimeo** — lecteur vidéo intégré dans la section highlights
 
@@ -143,7 +144,7 @@ Pour chaque rôle (`left_main`, `right_top`, `right_small_1`, `right_small_2`) :
 
 ## 📸 Aperçus
 
-> 💡 *Ajoute ici des screenshots de la page produit, de la section highlights, et du flash sale en mobile + desktop.*
+> 💡 *Prochainement*
 
 | Desktop | Mobile |
 |---|---|
