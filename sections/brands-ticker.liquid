@@ -1,14 +1,23 @@
 {% comment %}
   Brands Ticker Hybride — iDhightech2
   Fichier : sections/brands-ticker.liquid
-  - Récupère automatiquement tous les vendors Shopify
-  - Affiche le logo si uploadé dans le customizer, sinon le nom stylisé
+
+  Cascade de fallback pour chaque marque :
+    1. Logo uploadé manuellement dans le customizer (block matching par nom)
+    2. Fichier local dans assets/ (ex: brand-apple.svg)
+    3. Simple Icons CDN (https://cdn.simpleicons.org/{slug}/{color})
+    4. Nom stylisé en texte
 {% endcomment %}
 
 {{ 'brands-ticker.css' | asset_url | stylesheet_tag }}
 
-{%- comment %} Construit un dictionnaire logo par vendor depuis les blocs {% endcomment -%}
-{%- assign vendor_logos = '' -%}
+{%- assign sc_color = section.settings.simpleicons_color | default: '000000' | replace: '#', '' -%}
+{%- assign local_prefix = section.settings.local_logo_prefix | default: 'brand-' -%}
+
+{%- comment %} Liste des vendors à exclure (séparés par virgules ou retours à la ligne) {% endcomment -%}
+{%- assign excluded_raw = section.settings.excluded_vendors | downcase | replace: '
+', ',' -%}
+{%- assign excluded_list = excluded_raw | split: ',' -%}
 
 <div class="brands-wrapper" id="brands-{{ section.id }}" style="
   background: {{ section.settings.section_bg }};
@@ -29,26 +38,88 @@
     <div class="brands__ticker-outer">
       <div class="brands__ticker {% if section.settings.grayscale %}brands--grayscale{% endif %}">
 
-        {%- comment %} Génère les items — 2 copies pour la boucle infinie {% endcomment -%}
+        {%- comment %} 2 copies pour la boucle infinie {% endcomment -%}
         {%- for pass in (1..2) -%}
           <div class="brands__track" {% if pass == 2 %}aria-hidden="true"{% endif %}>
 
             {%- for vendor in shop.vendors -%}
               {%- if vendor != blank -%}
 
-                {%- comment %} Cherche si un bloc correspond à ce vendor {% endcomment -%}
+                {%- comment %} Vérifie si ce vendor est dans la liste d'exclusion {% endcomment -%}
+                {%- assign vendor_lower = vendor | downcase | strip -%}
+                {%- assign is_excluded = false -%}
+                {%- for ex in excluded_list -%}
+                  {%- assign ex_clean = ex | strip -%}
+                  {%- if ex_clean != blank and ex_clean == vendor_lower -%}
+                    {%- assign is_excluded = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if is_excluded -%}
+                  {%- continue -%}
+                {%- endif -%}
+
+                {%- comment %} Cherche un block matching pour ce vendor (ou un block "hide") {% endcomment -%}
                 {%- assign vendor_logo = nil -%}
                 {%- assign vendor_url = nil -%}
+                {%- assign block_slug = nil -%}
+                {%- assign block_hidden = false -%}
                 {%- for block in section.blocks -%}
                   {%- if block.type == 'brand' -%}
                     {%- assign block_name = block.settings.name | downcase | strip -%}
-                    {%- assign vendor_lower = vendor | downcase | strip -%}
                     {%- if block_name == vendor_lower -%}
+                      {%- if block.settings.hide -%}
+                        {%- assign block_hidden = true -%}
+                      {%- endif -%}
                       {%- assign vendor_logo = block.settings.logo -%}
                       {%- assign vendor_url = block.settings.url -%}
+                      {%- assign block_slug = block.settings.simpleicons_slug | strip -%}
                     {%- endif -%}
                   {%- endif -%}
                 {%- endfor -%}
+
+                {%- if block_hidden -%}
+                  {%- continue -%}
+                {%- endif -%}
+
+                {%- comment %} Slug pour les fichiers locaux + Simple Icons {% endcomment -%}
+                {%- if block_slug != blank -%}
+                  {%- assign vendor_slug = block_slug -%}
+                {%- else -%}
+                  {%- assign vendor_slug = vendor | handleize -%}
+                {%- endif -%}
+
+                {%- comment %} Construit la chaîne de fallback {% endcomment -%}
+                {%- assign primary_src = '' -%}
+                {%- assign fallback_1 = '' -%}
+                {%- assign fallback_2 = '' -%}
+
+                {%- if vendor_logo != blank -%}
+                  {%- comment %} Niveau 1 : logo uploadé via block (priorité absolue, pas de fallback) {% endcomment -%}
+                  {%- assign primary_src = vendor_logo | image_url: width: 200 -%}
+                {%- else -%}
+                  {%- assign chain_step = 0 -%}
+
+                  {%- if section.settings.enable_local_logos -%}
+                    {%- assign local_url = local_prefix | append: vendor_slug | append: '.svg' | asset_url -%}
+                    {%- if chain_step == 0 -%}
+                      {%- assign primary_src = local_url -%}
+                      {%- assign chain_step = 1 -%}
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  {%- if section.settings.enable_simpleicons -%}
+                    {%- assign si_url = 'https://cdn.simpleicons.org/' | append: vendor_slug | append: '/' | append: sc_color -%}
+                    {%- if chain_step == 0 -%}
+                      {%- assign primary_src = si_url -%}
+                      {%- assign chain_step = 1 -%}
+                    {%- elsif chain_step == 1 -%}
+                      {%- assign fallback_1 = si_url -%}
+                      {%- assign chain_step = 2 -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endif -%}
 
                 <div class="brands__item">
                   {%- if vendor_url != blank -%}
@@ -57,18 +128,21 @@
                     <div class="brands__link">
                   {%- endif -%}
 
-                    {%- if vendor_logo != blank -%}
-                      {%- comment %} Logo uploadé {% endcomment -%}
+                    {%- if primary_src != '' -%}
                       <img
-                        src="{{ vendor_logo | image_url: width: 200 }}"
+                        src="{{ primary_src }}"
                         alt="{{ vendor }}"
                         class="brands__logo"
                         loading="lazy"
                         width="{{ section.settings.logo_width }}"
                         height="{{ section.settings.logo_height }}"
+                        {% if fallback_1 != '' %}data-fallback-1="{{ fallback_1 }}"{% endif %}
+                        {% if fallback_2 != '' %}data-fallback-2="{{ fallback_2 }}"{% endif %}
+                        data-fallback-text="{{ vendor | escape }}"
+                        onerror="brandsTickerFallback(this)"
                       >
                     {%- else -%}
-                      {%- comment %} Nom stylisé en fallback {% endcomment -%}
+                      {%- comment %} Pas de source possible : nom stylisé direct {% endcomment -%}
                       <span class="brands__name">{{ vendor }}</span>
                     {%- endif -%}
 
@@ -92,6 +166,32 @@
 </div>
 
 <script>
+// Fallback chain pour les logos de marques (déclaré globalement, partagé entre les sections)
+if (typeof window.brandsTickerFallback !== 'function') {
+  window.brandsTickerFallback = function(img) {
+    if (img.dataset.fallback1) {
+      var next = img.dataset.fallback1;
+      delete img.dataset.fallback1;
+      img.src = next;
+      return;
+    }
+    if (img.dataset.fallback2) {
+      var next2 = img.dataset.fallback2;
+      delete img.dataset.fallback2;
+      img.src = next2;
+      return;
+    }
+    // Plus de fallback : remplace par le nom stylisé
+    var name = img.dataset.fallbackText || img.alt || '';
+    var span = document.createElement('span');
+    span.className = 'brands__name';
+    span.textContent = name;
+    if (img.parentNode) {
+      img.parentNode.replaceChild(span, img);
+    }
+  };
+}
+
 (function() {
   var ticker = document.querySelector('#brands-{{ section.id }} .brands__ticker');
   if (!ticker) return;
@@ -183,6 +283,52 @@
     },
     {
       "type": "header",
+      "content": "Marques à masquer"
+    },
+    {
+      "type": "textarea",
+      "id": "excluded_vendors",
+      "label": "Vendors à exclure du ticker",
+      "info": "Liste des noms (un par ligne ou séparés par des virgules) à ne pas afficher. Insensible à la casse. Ex: Marque inconnue, Sans nom"
+    },
+    {
+      "type": "header",
+      "content": "Cascade de fallback automatique"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pour chaque marque sans logo uploadé : le code essaie d'abord un fichier local dans assets/, puis Simple Icons (CDN public, 3000+ logos), puis affiche le nom en texte stylisé."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_local_logos",
+      "label": "Essayer les fichiers locaux",
+      "info": "Cherche un fichier nommé '{prefix}{slug}.svg' dans assets/ (ex: brand-apple.svg)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "local_logo_prefix",
+      "label": "Préfixe des fichiers locaux",
+      "default": "brand-",
+      "info": "Ex: 'brand-' → cherchera assets/brand-apple.svg"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_simpleicons",
+      "label": "Essayer Simple Icons CDN",
+      "info": "https://simpleicons.org — bibliothèque open-source de 3000+ logos en SVG monochrome",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "simpleicons_color",
+      "label": "Couleur Simple Icons (HEX sans #)",
+      "default": "000000",
+      "info": "Ex: 000000 (noir), ec6034 (orange), ffffff (blanc)"
+    },
+    {
+      "type": "header",
       "content": "Défilement"
     },
     {
@@ -225,25 +371,38 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "👇 Tapez le nom exact de la marque telle qu'elle apparaît dans vos produits (ex: Samsung, Apple, Sony). Le nom sera remplacé par le logo automatiquement."
+          "content": "👇 Tapez le nom exact de la marque (vendor) telle qu'elle apparaît dans vos produits. Le logo uploadé écrase la cascade automatique."
         },
         {
           "type": "text",
           "id": "name",
-          "label": "Nom exact de la marque",
+          "label": "Nom exact du fournisseur (vendor)",
           "placeholder": "Ex: Samsung",
-          "info": "⚠️ Doit correspondre exactement au fournisseur dans Produits → Fournisseur. Respectez les majuscules."
+          "info": "⚠️ Doit correspondre exactement au champ 'Fournisseur' du produit, sensible à la casse."
         },
         {
           "type": "image_picker",
           "id": "logo",
-          "label": "Logo de la marque",
-          "info": "PNG avec fond transparent recommandé"
+          "label": "Logo de la marque (optionnel)",
+          "info": "Si vide, la cascade automatique (fichier local → Simple Icons → texte) s'applique. PNG/SVG transparent recommandé."
+        },
+        {
+          "type": "text",
+          "id": "simpleicons_slug",
+          "label": "Slug Simple Icons (optionnel)",
+          "info": "Override du slug auto-généré. Ex: pour 'Apple Inc.', mettre 'apple'. Voir https://simpleicons.org pour les noms exacts."
         },
         {
           "type": "url",
           "id": "url",
           "label": "Lien vers le site de la marque (optionnel)"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide",
+          "label": "Masquer cette marque",
+          "info": "Cache cette marque du ticker tout en gardant ses réglages (logo, slug, lien). Utile pour la masquer temporairement.",
+          "default": false
         }
       ]
     }

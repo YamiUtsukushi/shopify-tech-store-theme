@@ -95,6 +95,14 @@
   opacity: 0.75;
 }
 
+/* Simple Icons / SVG monochrome → ajuste l'apparence pour rester cohérent */
+.brands__logo[src*="simpleicons.org"] {
+  /* Les SVG Simple Icons sont déjà monochromes, on laisse l'opacité agir */
+  width: var(--brands-logo-width, 120px);
+  height: var(--brands-logo-height, 50px);
+  max-width: 100%;
+}
+
 /* Grayscale mode */
 .brands--grayscale .brands__logo {
   filter: grayscale(100%);
