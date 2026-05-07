@@ -195,10 +195,56 @@ if (typeof window.brandsTickerFallback !== 'function') {
 (function() {
   var ticker = document.querySelector('#brands-{{ section.id }} .brands__ticker');
   if (!ticker) return;
+
+  // Pause au survol
   {%- if section.settings.pause_on_hover -%}
   ticker.addEventListener('mouseenter', function() { ticker.style.animationPlayState = 'paused'; });
   ticker.addEventListener('mouseleave', function() { ticker.style.animationPlayState = 'running'; });
   {%- endif -%}
+
+  // Boucle continue : clone des tracks supplémentaires si nécessaire pour qu'aucun logo
+  // ne soit visible en double simultanément. On ajoute des copies jusqu'à ce que la
+  // largeur totale dépasse 2× la largeur du viewport.
+  function ensureContinuousLoop() {
+    var tracks = ticker.querySelectorAll('.brands__track');
+    if (tracks.length === 0) return;
+
+    var trackWidth = tracks[0].offsetWidth;
+    if (trackWidth === 0) return;
+
+    var minTotalWidth = window.innerWidth * 2.2;
+    var currentTracks = tracks.length;
+    var maxTracks = 8; // sécurité
+
+    while (trackWidth * currentTracks < minTotalWidth && currentTracks < maxTracks) {
+      var clone = tracks[0].cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      ticker.appendChild(clone);
+      currentTracks++;
+    }
+
+    // Ajuste l'animation : on translate de -1/N% pour que la boucle soit fluide
+    var translatePct = 100 / currentTracks;
+    ticker.style.setProperty('--brands-translate', '-' + translatePct + '%');
+  }
+
+  // Attend le chargement des images pour avoir la bonne largeur
+  function init() {
+    ensureContinuousLoop();
+  }
+
+  if (document.readyState === 'complete') {
+    init();
+  } else {
+    window.addEventListener('load', init);
+  }
+
+  // Recalcule au resize (debounced)
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(ensureContinuousLoop, 200);
+  });
 })();
 </script>
 
