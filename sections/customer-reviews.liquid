@@ -5,6 +5,48 @@
 
 {{ 'customer-reviews.css' | asset_url | stylesheet_tag }}
 
+{%- comment %} MODIF : suppression des flèches, défilement continu type marquee (même logique que brands-ticker) {% endcomment -%}
+
+<style>
+  #cr-{{ section.id }} {
+    --cr-speed: {{ section.settings.autoplay_speed }}s;
+    --cr-gap: 20px;
+    --cr-card-width: 320px;
+  }
+
+  #cr-{{ section.id }} .cr__ticker-outer {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  #cr-{{ section.id }} .cr__ticker {
+    display: flex;
+    width: max-content;
+    animation: cr-marquee-{{ section.id }} var(--cr-speed) linear infinite;
+  }
+
+  #cr-{{ section.id }} .cr__ticker:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes cr-marquee-{{ section.id }} {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  #cr-{{ section.id }} .cr__track {
+    display: flex;
+    gap: var(--cr-gap);
+    padding: 12px var(--cr-gap);
+    flex-shrink: 0;
+  }
+
+  #cr-{{ section.id }} .cr__card {
+    flex-shrink: 0;
+    width: var(--cr-card-width);
+  }
+</style>
+
 <section class="cr-section" id="cr-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
 
   {%- comment %} Header {% endcomment -%}
@@ -16,117 +58,79 @@
     </div>
   {%- endif -%}
 
-  {%- comment %} Slider {% endcomment -%}
-  <div class="cr__slider-wrapper">
-    <button class="cr__nav cr__nav--prev" id="crPrev-{{ section.id }}" aria-label="Précédent" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-    </button>
+  {%- comment %} Marquee — 2 passes identiques pour la boucle infinie seamless {% endcomment -%}
+  <div class="cr__ticker-outer">
+    <div class="cr__ticker">
 
-    <div class="cr__slider" id="crSlider-{{ section.id }}">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'review' -%}
-          {%- assign rating = block.settings.rating -%}
+      {%- for pass in (1..2) -%}
+        <div class="cr__track" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'review' -%}
+              {%- assign rating = block.settings.rating -%}
 
-          <div class="cr__card" style="border-color: {{ section.settings.card_border_color }};" {{ block.shopify_attributes }}>
+              <div class="cr__card" style="border-color: {{ section.settings.card_border_color }};" {% if pass == 1 %}{{ block.shopify_attributes }}{% endif %}>
 
-            {%- comment %} Étoiles {% endcomment -%}
-            <div class="cr__stars-row">
-              <div class="cr__stars">
-                {%- for i in (1..5) -%}
-                  {%- if i <= rating -%}
-                    <svg class="cr__star cr__star--full" viewBox="0 0 24 24" fill="#FFC107" width="18" height="18">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  {%- else -%}
-                    <svg class="cr__star cr__star--empty" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="1.5" width="18" height="18">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
-              <span class="cr__rating-text">{{ rating }} | {{ block.settings.review_count }} Avis</span>
-            </div>
-
-            {%- comment %} Texte de l'avis {% endcomment -%}
-            {%- if block.settings.review_text != blank -%}
-              <p class="cr__review-text">"{{ block.settings.review_text }}"</p>
-            {%- endif -%}
-
-            {%- comment %} Auteur {% endcomment -%}
-            <div class="cr__author">
-              {%- if block.settings.author_photo != blank -%}
-                <img
-                  src="{{ block.settings.author_photo | image_url: width: 100 }}"
-                  alt="{{ block.settings.author_name | escape }}"
-                  class="cr__author-photo"
-                  width="56"
-                  height="56"
-                  loading="lazy"
-                >
-              {%- else -%}
-                <div class="cr__author-placeholder">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                  </svg>
+                {%- comment %} Étoiles {% endcomment -%}
+                <div class="cr__stars-row">
+                  <div class="cr__stars">
+                    {%- for i in (1..5) -%}
+                      {%- if i <= rating -%}
+                        <svg class="cr__star cr__star--full" viewBox="0 0 24 24" fill="#FFC107" width="18" height="18">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      {%- else -%}
+                        <svg class="cr__star cr__star--empty" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="1.5" width="18" height="18">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                  <span class="cr__rating-text">{{ rating }} | {{ block.settings.review_count }} Avis</span>
                 </div>
-              {%- endif -%}
-              <div class="cr__author-info">
-                <p class="cr__author-name">{{ block.settings.author_name }}</p>
-                {%- if block.settings.author_role != blank -%}
-                  <p class="cr__author-role">{{ block.settings.author_role }}</p>
+
+                {%- comment %} Texte de l'avis {% endcomment -%}
+                {%- if block.settings.review_text != blank -%}
+                  <p class="cr__review-text">"{{ block.settings.review_text }}"</p>
                 {%- endif -%}
+
+                {%- comment %} Auteur {% endcomment -%}
+                <div class="cr__author">
+                  {%- if block.settings.author_photo != blank -%}
+                    <img
+                      src="{{ block.settings.author_photo | image_url: width: 100 }}"
+                      alt="{{ block.settings.author_name | escape }}"
+                      class="cr__author-photo"
+                      width="56"
+                      height="56"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="cr__author-placeholder">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+                  <div class="cr__author-info">
+                    <p class="cr__author-name">{{ block.settings.author_name }}</p>
+                    {%- if block.settings.author_role != blank -%}
+                      <p class="cr__author-role">{{ block.settings.author_role }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+
               </div>
-            </div>
 
-          </div>
-        {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
       {%- endfor -%}
-    </div>
 
-    <button class="cr__nav cr__nav--next" id="crNext-{{ section.id }}" aria-label="Suivant" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-        <polyline points="9 18 15 12 9 6"/>
-      </svg>
-    </button>
+    </div>
   </div>
 
 </section>
 
-<script>
-(function() {
-  var slider  = document.getElementById('crSlider-{{ section.id }}');
-  var prevBtn = document.getElementById('crPrev-{{ section.id }}');
-  var nextBtn = document.getElementById('crNext-{{ section.id }}');
-  if (!slider) return;
-
-  function cardWidth() {
-    var card = slider.querySelector('.cr__card');
-    if (!card) return 280;
-    return card.offsetWidth + parseInt(getComputedStyle(slider).gap || 20);
-  }
-
-  function updateNav() {
-    var overflows = slider.scrollWidth > slider.clientWidth + 2;
-    var atStart   = slider.scrollLeft <= 0;
-    var atEnd     = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
-    if (prevBtn) prevBtn.style.visibility = (!overflows || atStart) ? 'hidden' : 'visible';
-    if (nextBtn) nextBtn.style.visibility = (!overflows || atEnd)   ? 'hidden' : 'visible';
-  }
-
-  if (prevBtn) prevBtn.addEventListener('click', function() {
-    slider.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
-  });
-  if (nextBtn) nextBtn.addEventListener('click', function() {
-    slider.scrollBy({ left: cardWidth(), behavior: 'smooth' });
-  });
-
-  slider.addEventListener('scroll', updateNav, { passive: true });
-  window.addEventListener('resize', updateNav);
-  setTimeout(updateNav, 100);
-})();
-</script>
 
 {% schema %}
 {
@@ -173,6 +177,20 @@
       "id": "card_border_color",
       "label": "Couleur de la bordure des cartes",
       "default": "#FF6600"
+    },
+    {
+      "type": "header",
+      "content": "Défilement automatique"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Vitesse de défilement (plus bas = plus rapide)",
+      "default": 30
     }
   ],
   "blocks": [
