@@ -95,11 +95,8 @@
 
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      var panel = activateTab(tab.dataset.category);
-      if (panel) {
-        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      // Met à jour l'URL sans recharger
+      activateTab(tab.dataset.category);
+      // MODIF : suppression du scrollIntoView — plus de scroll automatique au clic
       history.replaceState(null, '', '#' + tab.dataset.category);
     });
   });
@@ -148,20 +145,12 @@
     var panel = activateTab(cat);
     if (!panel) return;
 
-    // Scroll vers le panel
-    setTimeout(function() {
-      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Ouvre la question spécifique si indiquée
-      if (qIdx !== null) {
-        var items = panel.querySelectorAll('.faq__item');
-        if (items[qIdx]) {
-          setTimeout(function() {
-            openAccordion(items[qIdx]);
-          }, 400);
-        }
-      }
-    }, 100);
+    // MODIF : suppression du scrollIntoView au chargement du hash
+    // Ouvre la question spécifique si indiquée dans le hash (ex: #retours-q1)
+    if (qIdx !== null) {
+      var items = panel.querySelectorAll('.faq__item');
+      if (items[qIdx]) openAccordion(items[qIdx]);
+    }
   }
 
   handleHash();
