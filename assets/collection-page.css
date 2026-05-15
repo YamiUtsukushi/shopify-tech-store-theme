@@ -193,7 +193,7 @@
   padding: 1.25rem;
   position: relative;
   transition: box-shadow 0.2s;
-  align-items: start;
+  align-items: stretch;
 }
 
 .col-product-card:hover {
@@ -326,15 +326,17 @@
   color: #ef4444;
 }
 
-/* Partie droite — prix + bouton */
+/* Partie droite — prix en haut, bouton en bas */
 .col-product-card__right {
   grid-column: 3;
   grid-row: 1 / 3;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: space-between;
   gap: 1rem;
   min-width: 160px;
+  align-self: stretch;
 }
 
 .col-product-card__price-wrap {

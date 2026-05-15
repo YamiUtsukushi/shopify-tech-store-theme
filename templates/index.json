@@ -263,6 +263,87 @@
     },
     "brands_ticker_9fCpDB": {
       "type": "brands-ticker",
+      "blocks": {
+        "brand_gjwnwk": {
+          "type": "brand",
+          "settings": {
+            "name": "Sony",
+            "logo": "shopify://shop_images/Sony.png",
+            "simpleicons_slug": "",
+            "url": "https://www.sony.fr/",
+            "hide": false
+          }
+        },
+        "brand_zNWKBT": {
+          "type": "brand",
+          "settings": {
+            "name": "Corsair",
+            "logo": "shopify://shop_images/corsair_logo.png",
+            "simpleicons_slug": "",
+            "url": "https://www.corsair.com/",
+            "hide": false
+          }
+        },
+        "brand_URMQew": {
+          "type": "brand",
+          "settings": {
+            "name": "Philips",
+            "logo": "shopify://shop_images/Philips_948f3e11-dcd2-4a0e-b849-dab6f2bf4b9c.png",
+            "simpleicons_slug": "",
+            "url": "https://www.philips.fr/",
+            "hide": false
+          }
+        },
+        "brand_wjVBad": {
+          "type": "brand",
+          "settings": {
+            "name": "Samsung",
+            "logo": "shopify://shop_images/Samsung.png",
+            "simpleicons_slug": "",
+            "url": "https://www.samsung.com/fr/",
+            "hide": false
+          }
+        },
+        "brand_BqexTU": {
+          "type": "brand",
+          "settings": {
+            "name": "SteelSeries",
+            "logo": "shopify://shop_images/SteelSeries.png",
+            "simpleicons_slug": "",
+            "url": "https://steelseries.com/",
+            "hide": false
+          }
+        },
+        "brand_BMd9NR": {
+          "type": "brand",
+          "settings": {
+            "name": "Google",
+            "logo": "shopify://shop_images/Google.png",
+            "simpleicons_slug": "",
+            "url": "https://www.google.com/",
+            "hide": false
+          }
+        },
+        "brand_zjHjAW": {
+          "type": "brand",
+          "settings": {
+            "name": "Asus",
+            "logo": "shopify://shop_images/ASUS.png",
+            "simpleicons_slug": "",
+            "url": "https://www.asus.com/fr/",
+            "hide": false
+          }
+        }
+      },
+      "block_order": [
+        "brand_gjwnwk",
+        "brand_zNWKBT",
+        "brand_URMQew",
+        "brand_wjVBad",
+        "brand_BqexTU",
+        "brand_BMd9NR",
+        "brand_zjHjAW"
+      ],
       "name": "Bandeau Marques",
       "settings": {
         "section_bg": "#ffffff",
@@ -273,6 +354,11 @@
         "logo_bg": "#ffffff",
         "logo_width": 200,
         "logo_height": 100,
+        "excluded_vendors": "ONYX\nPanasonic\nPhilips Hue\nRealme\nRing\nRoborock\nSonos\nSoundMax\ntest-perso-dev\nApple\nArlo\nAudio-Technica\nAwair\nBenQ\nBosch\nBose\nDeLonghi\nDreame\nDXRacer\nElica\nGamePro\nHisense\nHuawei\nIndesit\nJabra\nJBL\nLenovo\nLG\nLogitech\nMicrosoft\nNest\nTP-Link\nVisionTech\nWhirlpool\nWithings\nXiaomi\nYale\nYamaha\nAmazon\nAnker",
+        "enable_local_logos": true,
+        "local_logo_prefix": "brand-",
+        "enable_simpleicons": true,
+        "simpleicons_color": "000000",
         "gap": 20,
         "speed": 60,
         "grayscale": false,
