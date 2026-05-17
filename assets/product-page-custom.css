@@ -1277,11 +1277,17 @@ details[open] > summary .pdp-faq__chevron,
   .product-form__input {
     margin-bottom: 0.75rem !important;
   }
+  /* MODIF : centrage texte variante en mobile — display flex requis pour align-items */
   .product-form__input.product-form__input--swatch label,
   .product-form__input.product-form__input--pill label {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     min-height: 38px !important;
-    padding: 8px 14px !important;
+    padding: 0 14px !important;
     font-size: 0.85rem !important;
+    line-height: 1 !important;
+    box-sizing: border-box !important;
   }
 }
 
