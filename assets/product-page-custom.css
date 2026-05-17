@@ -8,6 +8,8 @@
    ============================================= */
 product-info {
   background: #fff;
+  /* MODIF : héritage Poppins sur toute la fiche produit */
+  font-family: 'Poppins', sans-serif;
 }
 
 /* =============================================
@@ -550,17 +552,86 @@ quantity-input.quantity .quantity__input::-webkit-inner-spin-button {
 
 /* =============================================
    BREADCRUMB
+   MODIF : styles breadcrumb — classes custom pdp-breadcrumb + Dawn natif
    ============================================= */
-nav[aria-label="breadcrumbs"] a,
-.breadcrumbs__link {
-  color: #888 !important;
+
+/* Breadcrumb custom (main-product.liquid) */
+.pdp-breadcrumb {
+  padding: 1rem 0 0.5rem;
+}
+
+.pdp-breadcrumb__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  flex-wrap: wrap;
+}
+
+.pdp-breadcrumb__link {
+  color: #FF6600 !important;
   text-decoration: none !important;
-  transition: color 0.2s !important;
+  font-weight: 500 !important;
+  font-size: 1.05rem !important;
+  transition: opacity 0.2s !important;
+}
+
+.pdp-breadcrumb__link:hover {
+  opacity: 0.75 !important;
+  text-decoration: underline !important;
+}
+
+.pdp-breadcrumb__sep {
+  color: #bbb !important;
+  font-size: 1.1rem !important;
+  line-height: 1 !important;
+}
+
+.pdp-breadcrumb__current {
+  color: #888 !important;
+  font-weight: 400 !important;
+  font-size: 1.05rem !important;
+}
+
+/* Breadcrumb Dawn natif (fallback) */
+nav[aria-label="breadcrumbs"],
+nav[aria-label="Breadcrumb"],
+.breadcrumbs {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.05rem !important;
+}
+
+nav[aria-label="breadcrumbs"] a,
+nav[aria-label="Breadcrumb"] a,
+.breadcrumbs__link {
+  color: #FF6600 !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  transition: opacity 0.2s !important;
 }
 
 nav[aria-label="breadcrumbs"] a:hover,
+nav[aria-label="Breadcrumb"] a:hover,
 .breadcrumbs__link:hover {
-  color: #ec6034 !important;
+  opacity: 0.75 !important;
+  text-decoration: underline !important;
+}
+
+nav[aria-label="breadcrumbs"] li:last-child a,
+nav[aria-label="Breadcrumb"] li:last-child a,
+nav[aria-label="breadcrumbs"] span:not([aria-hidden]),
+nav[aria-label="Breadcrumb"] span:not([aria-hidden]),
+.breadcrumbs__item--current {
+  color: #888 !important;
+  font-weight: 400 !important;
+}
+
+nav[aria-label="breadcrumbs"] li::before,
+nav[aria-label="Breadcrumb"] li::before,
+nav[aria-label="breadcrumbs"] .breadcrumbs__separator,
+nav[aria-label="Breadcrumb"] .breadcrumbs__separator {
+  color: #bbb !important;
 }
 
 /* =============================================
@@ -1211,5 +1282,130 @@ details[open] > summary .pdp-faq__chevron,
     min-height: 38px !important;
     padding: 8px 14px !important;
     font-size: 0.85rem !important;
+  }
+}
+
+/* =============================================
+   POPPINS + AUGMENTATION DES TAILLES
+   MODIF : police Poppins + tailles augmentées (même standard que collection page)
+   ============================================= */
+
+/* Titre produit */
+.product__title h1,
+.product__title h2 {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: clamp(2rem, 3.5vw, 2.8rem) !important;
+}
+
+/* Description */
+.product__description {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.1rem !important;
+}
+
+/* Inventaire / stock */
+.product__inventory {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1rem !important;
+}
+
+/* Accordéon infos complémentaires */
+.accordion__button {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.1rem !important;
+}
+
+/* FAQ accordéon — questions */
+.pdp-faq__summary,
+.product__accordion.pdp-faq__item summary.pdp-faq__summary,
+.product__accordion.pdp-faq__item details > summary {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.2rem !important;
+}
+
+/* FAQ accordéon — réponses */
+.pdp-faq__content,
+.product__accordion.pdp-faq__item .pdp-faq__content {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.05rem !important;
+}
+
+/* 4 icônes features (Daily Deals / Return / Payment / Help) */
+.pdp-features__item {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1rem !important;
+}
+
+/* Timer flash-sale */
+.pdp-timer__label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.05rem !important;
+}
+
+.pdp-timer__value {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.2rem !important;
+}
+
+.pdp-timer__unit {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.72rem !important;
+}
+
+/* Bouton Ajouter au panier */
+.product-form .product-form__submit.button,
+.product-form__buttons .product-form__submit,
+.product-form__submit {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.05rem !important;
+}
+
+/* Bouton Acheter maintenant */
+.shopify-payment-button__button {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.05rem !important;
+}
+
+/* Notes / taxes */
+.product__tax {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.85rem !important;
+}
+
+/* Label quantité */
+.pdp-purchase__qty .quantity__label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1rem !important;
+}
+
+/* Prix */
+.price--large .price-item--sale,
+.price--large .price-item--regular {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Mobile — ajustements tailles */
+@media screen and (max-width: 600px) {
+  .product__title h1,
+  .product__title h2 {
+    font-size: clamp(1.6rem, 6vw, 2rem) !important;
+  }
+  .product__description {
+    font-size: 1rem !important;
+  }
+  .pdp-faq__summary,
+  .product__accordion.pdp-faq__item summary.pdp-faq__summary,
+  .product__accordion.pdp-faq__item details > summary {
+    font-size: 1.05rem !important;
+  }
+  .pdp-faq__content,
+  .product__accordion.pdp-faq__item .pdp-faq__content {
+    font-size: 0.98rem !important;
+  }
+  .pdp-features__item {
+    font-size: 0.88rem !important;
+  }
+  .accordion__button {
+    font-size: 1rem !important;
   }
 }

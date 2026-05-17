@@ -95,6 +95,9 @@
       {%- comment %} ===== GALERIE CUSTOM (image principale + vignettes paginées) ===== {% endcomment -%}
       <div class="pdp-gallery" id="pdpGallery-{{ section.id }}">
 
+        {%- comment %} MODIF : wrapper sticky interne — évite l'offset top sur le grid item lui-même {% endcomment -%}
+        <div class="pdp-gallery__inner-sticky">
+
         {%- comment %} Image principale (en haut) {% endcomment -%}
         <div class="pdp-gallery__main" id="pdpMain-{{ section.id }}">
           {%- for media in product.media -%}
@@ -165,6 +168,8 @@
             {%- endif -%}
           </div>
         {%- endif -%}
+
+        </div>{%- comment %} /pdp-gallery__inner-sticky {% endcomment -%}
       </div>
 
       {%- comment %} ===== INFO PRODUIT ===== {% endcomment -%}

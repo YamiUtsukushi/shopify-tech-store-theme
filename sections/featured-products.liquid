@@ -6,13 +6,25 @@
 
 {{ 'featured-products.css' | asset_url | stylesheet_tag }}
 
+{%- comment %} MODIF : taille titre responsive via style scopé {% endcomment -%}
+<style>
+  #fp-{{ section.id }} .fp__title {
+    font-size: {{ section.settings.title_size }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #fp-{{ section.id }} .fp__title {
+      font-size: {{ section.settings.mobile_title_size }}px;
+    }
+  }
+</style>
+
 <section class="fp-section" id="fp-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
   <div class="fp-wrapper" style="background: {{ section.settings.section_bg }};">
 
   {%- comment %} Header {% endcomment -%}
   {%- if section.settings.title != blank -%}
     <div class="fp__header" style="background: {{ section.settings.header_bg }};">
-      <h2 class="fp__title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+      <h2 class="fp__title" style="color: {{ section.settings.title_color }};">
         {{ section.settings.title }}
       </h2>
       {%- if section.settings.view_all_url != blank -%}
@@ -172,8 +184,18 @@ window.fpAddToCart = function(btn) {
       "max": 40,
       "step": 1,
       "unit": "px",
-      "label": "Taille du titre",
+      "label": "Taille du titre (desktop)",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre (mobile)",
+      "default": 15
     },
     {
       "type": "range",

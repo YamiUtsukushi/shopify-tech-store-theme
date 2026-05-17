@@ -52,16 +52,17 @@
 }
 
 @media screen and (min-width: 901px) {
+  /* MODIF : suppression du sticky direct sur le grid item (causait un offset top: 100px
+     sur le rendu initial dans Chromium). On passe par un wrapper interne à la place. */
   .pdp-gallery {
-    position: sticky;
-    top: 100px;
+    position: relative;
     align-self: start;
-    max-height: calc(100vh - 120px);
   }
 
-  /* Espace nécessaire pour ne pas que la section suivante se superpose au sticky */
-  .pdp-gallery__thumbs {
-    margin-bottom: 9rem;
+  /* Sticky appliqué sur le contenu interne — ne perturbe plus l'alignement du grid */
+  .pdp-gallery__inner-sticky {
+    position: sticky;
+    top: 90px;
   }
 }
 
@@ -71,6 +72,29 @@
 .pdp-info .product__info-container.product__column-sticky {
   position: static !important;
   top: auto !important;
+}
+
+/* MODIF : alignement explicite des deux colonnes au sommet du grid */
+.pdp-gallery,
+.pdp-info {
+  align-self: start !important;
+  margin-top: 0 !important;
+}
+
+/* MODIF : supprime le padding gauche Dawn sur product__info-wrapper (prévu pour son layout natif) */
+.pdp-info .product__info-wrapper {
+  padding: 0 !important;
+}
+
+/* MODIF : aligne le premier bloc (titre) au sommet de la colonne sans marge parasite */
+.pdp-info .product__info-container > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* MODIF : aligne la galerie au sommet du grid — même baseline que le titre */
+.pdp-gallery {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* =============================================
@@ -162,6 +186,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   width: 100%;
+  padding-top: 1rem;
 }
 
 .pdp-gallery__thumb {
@@ -280,6 +305,7 @@
 @media screen and (min-width: 601px) and (max-width: 900px) {
   .pdp-gallery__thumbs {
     gap: 12px;
+    padding-top: 0.5rem;
   }
 }
 
@@ -296,6 +322,7 @@
 
   .pdp-gallery__thumbs {
     gap: 8px;
+    padding-top: 0.5rem;
   }
 
   .pdp-gallery__thumb,
@@ -338,6 +365,7 @@
 @media screen and (max-width: 380px) {
   .pdp-gallery__thumbs {
     gap: 6px;
+    padding-top: 0.5rem;
   }
 
   .pdp-breadcrumb__current {

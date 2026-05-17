@@ -12,6 +12,8 @@
   padding: 2rem 1.5rem;
   max-width: 1400px;
   margin: 0 auto;
+  /* MODIF : héritage Poppins sur toute la section */
+  font-family: 'Poppins', sans-serif;
 }
 
 /* --- Header --- */
@@ -24,7 +26,7 @@
 }
 
 .flash-sale__title {
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   font-weight: 700;
   margin: 0;
 }
@@ -112,7 +114,7 @@
   display: inline-block;
   padding: 2px 8px;
   border-radius: 4px;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -182,14 +184,14 @@
 }
 
 .flash-sale__countdown-value {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #111;
   line-height: 1.1;
 }
 
 .flash-sale__countdown-label {
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -208,7 +210,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -226,7 +228,7 @@
 }
 
 .flash-sale__card-title {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #111;
   text-decoration: none;
@@ -251,20 +253,20 @@
 }
 
 .flash-sale__price-current {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #ec6034;
 }
 
 .flash-sale__price-compare {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #aaa;
   text-decoration: line-through;
 }
 
 /* --- Stock --- */
 .flash-sale__stock {
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   color: #16a34a;
   margin: 0;
   line-height: 1.4;
@@ -282,7 +284,7 @@
   color: #fff;
   border: none;
   border-radius: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
@@ -343,7 +345,7 @@
 }
 
 .flash-sale__dotd-label {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: 0.02em;
@@ -361,18 +363,18 @@
 }
 
 .flash-sale__countdown-value--dotd {
-  font-size: 1.6rem;
+  font-size: 1.9rem;
   font-weight: 800;
   color: #fff;
 }
 
 .flash-sale__countdown-label--dotd {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: rgba(255,255,255,0.7);
 }
 
 .flash-sale__dotd-sep {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 700;
   color: rgba(255,255,255,0.6);
   margin-bottom: 14px;
@@ -389,7 +391,7 @@
   border: 2px solid rgba(255,255,255,0.7);
   border-radius: 6px;
   padding: 10px 20px;
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -441,7 +443,7 @@
   }
 
   .flash-sale__title {
-    font-size: 1.1rem;
+    font-size: 1.35rem;
   }
 
   /* Cache les boutons nav sur mobile */
@@ -479,11 +481,11 @@
   }
 
   .flash-sale__card-title {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
   }
 
   .flash-sale__price-current {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   /* Fix bouton — supprime les marges négatives sur mobile */
@@ -516,7 +518,7 @@
   }
 
   .flash-sale__dotd-label {
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
 
   .flash-sale__dotd-icon {
@@ -532,15 +534,15 @@
   }
 
   .flash-sale__countdown-value--dotd {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 
   .flash-sale__countdown-label--dotd {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 
   .flash-sale__dotd-sep {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-bottom: 14px;
   }
 
@@ -548,7 +550,7 @@
     width: auto;
     max-width: none;
     padding: 8px 16px;
-    font-size: 0.88rem;
+    font-size: 1rem;
   }
 }
 

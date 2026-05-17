@@ -45,6 +45,16 @@
     flex-shrink: 0;
     width: var(--cr-card-width);
   }
+
+  /* MODIF : taille titre responsive */
+  #cr-{{ section.id }} .cr__title {
+    font-size: {{ section.settings.title_size }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #cr-{{ section.id }} .cr__title {
+      font-size: {{ section.settings.mobile_title_size }}px;
+    }
+  }
 </style>
 
 <section class="cr-section" id="cr-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
@@ -52,7 +62,7 @@
   {%- comment %} Header {% endcomment -%}
   {%- if section.settings.title != blank -%}
     <div class="cr__header" style="background: {{ section.settings.header_bg }};">
-      <h2 class="cr__title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+      <h2 class="cr__title" style="color: {{ section.settings.title_color }};">
         {{ section.settings.title }}
       </h2>
     </div>
@@ -169,8 +179,18 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "label": "Taille du titre",
+      "label": "Taille du titre (desktop)",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre (mobile)",
+      "default": 15
     },
     {
       "type": "color",
@@ -186,11 +206,11 @@
       "type": "range",
       "id": "autoplay_speed",
       "min": 10,
-      "max": 60,
-      "step": 5,
+      "max": 300,
+      "step": 10,
       "unit": "s",
       "label": "Vitesse de défilement (plus bas = plus rapide)",
-      "default": 30
+      "default": 60
     }
   ],
   "blocks": [

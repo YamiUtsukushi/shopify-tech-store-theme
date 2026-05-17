@@ -5,11 +5,11 @@
 
 {{ 'flash-sale.css' | asset_url | stylesheet_tag }}
 
-<section class="flash-sale-section" id="flash-sale-{{ section.id }}">
+<section class="flash-sale-section" id="flash-sale-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
 
   {%- if section.settings.title != blank -%}
-    <div class="flash-sale__header">
-      <h2 class="flash-sale__title">{{ section.settings.title }}</h2>
+    <div class="flash-sale__header" style="background: {{ section.settings.header_bg }};">
+      <h2 class="flash-sale__title" style="color: {{ section.settings.title_color }};">{{ section.settings.title }}</h2>
     </div>
   {%- endif -%}
 
@@ -198,8 +198,14 @@
   #flash-sale-{{ section.id }} .flash-sale__card {
     border-color: {{ section.settings.card_border_color }};
   }
+  /* MODIF : taille titre responsive */
   #flash-sale-{{ section.id }} .flash-sale__title {
-    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #flash-sale-{{ section.id }} .flash-sale__title {
+      font-size: {{ section.settings.mobile_title_size }}px;
+    }
   }
 </style>
 
@@ -352,6 +358,10 @@ window.flashSaleAddToCart = function(btn) {
   "class": "flash-sale-wrapper",
   "settings": [
     {
+      "type": "header",
+      "content": "En-tête"
+    },
+    {
       "type": "text",
       "id": "title",
       "label": "Titre de la section",
@@ -362,6 +372,38 @@ window.flashSaleAddToCart = function(btn) {
       "id": "title_color",
       "label": "Couleur du titre",
       "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre (desktop)",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre (mobile)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Fond de la section",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Fond du titre",
+      "default": "#ffffff"
     },
     {
       "type": "color",

@@ -127,7 +127,7 @@
         "header_bg": "#ffffff",
         "title": "Vous aimerez aussi",
         "title_color": "#111111",
-        "title_size": 20,
+        "title_size": 21,
         "columns": 4,
         "show_stock": false
       }

@@ -7,6 +7,13 @@
 
 <section class="cf-section" id="cf-{{ section.id }}">
 
+  {%- comment %} Breadcrumb {% endcomment -%}
+  <nav class="cf__breadcrumb" aria-label="Fil d'Ariane">
+    <a href="{{ routes.root_url }}" class="cf__breadcrumb-link">Accueil</a>
+    <span class="cf__breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="cf__breadcrumb-current">{{ section.settings.title | default: 'Contactez-nous' }}</span>
+  </nav>
+
   {%- comment %} Header au-dessus des deux colonnes {% endcomment -%}
   {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
     <div class="cf__header">

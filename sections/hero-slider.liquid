@@ -28,15 +28,15 @@
           {%- comment %} Contenu {% endcomment -%}
           <div class="hero-slider__content">
             {%- if block.settings.title != blank -%}
-              <h2 class="hero-slider__title" data-animate="title">{{ block.settings.title }}</h2>
+              <h2 class="hero-slider__title" data-animate="title" style="font-size: {{ block.settings.title_size }}px; color: {{ block.settings.title_color }};">{{ block.settings.title }}</h2>
             {%- endif -%}
 
             {%- if block.settings.subtitle != blank -%}
-              <p class="hero-slider__subtitle" data-animate="subtitle">{{ block.settings.subtitle }}</p>
+              <p class="hero-slider__subtitle" data-animate="subtitle" style="font-size: {{ block.settings.subtitle_size }}px; color: {{ block.settings.subtitle_color }};">{{ block.settings.subtitle }}</p>
             {%- endif -%}
 
             {%- if block.settings.badge_text != blank -%}
-              <p class="hero-slider__badge" data-animate="badge" style="color: {{ block.settings.badge_color }};">
+              <p class="hero-slider__badge" data-animate="badge" style="font-size: {{ block.settings.badge_size }}px; color: {{ block.settings.badge_color }};">
                 {{ block.settings.badge_text }}
               </p>
             {%- endif -%}
@@ -250,7 +250,7 @@
       "type": "text",
       "id": "ticker_text",
       "label": "Texte du bandeau",
-      "default": "Electronics Extravaganza: Unmissable Deals!"
+      "default": "Offres incroyables sur l'électronique !"
     },
     {
       "type": "color",
@@ -277,7 +277,8 @@
         {
           "type": "image_picker",
           "id": "bg_image",
-          "label": "Image de fond"
+          "label": "Image de fond",
+          "info": "Dimensions recommandées : 1920 × 800 px minimum (format paysage, JPG ou WebP). En dessous de cette taille, l'image peut apparaître floue."
         },
         {
           "type": "color",
@@ -303,13 +304,45 @@
           "type": "text",
           "id": "title",
           "label": "Titre",
-          "default": "SMART PHONE"
+          "default": "SMARTPHONE"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Couleur du titre",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "min": 24,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Taille du titre",
+          "default": 56
         },
         {
           "type": "text",
           "id": "subtitle",
           "label": "Sous-titre",
-          "default": "Mega Music Sale"
+          "default": "Vente Flash Audio"
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Couleur du sous-titre",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "subtitle_size",
+          "min": 14,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "label": "Taille du sous-titre",
+          "default": 28
         },
         {
           "type": "text",
@@ -324,6 +357,16 @@
           "default": "#FFA500"
         },
         {
+          "type": "range",
+          "id": "badge_size",
+          "min": 10,
+          "max": 36,
+          "step": 2,
+          "unit": "px",
+          "label": "Taille du texte court",
+          "default": 18
+        },
+        {
           "type": "header",
           "content": "Bouton CTA"
         },
@@ -331,7 +374,7 @@
           "type": "text",
           "id": "cta_label",
           "label": "Texte du bouton",
-          "default": "Shop Now"
+          "default": "Découvrir"
         },
         {
           "type": "url",
@@ -360,8 +403,8 @@
         {
           "type": "slide",
           "settings": {
-            "title": "SMART PHONE",
-            "subtitle": "Mega Music Sale",
+            "title": "SMARTPHONE",
+            "subtitle": "Vente Flash Audio",
             "badge_text": "02-06 Sep"
           }
         },

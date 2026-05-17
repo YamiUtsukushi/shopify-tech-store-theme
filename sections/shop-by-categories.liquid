@@ -5,13 +5,25 @@
 
 {{ 'shop-by-categories.css' | asset_url | stylesheet_tag }}
 
+{%- comment %} MODIF : taille titre responsive via style scopé {% endcomment -%}
+<style>
+  #sbc-{{ section.id }} .sbc__title {
+    font-size: {{ section.settings.title_size }}px;
+  }
+  @media screen and (max-width: 768px) {
+    #sbc-{{ section.id }} .sbc__title {
+      font-size: {{ section.settings.mobile_title_size }}px;
+    }
+  }
+</style>
+
 {%- assign pastel_colors = '#FFE4E4,#D4F5F0,#E8DEFF,#FFF4D4,#E2F5D4,#FFE8D4,#D4E4FF,#D4EEFF,#EBEBEB,#FFD4F0,#D4FFE8,#FFF0D4' | split: ',' -%}
 
-<section class="sbc-section" id="sbc-{{ section.id }}">
+<section class="sbc-section" id="sbc-{{ section.id }}" style="background: {{ section.settings.section_bg }};">
 
   {%- comment %} Header {% endcomment -%}
-  <div class="sbc__header">
-    <h2 class="sbc__title" style="font-size: {{ section.settings.title_size }}px; color: {{ section.settings.title_color }};">{{ section.settings.title }}</h2>
+  <div class="sbc__header" style="background: {{ section.settings.header_bg }};">
+    <h2 class="sbc__title" style="color: {{ section.settings.title_color }};">{{ section.settings.title }}</h2>
     <a href="/collections/all" class="sbc__see-all">{{ section.settings.see_all_label }}</a>
   </div>
 
@@ -187,7 +199,13 @@
     {
       "type": "color",
       "id": "section_bg",
-      "label": "Couleur de fond de la section",
+      "label": "Fond de la section",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Fond du titre",
       "default": "#f5f5f5"
     },
     {
@@ -203,8 +221,18 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "label": "Taille du titre",
+      "label": "Taille du titre (desktop)",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Taille du titre (mobile)",
+      "default": 15
     },
     {
       "type": "range",

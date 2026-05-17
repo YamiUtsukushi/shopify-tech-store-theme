@@ -11,6 +11,8 @@
   max-width: 1400px;
   margin: 0 auto;
   border-radius: 12px;
+  /* MODIF : héritage Poppins sur toute la section */
+  font-family: 'Poppins', sans-serif;
 }
 
 /* =============================================
@@ -34,7 +36,7 @@
 }
 
 .fp__view-all {
-  font-size: 1.10rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: #111;
   text-decoration: underline;
@@ -95,7 +97,7 @@
   display: inline-block;
   padding: 4px 10px;
   border-radius: 5px;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -171,7 +173,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -190,7 +192,7 @@
 
 /* Titre */
 .fp__card-title {
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #111;
   text-decoration: none;
@@ -216,20 +218,20 @@
 }
 
 .fp__price-current {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #ec6034;
 }
 
 .fp__price-compare {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #bbb;
   text-decoration: line-through;
 }
 
 /* Stock */
 .fp__stock {
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   color: #16a34a;
   margin: 0;
   line-height: 1.4;
@@ -249,7 +251,7 @@
   padding: 13px 0;
   border: none;
   border-radius: 0 0 10px 10px;
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   text-align: center;
@@ -309,8 +311,32 @@
   }
 
   .fp__view-all {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     flex-shrink: 0;
+  }
+
+  .fp__card-title {
+    font-size: 0.95rem;
+  }
+
+  .fp__price-current {
+    font-size: 1.05rem;
+  }
+
+  .fp__price-compare {
+    font-size: 0.85rem;
+  }
+
+  .fp__card-category {
+    font-size: 0.75rem;
+  }
+
+  .fp__stock {
+    font-size: 0.78rem;
+  }
+
+  .fp__btn-cart {
+    font-size: 0.92rem;
   }
 }
 

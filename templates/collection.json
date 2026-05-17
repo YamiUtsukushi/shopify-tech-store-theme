@@ -38,10 +38,94 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "features_bar_dAeWQQ": {
+      "type": "features-bar",
+      "blocks": {
+        "feature_PWikgf": {
+          "type": "feature",
+          "settings": {
+            "icon": "delivery",
+            "title": "Livraison offerte",
+            "description": "Dès 50€ d'achat en France",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_dk8NHq": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "title": "Retours sous 30 jours",
+            "description": "Satisfait ou remboursé",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_Hb9aBK": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Garantie 2 ans",
+            "description": "Sur tous nos produits",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_U7tjD7": {
+          "type": "feature",
+          "settings": {
+            "icon": "support",
+            "title": "Service après vente",
+            "description": "Du lundi au vendredi 9h-18h",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_qGBLzA": {
+          "type": "feature",
+          "settings": {
+            "icon": "price",
+            "title": "Meilleurs prix garantis",
+            "description": "Nous remboursons la différence",
+            "link_text": "",
+            "link_url": ""
+          }
+        },
+        "feature_4hMEUT": {
+          "type": "feature",
+          "settings": {
+            "icon": "lock",
+            "title": "Paiement sécurisé",
+            "description": "SSL 256 bits",
+            "link_text": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_PWikgf",
+        "feature_dk8NHq",
+        "feature_Hb9aBK",
+        "feature_U7tjD7",
+        "feature_qGBLzA",
+        "feature_4hMEUT"
+      ],
+      "name": "Barre Avantages",
+      "settings": {
+        "bg_color": "#111111",
+        "text_color": "#ffffff",
+        "link_color": "#ec6034",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "global_link_text": "",
+        "global_link_url": ""
+      }
     }
   },
   "order": [
     "banner",
-    "product-grid"
+    "product-grid",
+    "features_bar_dAeWQQ"
   ]
 }

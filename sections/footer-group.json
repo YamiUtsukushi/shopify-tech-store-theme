@@ -13,37 +13,43 @@
   "sections": {
     "custom_footer_FBCga9": {
       "type": "custom-footer",
+      "blocks": {
+        "menu_column_T8rgyp": {
+          "type": "menu_column",
+          "settings": {
+            "column_title": "Navigation",
+            "menu_handle": "footer"
+          }
+        },
+        "menu_column_YtNgLB": {
+          "type": "menu_column",
+          "settings": {
+            "column_title": "Navigation",
+            "menu_handle": "footer-mon-compte"
+          }
+        }
+      },
+      "block_order": [
+        "menu_column_T8rgyp",
+        "menu_column_YtNgLB"
+      ],
       "name": "Pied de page",
       "settings": {
-        "footer_logo_width": 140,
         "about_text": "Votre boutique électronique de confiance. Retrouvez les meilleures marques au meilleur prix.",
-        "social_facebook": "",
-        "social_instagram": "",
-        "social_youtube": "",
-        "social_tiktok": "",
-        "social_twitter": "",
-        "col2_title": "Service Client",
-        "link_faq_label": "FAQ",
-        "link_faq_url": "shopify://pages/faq",
-        "link_tracking_label": "Suivi de commande",
-        "link_tracking_url": "shopify://pages/faq",
-        "link_returns_label": "Retours & remboursements",
-        "link_returns_url": "shopify://pages/faq",
-        "link_shipping_label": "Livraison & délais",
-        "link_shipping_url": "shopify://pages/faq",
-        "link_contact_label": "Contactez-nous",
-        "link_contact_url": "shopify://pages/contact",
-        "col4_title": "Mon Compte",
-        "link_wishlist_label": "Ma liste de souhaits",
-        "link_wishlist_url": "",
-        "link_about_label": "À propos de nous",
-        "link_about_url": "shopify://pages/a-propos-de-nous",
-        "copyright_text": "Tous droits réservés.",
+        "social_facebook": "https://www.facebook.com/",
+        "social_instagram": "https://www.instagram.com/?hl=en",
+        "social_youtube": "https://www.youtube.com/",
+        "social_tiktok": "https://www.tiktok.com/en/",
+        "social_twitter": "https://x.com/",
         "show_visa": true,
         "show_mastercard": true,
         "show_paypal": true,
         "show_applepay": true,
-        "show_googlepay": true
+        "show_shoppay": true,
+        "show_klarna": true,
+        "show_amex": true,
+        "show_cb": true,
+        "copyright_text": "Tous droits réservés."
       }
     },
     "footer": {

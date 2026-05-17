@@ -12,6 +12,8 @@
   max-width: 1400px;
   margin: 0 auto;
   background: #fff;
+  /* MODIF : héritage Poppins sur toute la section */
+  font-family: 'Poppins', sans-serif;
 }
 
 /* =============================================
@@ -123,7 +125,7 @@
 }
 
 .cr__rating-text {
-  font-size: 0.8rem;
+  font-size: 0.92rem;
   color: #666;
   font-weight: 500;
   white-space: nowrap;
@@ -133,7 +135,7 @@
    TEXTE DE L'AVIS
    ============================================= */
 .cr__review-text {
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: #333;
   line-height: 1.6;
   margin: 0;
@@ -184,7 +186,7 @@
 }
 
 .cr__author-name {
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #111;
   margin: 0;
@@ -194,7 +196,7 @@
 }
 
 .cr__author-role {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   color: #888;
   margin: 0;
 }
@@ -215,5 +217,21 @@
   .cr__nav {
     width: 30px;
     height: 30px;
+  }
+
+  .cr__review-text {
+    font-size: 0.92rem;
+  }
+
+  .cr__author-name {
+    font-size: 0.95rem;
+  }
+
+  .cr__author-role {
+    font-size: 0.82rem;
+  }
+
+  .cr__rating-text {
+    font-size: 0.85rem;
   }
 }

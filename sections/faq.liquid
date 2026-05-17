@@ -7,6 +7,13 @@
 
 <section class="faq-section" id="faq-{{ section.id }}">
 
+  {%- comment %} Breadcrumb {% endcomment -%}
+  <nav class="faq__breadcrumb" aria-label="Fil d'Ariane">
+    <a href="{{ routes.root_url }}" class="faq__breadcrumb-link">Accueil</a>
+    <span class="faq__breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="faq__breadcrumb-current">{{ section.settings.title | default: 'Questions fréquentes' }}</span>
+  </nav>
+
   {%- comment %} Header {% endcomment -%}
   <div class="faq__header">
     {%- if section.settings.title != blank -%}

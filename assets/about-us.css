@@ -1,10 +1,54 @@
 /* =============================================
    À Propos — Dawn Theme Compatible
    Fichier : assets/about-us.css
+   MODIF : font-family Poppins partout, tailles augmentées sur tous les éléments
    ============================================= */
 
 .about {
   overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* =============================================
+   BREADCRUMB
+   ============================================= */
+.about__breadcrumb-wrap {
+  background: #fff;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.about__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+  flex-wrap: wrap;
+}
+
+.about__breadcrumb-link {
+  color: #FF6600;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.about__breadcrumb-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.about__breadcrumb-sep {
+  color: #bbb;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.about__breadcrumb-current {
+  color: #888;
+  font-weight: 400;
 }
 
 /* =============================================
@@ -12,16 +56,16 @@
    ============================================= */
 .about__section-eyebrow {
   display: inline-block;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #FF6600;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
 .about__section-title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   font-weight: 800;
   color: #111;
   margin: 0 0 1rem;
@@ -82,12 +126,12 @@
   z-index: 2;
   text-align: center;
   padding: 4rem 1.5rem;
-  max-width: 700px;
+  max-width: 750px;
   width: 100%;
 }
 
 .about__hero-eyebrow {
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -97,7 +141,7 @@
 }
 
 .about__hero-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2.8rem, 6vw, 5rem);
   font-weight: 900;
   color: #fff;
   margin: 0 0 1rem;
@@ -108,10 +152,10 @@
 }
 
 .about__hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   color: rgba(255,255,255,0.85);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.65;
   display: block;
 }
 
@@ -133,17 +177,17 @@
 }
 
 .about__story-text .about__section-title {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
 }
 
 .about__story-body {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: #555;
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
 .about__story-body p {
-  margin: 0 0 1rem;
+  margin: 0 0 1.1rem;
 }
 
 .about__story-body p:last-child {
@@ -195,7 +239,7 @@
 }
 
 .about__stat-value {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
   font-weight: 900;
   color: #fff;
   line-height: 1;
@@ -203,8 +247,8 @@
 }
 
 .about__stat-label {
-  font-size: 0.88rem;
-  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
   font-weight: 500;
   text-align: center;
 }
@@ -243,23 +287,30 @@
   transform: translateY(-4px);
 }
 
+/* Desktop : header empilé centré */
+.about__value-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .about__value-icon {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 1rem;
   display: block;
 }
 
 .about__value-title {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #111;
   margin: 0 0 0.75rem;
 }
 
 .about__value-text {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
 }
 
@@ -277,7 +328,7 @@
 }
 
 .about__team-subtitle {
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: #666;
   margin: 0.5rem 0 0;
   line-height: 1.6;
@@ -324,14 +375,14 @@
 }
 
 .about__member-name {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #111;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.3rem;
 }
 
 .about__member-role {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #FF6600;
   font-weight: 600;
   text-transform: uppercase;
@@ -340,9 +391,9 @@
 }
 
 .about__member-bio {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
 }
 
@@ -371,7 +422,7 @@
   gap: 1rem;
   background: #fff;
   border-radius: 10px;
-  padding: 1.5rem;
+  padding: 1.75rem;
   border: 1.5px solid #f0f0f0;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -382,8 +433,8 @@
 }
 
 .about__why-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
   background: #fff5ee;
   display: flex;
@@ -394,16 +445,16 @@
 }
 
 .about__why-title {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #111;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.5rem;
 }
 
 .about__why-text {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
 }
 
@@ -416,13 +467,13 @@
 }
 
 .about__cta-inner {
-  max-width: 700px;
+  max-width: 750px;
   margin: 0 auto;
   text-align: center;
 }
 
 .about__cta-title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   font-weight: 800;
   color: #fff;
   margin: 0 0 1rem;
@@ -430,10 +481,10 @@
 }
 
 .about__cta-text {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.8);
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.82);
   margin: 0 0 2rem;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .about__cta-btns {
@@ -446,11 +497,12 @@
 
 .about__cta-btn {
   display: inline-block;
-  padding: 0.9rem 2rem;
+  padding: 1rem 2.2rem;
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none;
+  font-family: 'Poppins', sans-serif;
   transition: opacity 0.2s, transform 0.15s;
 }
 
@@ -475,38 +527,154 @@
 }
 
 /* =============================================
-   Responsive
+   Responsive — Tablette (≤ 1024px)
    ============================================= */
 @media screen and (max-width: 1024px) {
-  .about__values-grid,
-  .about__team-grid {
+
+  /* Hero */
+  .about__hero {
+    min-height: 380px;
+  }
+
+  .about__hero-content {
+    padding: 3rem 1.5rem;
+  }
+
+  /* Histoire */
+  .about__story {
+    padding: 4rem 1.5rem;
+  }
+
+  .about__story-inner {
+    gap: 2.5rem;
+  }
+
+  /* Stats */
+  .about__stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  /* Valeurs */
+  .about__values {
+    padding: 4rem 1.5rem;
+  }
+
+  .about__values-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .about__stats-inner {
+  /* Cartes valeurs tablette — icône + titre sur même ligne centrés, description pleine largeur */
+  .about__value-card {
+    padding: 1.5rem;
+  }
+
+  .about__value-header {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .about__value-icon {
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
+
+  .about__value-title {
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    align-self: center;
+  }
+
+  .about__value-text {
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  /* Équipe tablette — masquer la bio */
+  .about__member-bio {
+    display: none;
+  }
+
+  /* Équipe */
+  .about__team {
+    padding: 4rem 1.5rem;
+  }
+
+  .about__team-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  /* Pourquoi nous */
+  .about__why {
+    padding: 4rem 1.5rem;
   }
 
   .about__why-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* CTA */
+  .about__cta {
+    padding: 4rem 1.5rem;
+  }
 }
 
+/* =============================================
+   Responsive — Mobile (≤ 768px)
+   ============================================= */
 @media screen and (max-width: 768px) {
+
+  /* Hero */
+  .about__hero {
+    min-height: 300px;
+  }
+
+  .about__hero-content {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .about__hero-eyebrow {
+    font-size: 0.88rem;
+  }
+
+  .about__hero-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Éléments communs */
+  .about__section-header {
+    margin-bottom: 2rem;
+  }
+
+  .about__section-eyebrow {
+    font-size: 0.85rem;
+  }
+
+  /* Histoire */
+  .about__story {
+    padding: 3rem 1.25rem;
+  }
+
   .about__story-inner {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 
-  .about__story-img,
-  .about__story-placeholder {
-    height: 280px;
+  .about__story-body {
+    font-size: 1rem;
   }
 
-  .about__values-grid,
-  .about__team-grid,
-  .about__why-grid {
-    grid-template-columns: 1fr;
+  .about__story-img,
+  .about__story-placeholder {
+    height: 260px;
+  }
+
+  /* Stats */
+  .about__stats {
+    padding: 2.5rem 1.25rem;
   }
 
   .about__stats-inner {
@@ -514,22 +682,165 @@
     gap: 1.5rem;
   }
 
-  .about__hero {
-    min-height: 320px;
+  .about__stat-value {
+    font-size: clamp(1.9rem, 8vw, 2.6rem);
+  }
+
+  .about__stat-label {
+    font-size: 0.9rem;
+  }
+
+  /* Valeurs */
+  .about__values {
+    padding: 3rem 1.25rem;
+  }
+
+  .about__values-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Cartes valeurs mobile — 2 colonnes */
+  .about__values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about__value-card {
+    padding: 1.25rem;
+  }
+
+  .about__value-header {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .about__value-icon {
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
+
+  .about__value-title {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    align-self: center;
+  }
+
+  .about__value-text {
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  /* Équipe */
+  .about__team {
+    padding: 3rem 1.25rem;
+  }
+
+  .about__team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .about__team-subtitle {
+    font-size: 1rem;
+  }
+
+  .about__member-name {
+    font-size: 1.05rem;
+  }
+
+  .about__member-bio {
+    font-size: 0.9rem;
+  }
+
+  /* Pourquoi nous */
+  .about__why {
+    padding: 3rem 1.25rem;
+  }
+
+  .about__why-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .about__why-item {
+    padding: 1.25rem;
+  }
+
+  .about__why-title {
+    font-size: 1.05rem;
+  }
+
+  .about__why-text {
+    font-size: 0.95rem;
+  }
+
+  /* CTA */
+  .about__cta {
+    padding: 3rem 1.25rem;
+  }
+
+  .about__cta-text {
+    font-size: 1rem;
   }
 }
 
+/* =============================================
+   Responsive — Petits mobiles (≤ 480px)
+   ============================================= */
 @media screen and (max-width: 480px) {
-  .about__stats-inner {
-    grid-template-columns: 1fr 1fr;
+
+  /* Hero */
+  .about__hero {
+    min-height: 260px;
   }
 
+  .about__hero-content {
+    padding: 2rem 1rem;
+  }
+
+  /* Stats — 2 colonnes fixes */
+  .about__stats-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Équipe — 2 colonnes maintenues même sur petit écran */
+  .about__team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .about__member-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .about__member-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* CTA boutons empilés */
   .about__cta-btns {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .about__cta-btn {
     width: 100%;
     text-align: center;
+    padding: 0.9rem 1.5rem;
+  }
+
+  /* Sections padding réduit */
+  .about__story,
+  .about__values,
+  .about__team,
+  .about__why,
+  .about__cta {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

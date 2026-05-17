@@ -1,12 +1,49 @@
 /* =============================================
    FAQ — Dawn Theme Compatible
    Fichier : assets/faq.css
+   MODIF : font-family Poppins, tailles augmentées, responsive tablette + mobile
    ============================================= */
 
 .faq-section {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 3.5rem 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* =============================================
+   BREADCRUMB
+   ============================================= */
+.faq__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.faq__breadcrumb-link {
+  color: #FF6600;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.faq__breadcrumb-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.faq__breadcrumb-sep {
+  color: #bbb;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.faq__breadcrumb-current {
+  color: #888;
+  font-weight: 400;
 }
 
 /* =============================================
@@ -18,18 +55,19 @@
 }
 
 .faq__title {
-  font-size: 2rem;
+  font-size: 2.6rem;
   font-weight: 800;
   color: #111;
   margin: 0 0 0.75rem;
   letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .faq__subtitle {
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: #666;
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* =============================================
@@ -38,7 +76,7 @@
 .faq__tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 6px;
   margin-bottom: 2rem;
   border-bottom: 2px solid #f0f0f0;
   padding-bottom: 0;
@@ -49,14 +87,16 @@
   border: none;
   border-bottom: 3px solid transparent;
   margin-bottom: -2px;
-  padding: 0.75rem 1.25rem;
-  font-size: 0.9rem;
+  padding: 0.8rem 1.35rem;
+  font-size: 1rem;
   font-weight: 600;
+  font-family: 'Poppins', sans-serif;
   color: #666;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
   white-space: nowrap;
   border-radius: 0;
+  line-height: 1.4;
 }
 
 .faq__tab:hover {
@@ -86,7 +126,7 @@
 }
 
 /* =============================================
-   ACCORDEONS
+   ACCORDÉONS
    ============================================= */
 .faq__item {
   border: 1.5px solid #e0e0e0;
@@ -107,15 +147,17 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.1rem 1.25rem;
+  padding: 1.2rem 1.4rem;
   background: #fff;
   border: none;
   cursor: pointer;
   text-align: left;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 600;
+  font-family: 'Poppins', sans-serif;
   color: #111;
   transition: background 0.15s, color 0.2s;
+  line-height: 1.45;
 }
 
 .faq__question:hover {
@@ -147,12 +189,12 @@
 }
 
 .faq__answer-inner {
-  padding: 0 1.25rem 1.25rem;
-  font-size: 0.9rem;
+  padding: 1rem 1.4rem 1.4rem;
+  font-size: 1rem;
   color: #444;
-  line-height: 1.7;
+  line-height: 1.75;
   border-top: 1px solid #f5f5f5;
-  padding-top: 1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .faq__answer-inner p {
@@ -175,7 +217,7 @@
   margin-top: 3rem;
   background: linear-gradient(135deg, #000000 0%, #1a0a00 40%, #7a2d00 75%, #FF6600 100%);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 2rem 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -184,19 +226,21 @@
 }
 
 .faq__cta-text {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #fff;
   margin: 0;
+  line-height: 1.5;
 }
 
 .faq__cta-btn {
   display: inline-block;
   background: #fff;
   color: #111;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 700;
-  padding: 0.75rem 1.75rem;
+  font-family: 'Poppins', sans-serif;
+  padding: 0.85rem 2rem;
   border-radius: 6px;
   text-decoration: none;
   white-space: nowrap;
@@ -210,33 +254,158 @@
 }
 
 /* =============================================
-   Responsive
+   Responsive — Tablette (≤ 1024px)
    ============================================= */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .faq-section {
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
   }
 
   .faq__title {
-    font-size: 1.5rem;
+    font-size: 2.2rem;
   }
 
+  .faq__subtitle {
+    font-size: 1.05rem;
+  }
+
+  /* Onglets : scroll horizontal si trop nombreux */
   .faq__tabs {
-    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0;
+    gap: 4px;
+  }
+
+  .faq__tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .faq__tab {
-    font-size: 0.8rem;
-    padding: 0.6rem 0.85rem;
+    font-size: 0.92rem;
+    padding: 0.75rem 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .faq__question {
+    font-size: 1rem;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .faq__answer-inner {
+    font-size: 0.95rem;
+    padding: 0.9rem 1.25rem 1.25rem;
   }
 
   .faq__cta {
+    padding: 1.75rem 2rem;
+  }
+
+  .faq__cta-text {
+    font-size: 1.05rem;
+  }
+}
+
+/* =============================================
+   Responsive — Mobile (≤ 768px)
+   ============================================= */
+@media screen and (max-width: 768px) {
+  .faq-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .faq__header {
+    margin-bottom: 2rem;
+  }
+
+  .faq__title {
+    font-size: 1.8rem;
+  }
+
+  .faq__subtitle {
+    font-size: 1rem;
+  }
+
+  /* Onglets scrollables horizontalement */
+  .faq__tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .faq__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faq__tab {
+    font-size: 0.85rem;
+    padding: 0.65rem 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .faq__question {
+    font-size: 0.95rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .faq__answer-inner {
+    font-size: 0.92rem;
+    padding: 0.85rem 1.1rem 1.1rem;
+    line-height: 1.7;
+  }
+
+  /* CTA empilé */
+  .faq__cta {
     flex-direction: column;
     align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .faq__cta-text {
+    font-size: 1rem;
   }
 
   .faq__cta-btn {
     width: 100%;
     text-align: center;
+    font-size: 0.95rem;
+  }
+}
+
+/* =============================================
+   Responsive — Petits mobiles (≤ 480px)
+   ============================================= */
+@media screen and (max-width: 480px) {
+  .faq-section {
+    padding: 2rem 0.85rem;
+  }
+
+  .faq__title {
+    font-size: 1.6rem;
+  }
+
+  .faq__tabs {
+    margin-left: -0.85rem;
+    margin-right: -0.85rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .faq__tab {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .faq__question {
+    font-size: 0.9rem;
   }
 }

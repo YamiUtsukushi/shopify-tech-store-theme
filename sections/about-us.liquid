@@ -31,6 +31,15 @@
     </div>
   </div>
 
+  {%- comment %} ========== BREADCRUMB ========== {% endcomment -%}
+  <div class="about__breadcrumb-wrap">
+    <nav class="about__breadcrumb" aria-label="Fil d'Ariane">
+      <a href="{{ routes.root_url }}" class="about__breadcrumb-link">Accueil</a>
+      <span class="about__breadcrumb-sep" aria-hidden="true">›</span>
+      <span class="about__breadcrumb-current">{{ section.settings.hero_title | default: 'À propos' }}</span>
+    </nav>
+  </div>
+
   {%- comment %} ========== HISTOIRE ========== {% endcomment -%}
   <div class="about__story">
     <div class="about__story-inner">
@@ -87,8 +96,10 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'value' -%}
             <div class="about__value-card" {{ block.shopify_attributes }}>
-              <div class="about__value-icon">{{ block.settings.icon }}</div>
-              <h3 class="about__value-title">{{ block.settings.title }}</h3>
+              <div class="about__value-header">
+                <div class="about__value-icon">{{ block.settings.icon }}</div>
+                <h3 class="about__value-title">{{ block.settings.title }}</h3>
+              </div>
               <p class="about__value-text">{{ block.settings.text }}</p>
             </div>
           {%- endif -%}
